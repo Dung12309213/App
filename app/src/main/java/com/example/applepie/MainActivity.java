@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.applepie.Adapter.FlashSaleAdapter;
+import com.example.applepie.R;
 
 public class MainActivity extends AppCompatActivity {
 

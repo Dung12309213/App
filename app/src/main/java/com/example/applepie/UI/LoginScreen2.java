@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.applepie.R;
 
+
 public class LoginScreen2 extends AppCompatActivity {
 
     @Override

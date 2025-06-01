@@ -1,14 +1,16 @@
 package com.example.applepie;
 
+
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -24,7 +26,8 @@ import java.util.List;
 
 import com.example.applepie.Adapter.FlashSaleAdapter;
 import com.example.applepie.R;
-
+import com.example.applepie.UI.CategoryList;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private EditText edtSearch;
@@ -35,19 +38,43 @@ public class MainActivity extends AppCompatActivity {
     private FlashSaleAdapter flashSaleAdapter;
     private List<Product> productList;
 
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main); // Đảm bảo layout chính là activity_main.xml
+        setContentView(R.layout.activity_main);
 
-        // Fix lỗi setPadding + getInsets + thiếu import View
-        View rootView = findViewById(R.id.main);
-        ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_home) {
+                // Đang ở MainActivity rồi, không cần làm gì hoặc refresh
+                return true;
+            } else if (id == R.id.nav_category) {
+                Intent intentCategory = new Intent(MainActivity.this, CategoryList.class);
+                startActivity(intentCategory);
+                return true;
+            } else if (id == R.id.nav_cart) {
+                // Xử lý chuyển màn Cart nếu có
+                return true;
+            } else if (id == R.id.nav_chat) {
+                // Xử lý chuyển màn Chat nếu có
+                return true;
+            } else if (id == R.id.nav_profile) {
+                // Xử lý chuyển màn Profile nếu có
+                return true;
+            }
+            return false;
         });
 
         // Liên kết với HorizontalScrollView trong XML
@@ -92,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 filterPanel.setVisibility(View.GONE);
             }
         });
+
         // 1. Tìm RecyclerView trong layout
         rvFlashSale = findViewById(R.id.rvFlashSale);
 
@@ -112,7 +140,10 @@ public class MainActivity extends AppCompatActivity {
         // 5. Gán adapter cho RecyclerView
         rvFlashSale.setAdapter(flashSaleAdapter);
     }
+
+
 }
+
 
 
 

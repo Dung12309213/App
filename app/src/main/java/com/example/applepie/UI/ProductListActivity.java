@@ -2,6 +2,7 @@ package com.example.applepie.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -11,6 +12,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.applepie.MainActivity;
+import com.example.applepie.UI.ProductDetail;
+
 import com.example.applepie.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class ProductListActivity extends AppCompatActivity {
@@ -59,11 +62,12 @@ public class ProductListActivity extends AppCompatActivity {
      * Hàm này nên đặt ở Activity khác (như ProductListActivity) để mở ProductDetail
      */
     public void onProductClick(View v) {
-        int id = v.getId();
-        if (id == R.id.imgProductDetail2) {
+        Log.d("ProductListActivity", "Clicked view id: " + v.getId());
+        if (v.getId() == R.id.imgProductDetail2) {
+            Log.d("ProductListActivity", "Opening ProductDetail Activity");
             Intent intent = new Intent(ProductListActivity.this, ProductDetail.class);
             startActivity(intent);
         }
+    }
 
     }
-}

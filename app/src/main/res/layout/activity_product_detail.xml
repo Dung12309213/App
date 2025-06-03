@@ -82,15 +82,36 @@
             <!-- Description -->
 
             <!-- Short Features -->
-            <TextView
-                android:id="@+id/tvProductDesc"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:text="Sản phẩm treatment dành cho tóc..."
-                android:textColor="#444444"
-                android:textSize="14sp" />
+                android:layout_marginTop="8dp">
+
+                <!-- Nội dung mô tả rút gọn -->
+                <TextView
+                    android:id="@+id/DetailProductDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@string/title_productdetail_desc"
+                    android:textColor="#444444"
+                    android:textSize="14sp" />
+
+
+                <!-- Xem thêm -->
+                <TextView
+                    android:id="@+id/tvSeeMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Xem thêm"
+                    android:textColor="#B36A38"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -126,31 +147,109 @@
                     android:layout_marginStart="60dp" />
             </GridLayout>
 
-            <!-- Tabs -->
+            <!-- Tabs HDSD -->
             <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/layoutInstruction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="16dp">
-
-                <TextView
-                    android:layout_width="0dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/headerInstruction"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Thành phần sản phẩm"
-                    android:textColor="#000000"
-                    android:textSize="14sp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:clickable="true"
+                    android:focusable="true">
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxWidth="250dp"
+                        android:paddingEnd="10dp"
+                        android:text="Hướng dẫn sử dụng"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/arrowInstruction"
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_arrow_down"
+                        android:layout_marginStart="0dp" />
+                </LinearLayout>
+
+
+                <!-- Nội dung ẩn -->
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/tvInstructionDetail"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Hướng dẫn sử dụng"
-                    android:gravity="end"
-                    android:textColor="#000000"
-                    android:textSize="14sp" />
+                    android:text="Hướn dẫn sử dụng ở đây, a,b,c,d,e,f.."
+                    android:textColor="#444444"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="8dp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/layoutIngredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/headerIngredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxWidth="250dp"
+                        android:paddingEnd="10dp"
+                        android:text="Thành phần sản phẩm"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/arrowIngredients"
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_arrow_down"
+                        android:layout_marginStart="0dp" />
+                </LinearLayout>
+
+
+                <!-- Nội dung ẩn -->
+                <TextView
+                    android:id="@+id/tvIngredientsDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Chi tiết thành phần sản phẩm ở đây..."
+                    android:textColor="#444444"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="8dp" />
+            </LinearLayout>
+
 
             <!-- Reviews -->
             <TextView

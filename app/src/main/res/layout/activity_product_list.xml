@@ -51,10 +51,9 @@
 
                             <ImageView
                                 android:id="@+id/imgProductDetail1"
-                                android:focusable="true"
-                                android:onClick="onCategoryClick"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:onClick="onProductClick"
                                 android:scaleType="fitCenter"
                                 android:src="@drawable/ic_homepage_mau2" />
 

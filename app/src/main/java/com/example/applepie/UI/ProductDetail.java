@@ -2,9 +2,11 @@ package com.example.applepie.UI;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.applepie.R;
+
 public class ProductDetail extends AppCompatActivity {
 
     private TextView tvDesc;
@@ -24,6 +27,7 @@ public class ProductDetail extends AppCompatActivity {
     private LinearLayout headerInstruction;
     private TextView tvInstructionDetail;
     private ImageView arrowInstruction;
+    private LinearLayout bottomBar;  // Khung chứa phần MUA NGAY
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +41,36 @@ public class ProductDetail extends AppCompatActivity {
         headerIngredients = findViewById(R.id.headerIngredients);
         tvIngredientsDetail = findViewById(R.id.tvIngredientsDetail);
         arrowIngredients = findViewById(R.id.arrowIngredients);
-
         headerInstruction = findViewById(R.id.headerInstruction);
         tvInstructionDetail = findViewById(R.id.tvInstructionDetail);
         arrowInstruction = findViewById(R.id.arrowInstruction);
+        bottomBar = findViewById(R.id.bottomBar); // Nút MUA NGAY
 
+        // Lắng nghe sự kiện nhấn MUA NGAY
+        findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
+            // Tạo một popup mới từ layout riêng
+            LayoutInflater inflater = LayoutInflater.from(ProductDetail.this);
+            LinearLayout quantityPopup = (LinearLayout) inflater.inflate(R.layout.product_buy_now_popup, null);
+
+            // Thêm popup vào giao diện hiện tại (đè lên nút MUA NGAY)
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            quantityPopup.setLayoutParams(params);
+
+            // Đảm bảo nó xuất hiện trên cùng của màn hình (hoặc đè lên bottomBar)
+            bottomBar.addView(quantityPopup);
+        });
+
+        // Áp dụng padding cho system bar
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
-            // TODO: Xử lý nút MUA NGAY
-        });
-
+        // Sự kiện click "Xem thêm"
         tvSeeMore.setOnClickListener(v -> {
             boolean isExpanded = tvDesc.getMaxLines() == Integer.MAX_VALUE;
             if (isExpanded) {
@@ -65,6 +84,7 @@ public class ProductDetail extends AppCompatActivity {
             }
         });
 
+        // Sự kiện click "Thành phần sản phẩm"
         headerIngredients.setOnClickListener(v -> {
             if (tvIngredientsDetail.getVisibility() == View.GONE) {
                 tvIngredientsDetail.setVisibility(View.VISIBLE);
@@ -75,6 +95,7 @@ public class ProductDetail extends AppCompatActivity {
             }
         });
 
+        // Sự kiện click "Hướng dẫn sử dụng"
         headerInstruction.setOnClickListener(v -> {
             if (tvInstructionDetail.getVisibility() == View.GONE) {
                 tvInstructionDetail.setVisibility(View.VISIBLE);
@@ -84,5 +105,7 @@ public class ProductDetail extends AppCompatActivity {
                 arrowInstruction.setRotation(0);  // Xoay mũi tên lên
             }
         });
+
+
     }
 }

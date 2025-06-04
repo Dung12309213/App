@@ -339,6 +339,7 @@
                     android:orientation="horizontal"
                     android:paddingStart="10dp">
 
+                    <!-- Product 1 -->
                     <LinearLayout
                         android:layout_width="160dp"
                         android:layout_height="wrap_content"
@@ -353,21 +354,47 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="165.000 ₫"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvOldPrice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="256.000 ₫" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="Nước dưỡng tóc tinh dầu bưởi 140ml" />
                     </LinearLayout>
+
+                    <!-- Product 2 -->
+                    <LinearLayout
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="8dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:src="@drawable/productmau" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sữa tắm dưỡng da 200ml" />
+                    </LinearLayout>
+
+                    <!-- Product 3 -->
+                    <LinearLayout
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="8dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:src="@drawable/productmau" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kem dưỡng ẩm 100g" />
+                    </LinearLayout>
+
                 </LinearLayout>
+
             </HorizontalScrollView>
         </LinearLayout>
     </ScrollView>

@@ -1,12 +1,15 @@
 package com.example.applepie.UI;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -16,6 +19,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.applepie.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class ProductDetail extends AppCompatActivity {
 
@@ -27,7 +31,6 @@ public class ProductDetail extends AppCompatActivity {
     private LinearLayout headerInstruction;
     private TextView tvInstructionDetail;
     private ImageView arrowInstruction;
-    private LinearLayout bottomBar;  // Khung chứa phần MUA NGAY
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,6 @@ public class ProductDetail extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_product_detail);
 
-        // Khởi tạo view sau khi set layout
         tvDesc = findViewById(R.id.DetailProductDesc);
         tvSeeMore = findViewById(R.id.tvSeeMore);
         headerIngredients = findViewById(R.id.headerIngredients);
@@ -44,33 +46,14 @@ public class ProductDetail extends AppCompatActivity {
         headerInstruction = findViewById(R.id.headerInstruction);
         tvInstructionDetail = findViewById(R.id.tvInstructionDetail);
         arrowInstruction = findViewById(R.id.arrowInstruction);
-        bottomBar = findViewById(R.id.bottomBar); // Nút MUA NGAY
 
-        // Lắng nghe sự kiện nhấn MUA NGAY
-        findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
-            // Tạo một popup mới từ layout riêng
-            LayoutInflater inflater = LayoutInflater.from(ProductDetail.this);
-            LinearLayout quantityPopup = (LinearLayout) inflater.inflate(R.layout.product_buy_now_popup, null);
-
-            // Thêm popup vào giao diện hiện tại (đè lên nút MUA NGAY)
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT
-            );
-            quantityPopup.setLayoutParams(params);
-
-            // Đảm bảo nó xuất hiện trên cùng của màn hình (hoặc đè lên bottomBar)
-            bottomBar.addView(quantityPopup);
-        });
-
-        // Áp dụng padding cho system bar
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Sự kiện click "Xem thêm"
+        // Sự kiện "Xem thêm"
         tvSeeMore.setOnClickListener(v -> {
             boolean isExpanded = tvDesc.getMaxLines() == Integer.MAX_VALUE;
             if (isExpanded) {
@@ -84,28 +67,74 @@ public class ProductDetail extends AppCompatActivity {
             }
         });
 
-        // Sự kiện click "Thành phần sản phẩm"
+        // Toggle nội dung "Thành phần"
         headerIngredients.setOnClickListener(v -> {
             if (tvIngredientsDetail.getVisibility() == View.GONE) {
                 tvIngredientsDetail.setVisibility(View.VISIBLE);
-                arrowIngredients.setRotation(180);  // Xoay mũi tên xuống
+                arrowIngredients.setRotation(180);
             } else {
                 tvIngredientsDetail.setVisibility(View.GONE);
-                arrowIngredients.setRotation(0);  // Xoay mũi tên lên
+                arrowIngredients.setRotation(0);
             }
         });
+        //nút back
+        ImageView btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> onBackPressed());
 
-        // Sự kiện click "Hướng dẫn sử dụng"
+        // Toggle nội dung "Hướng dẫn"
         headerInstruction.setOnClickListener(v -> {
             if (tvInstructionDetail.getVisibility() == View.GONE) {
                 tvInstructionDetail.setVisibility(View.VISIBLE);
-                arrowInstruction.setRotation(180);  // Xoay mũi tên xuống
+                arrowInstruction.setRotation(180);
             } else {
                 tvInstructionDetail.setVisibility(View.GONE);
-                arrowInstruction.setRotation(0);  // Xoay mũi tên lên
+                arrowInstruction.setRotation(0);
             }
+        });findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
+            View quantityPopup = LayoutInflater.from(this).inflate(R.layout.product_buy_now_popup, null);
+            BottomSheetDialog dialog = new BottomSheetDialog(ProductDetail.this);
+            dialog.setContentView(quantityPopup);
+            dialog.show();
+
+            // Khởi tạo các view trong popup
+            Button btn140 = quantityPopup.findViewById(R.id.btn140ml);
+            Button btn360 = quantityPopup.findViewById(R.id.btn360ml);
+            ImageButton btnMinus = quantityPopup.findViewById(R.id.btnMinus);
+            ImageButton btnPlus = quantityPopup.findViewById(R.id.btnPlus);
+            TextView tvQuantity = quantityPopup.findViewById(R.id.tvQuantity);
+            Button btnConfirm = quantityPopup.findViewById(R.id.btnProductBuyConfirm);
+
+            // Xử lý chọn dung tích 140ml
+            btn140.setOnClickListener(vol -> {
+                btn140.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#9C5221")));
+                btn360.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E0E0E0")));
+            });
+
+            // Xử lý chọn dung tích 360ml
+            btn360.setOnClickListener(vol -> {
+                btn360.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#9C5221")));
+                btn140.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E0E0E0")));
+            });
+
+            // Giảm số lượng
+            btnMinus.setOnClickListener(vol -> {
+                int current = Integer.parseInt(tvQuantity.getText().toString());
+                if (current > 1) {
+                    tvQuantity.setText(String.valueOf(current - 1));
+                }
+            });
+
+            // Tăng số lượng
+            btnPlus.setOnClickListener(vol -> {
+                int current = Integer.parseInt(tvQuantity.getText().toString());
+                tvQuantity.setText(String.valueOf(current + 1));
+            });
+
+            // Xác nhận mua hàng
+            btnConfirm.setOnClickListener(vol -> {
+                // TODO: Gửi thông tin đặt hàng hoặc thêm vào giỏ hàng ở đây
+                dialog.dismiss();
+            });
         });
-
-
     }
 }

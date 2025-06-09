@@ -8,10 +8,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.applepie.R;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import  com.example.applepie.R;
 
 public class LoginScreenOTP extends AppCompatActivity {
 
@@ -23,7 +23,7 @@ public class LoginScreenOTP extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.applepie.R.layout.activity_login_screen_otp);
+        setContentView(R.layout.activity_login_screen_otp);
 
         // Ánh xạ view
         otp1 = findViewById(R.id.otp1);

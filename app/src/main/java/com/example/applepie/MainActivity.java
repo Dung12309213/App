@@ -17,32 +17,34 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.applepie.UI.BottomNavHelper;
 import com.example.applepie.Model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.applepie.Adapter.FlashSaleAdapter;
-import com.example.applepie.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Các thành phần UI
     private EditText edtSearch;
     private LinearLayout filterPanel;
     private Button btnCloseFilter;
-    HorizontalScrollView scrollHomepage;
+    private HorizontalScrollView scrollHomepage;
     private RecyclerView rvFlashSale;
+
+    // Adapter và dữ liệu cho danh sách sản phẩm flash sale
     private FlashSaleAdapter flashSaleAdapter;
     private List<Product> productList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main); // Đảm bảo layout chính là activity_main.xml
+        EdgeToEdge.enable(this); // Kích hoạt hiển thị toàn màn hình (không viền)
+        setContentView(R.layout.activity_main); // Gắn layout chính cho activity
 
-        // Fix lỗi setPadding + getInsets + thiếu import View
+        // Thiết lập padding tránh bị che khuất bởi thanh trạng thái và điều hướng
         View rootView = findViewById(R.id.main);
         ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -50,70 +52,55 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Liên kết với HorizontalScrollView trong XML
+        // Scroll tự động cho danh mục (scrollHomepage)
         scrollHomepage = findViewById(R.id.scrollHomepage);
-
-        // Auto-scroll danh mục
         scrollHomepage.post(() -> {
             ObjectAnimator animator = ObjectAnimator.ofInt(scrollHomepage, "scrollX", 0, 500);
-            animator.setDuration(5000); // cuộn trong 5 giây
+            animator.setDuration(5000);
             animator.setRepeatCount(ValueAnimator.INFINITE);
-            animator.setRepeatMode(ValueAnimator.REVERSE);
+            animator.setRepeatMode(ValueAnimator.REVERSE); // quay lại sau khi scroll xong
             animator.start();
         });
-        HorizontalScrollView trietLyScrollView = findViewById(R.id.trietlyscrollhome);
 
+        // Scroll tự động cho phần triết lý (trietLyScrollView)
+        HorizontalScrollView trietLyScrollView = findViewById(R.id.trietlyscrollhome);
         trietLyScrollView.post(() -> {
             int maxScroll = trietLyScrollView.getChildAt(0).getWidth() - trietLyScrollView.getWidth();
-            if (maxScroll < 0) maxScroll = 0; // tránh trường hợp ảnh nhỏ hơn khung
+            if (maxScroll < 0) maxScroll = 0; // tránh lỗi nếu nội dung ngắn hơn khung
             ObjectAnimator animator = ObjectAnimator.ofInt(trietLyScrollView, "scrollX", 0, maxScroll);
-            animator.setDuration(10000); // 10 giây
+            animator.setDuration(10000);
             animator.setRepeatCount(ValueAnimator.INFINITE);
-
             animator.start();
         });
 
+        // Giao diện tìm kiếm & bộ lọc
         edtSearch = findViewById(R.id.edt_search);
         filterPanel = findViewById(R.id.filter_panel);
         btnCloseFilter = findViewById(R.id.btn_close_filter);
 
-        // Khi nhấn vào EditText, hiện filter panel
-        edtSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                filterPanel.setVisibility(View.VISIBLE);
-            }
-        });
+        // Mở panel lọc khi nhấn vào ô tìm kiếm
+        edtSearch.setOnClickListener(v -> filterPanel.setVisibility(View.VISIBLE));
 
-        // Nút đóng filter panel
-        btnCloseFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                filterPanel.setVisibility(View.GONE);
-            }
-        });
-        // 1. Tìm RecyclerView trong layout
+        // Đóng panel lọc
+        btnCloseFilter.setOnClickListener(v -> filterPanel.setVisibility(View.GONE));
+
+        // Thiết lập danh sách sản phẩm flash sale
         rvFlashSale = findViewById(R.id.rvFlashSale);
-
-        // 2. Tạo LayoutManager cho RecyclerView, ngang (Horizontal)
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvFlashSale.setLayoutManager(layoutManager);
 
-        // 3. Tạo danh sách sản phẩm mẫu (thay sau sẽ lấy từ database hoặc API)
+        // Dữ liệu giả lập – sẽ được thay thế bằng dữ liệu thật trong tương lai
         productList = new ArrayList<>();
         productList.add(new Product("Nước dưỡng tóc tinh dầu bưởi 140ml", "165.000 đ", "256.000đ", "10", ""));
         productList.add(new Product("Sản phẩm 2", "120.000 đ", "200.000đ", "15", ""));
         productList.add(new Product("Sản phẩm 3", "99.000 đ", "150.000đ", "20", ""));
-        // Thêm sản phẩm tuỳ ý
 
-        // 4. Tạo adapter với dữ liệu
+        // Gắn adapter và hiển thị lên RecyclerView
         flashSaleAdapter = new FlashSaleAdapter(this, productList);
-
-        // 5. Gán adapter cho RecyclerView
         rvFlashSale.setAdapter(flashSaleAdapter);
+
+        // Gắn thanh điều hướng (bottom navigation)
+        BottomNavHelper.setupBottomNav(this);
     }
 }
-
-
-
 

@@ -1,13 +1,7 @@
 package com.example.applepie.UI;
 
-import com.example.applepie.MainActivity;
-import com.example.applepie.Model.UserList;
-import com.example.applepie.R;
-
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import  com.example.applepie.MainActivity;
+import  com.example.applepie.R;
+import  com.example.applepie.Model.UserList;
 
 public class LoginScreen1 extends AppCompatActivity {
 

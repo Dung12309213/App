@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Product Image -->
+        <ImageView
+            android:id="@+id/imgProduct"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_homepage_mau2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Order ID -->
+        <TextView
+            android:id="@+id/txtOrderId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/nunito_medium"
+            android:text="CC12345DH123"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/imgProduct"
+            app:layout_constraintTop_toTopOf="@+id/imgProduct" />
+
+        <!-- Quantity -->
+        <TextView
+            android:id="@+id/txtQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity: 3"
+            android:textSize="13sp"
+            android:textColor="@color/textcolor"
+            app:layout_constraintStart_toStartOf="@id/txtOrderId"
+            app:layout_constraintTop_toBottomOf="@id/txtOrderId"
+            android:layout_marginTop="4dp" />
+
+        <!-- Price -->
+        <TextView
+            android:id="@+id/txtPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/nunito_medium"
+            android:text="975.000 VND"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/txtOrderId"
+            app:layout_constraintTop_toBottomOf="@id/txtQuantity" />
+
+        <!-- Action Button -->
+        <Button
+            android:id="@+id/btnAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/brown"
+            android:fontFamily="@font/nunito_medium"
+            android:text="Track"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@id/imgProduct"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,5 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container_root"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"    android:id="@+id/container_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -16,11 +17,12 @@
         <!-- Logo -->
         <ImageButton
             android:id="@+id/btn_avatar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@mipmap/ic_logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
             android:background="@android:color/transparent"
-            android:contentDescription="Avatar" />
+
+            android:src="@mipmap/ic_logo"/>
 
         <!-- Search Box -->
         <EditText
@@ -36,15 +38,16 @@
             android:textColorHint="#B36A38" />
 
         <!-- Search Button -->
+
+        <!-- Notification -->
         <ImageButton
             android:id="@+id/btnSearch"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:src="@drawable/ic_search"
             android:background="@android:color/transparent"
-            android:contentDescription="Search" />
+            android:contentDescription="Search"
+            android:src="@drawable/ic_search" />
 
-        <!-- Notification -->
         <ImageButton
             android:id="@+id/btn_notification"
             android:layout_width="70dp"

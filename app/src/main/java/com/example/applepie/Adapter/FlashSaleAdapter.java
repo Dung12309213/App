@@ -10,10 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.applepie.Model.Product;
-
 
 import java.util.List;
+
+import com.example.applepie.Model.Product;
 import com.example.applepie.R;
 
 public class FlashSaleAdapter extends RecyclerView.Adapter<FlashSaleAdapter.ViewHolder> {

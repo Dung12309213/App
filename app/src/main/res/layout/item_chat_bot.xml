@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="start"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <!-- Avatar bot -->
+    <ImageView
+        android:id="@+id/botAvatar"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_gravity="bottom"
+        android:src="@mipmap/ic_logo"
+        android:scaleType="centerCrop"
+        android:background="@drawable/bg_circle" />
+
+    <!-- Tin nhắn và giờ -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="start">
+
+        <TextView
+            android:id="@+id/txtBotMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bot_message"
+            android:padding="12dp"
+            android:textColor="@color/textcolor"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtBotTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="08:04 pm"
+            android:textColor="#888888"
+            android:textSize="10sp"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+</LinearLayout>

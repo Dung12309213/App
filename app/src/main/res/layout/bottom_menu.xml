@@ -1,128 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_menu"
     android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    android:layout_height="60dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="30dp"
+    android:background="@drawable/bottom_nav_background"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/bottom_nav_background"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+    <!-- Home -->
+    <FrameLayout
+        android:id="@+id/home_button_container1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
 
-        <FrameLayout
-            android:id="@+id/home_button_container1"
-            android:layout_width="wrap_content"
+        <ImageButton
+            android:id="@+id/btn_home"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:gravity="center">
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_home" />
+    </FrameLayout>
 
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+    <!-- Category -->
+    <FrameLayout
+        android:id="@+id/home_button_container2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
 
-                android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_home" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/home_button_container2"
-            android:layout_width="wrap_content"
+        <ImageButton
+            android:id="@+id/btn_category"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@android:color/transparent">
-
-            <ImageButton
-                android:clickable="true"
-                android:focusable="true"
-
-                android:id="@+id/imageButton4"
-                android:layout_width="match_parent"
-
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_category" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/home_button_container3"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@android:color/transparent">
-
-            <ImageButton
-                android:clickable="true"
-                android:focusable="true"
-
-                android:id="@+id/imageButton5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-
-                android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_buy" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/home_button_container4"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@android:color/transparent">
-
-            <ImageButton
-                android:clickable="true"
-                android:focusable="true"
-
-                android:id="@+id/imageButton7"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-
-                android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_chat" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/home_button_container5"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:gravity="center">
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_category" />
+    </FrameLayout>
 
-            <ImageButton
-                android:clickable="true"
-                android:focusable="true"
+    <!-- Buy -->
+    <FrameLayout
+        android:id="@+id/home_button_container3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
 
-                android:id="@+id/imageButton6"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
+        <ImageButton
+            android:id="@+id/btn_buy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_buy" />
+    </FrameLayout>
 
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_profile" />
-        </FrameLayout>
+    <!-- Chat -->
+    <FrameLayout
+        android:id="@+id/home_button_container4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
 
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/btn_chat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_chat" />
+    </FrameLayout>
+
+    <!-- Profile -->
+    <FrameLayout
+        android:id="@+id/home_button_container5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/btn_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_profile" />
+    </FrameLayout>
+
+</LinearLayout>

@@ -368,16 +368,15 @@
 
     </ScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        app:itemBackground="@android:color/transparent"
-        app:itemRippleColor="@android:color/transparent"
-        app:itemIconSize="28dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:background="#7B3F00"
-        app:itemIconTint="@color/nav_icon_tint"
-        app:menu="@menu/bottom_nav_menu" />
+        >
+
+        <include layout="@layout/bottom_menu"></include>
+    </LinearLayout>
+
 
 </RelativeLayout>

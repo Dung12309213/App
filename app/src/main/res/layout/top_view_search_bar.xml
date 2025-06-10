@@ -57,63 +57,63 @@
             android:contentDescription="Notifications" />
     </LinearLayout>
 
-    <!-- Khu vực filter (mặc định ẩn) -->
     <LinearLayout
         android:id="@+id/filter_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@drawable/bg_filter_panel"
+        android:elevation="6dp"
         android:padding="16dp"
         android:visibility="gone"
-        android:background="@drawable/search_box"
-        android:elevation="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginHorizontal="12dp"
+        android:clipToPadding="false">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Filter by Category"
-            android:textColor="#4A4A4A"
+            android:textColor="#333333"
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingBottom="12dp" />
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="start"
+            android:layout_marginBottom="8dp">
 
             <CheckBox
                 android:id="@+id/check_filter_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Category 1"
-                android:textColor="#555555"
-                android:buttonTint="#6A4F4F"
-                android:paddingVertical="8dp"
-                android:layout_marginEnd="16dp" />
+                android:textColor="#444444"
+                android:buttonTint="#A0522D"
+                android:layout_marginEnd="24dp" />
 
             <CheckBox
                 android:id="@+id/check_filter_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Category 2"
-                android:textColor="#555555"
-                android:buttonTint="#6A4F4F"
-                android:paddingVertical="8dp" />
+                android:textColor="#444444"
+                android:buttonTint="#A0522D" />
         </LinearLayout>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_close_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Close Filter"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#A0522D"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="12dp"
-            android:layout_gravity="start"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/search_box" />
+            android:textColor="@color/white"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:layout_gravity="end"
+            android:background="@drawable/bg_user_message" />
     </LinearLayout>
 </LinearLayout>

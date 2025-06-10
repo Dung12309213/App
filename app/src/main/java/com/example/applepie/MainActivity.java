@@ -22,7 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.applepie.Adapter.FlashSaleAdapter;
 import com.example.applepie.Model.Product;
 import com.example.applepie.R;
+import com.example.applepie.UI.CartActivity;
 import com.example.applepie.UI.CategoryList;
+import com.example.applepie.UI.ChatBotActivity;
+import com.example.applepie.UI.ProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,15 +62,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btn_buy).setOnClickListener(v -> {
-            // startActivity(new Intent(MainActivity.this, CartActivity.class));
+            startActivity(new Intent(MainActivity.this, CartActivity.class));
         });
 
         findViewById(R.id.btn_chat).setOnClickListener(v -> {
-            // startActivity(new Intent(MainActivity.this, ChatActivity.class));
+            startActivity(new Intent(MainActivity.this, ChatBotActivity.class));
         });
 
         findViewById(R.id.btn_profile).setOnClickListener(v -> {
-            // startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         });
 
         // Scroll ngang danh mục

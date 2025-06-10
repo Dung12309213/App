@@ -1,6 +1,7 @@
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -38,6 +39,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.firebase.firestore)
+    implementation(libs.glide)
+    annotationProcessor(libs.glideCompiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

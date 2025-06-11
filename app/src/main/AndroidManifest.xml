@@ -18,7 +18,7 @@
         tools:targetApi="31">
 
         <!-- Đặt ProductReviewActivity làm launcher -->
-        <activity android:name=".UI.ProductReviewActivity" android:exported="true">
+        <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,7 +32,6 @@
         <activity android:name=".UI.LoginScreenOTP" android:exported="false" />
         <activity android:name=".UI.LoginScreen1" android:exported="true" />
         <activity android:name=".UI.LoginScreen2" android:exported="false" />
-        <activity android:name=".MainActivity" android:exported="true" />
         <activity android:name=".UI.HelpCenterActivity" />
         <activity android:name=".UI.PaymentMethodsActivity" />
         <activity android:name=".UI.SettingsActivity" />

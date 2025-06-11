@@ -7,15 +7,16 @@ public class Product {
     private int price;
     private int secondprice;
     private int quantity;
+    private float rating;
     private String description;
     private String ingredient;
     private String texture;
     private String uses;
-    private String manual;
-    private String discountPercent;
+    private String instruction;
+    private int discountPercent;
     private String imageUrl;
 
-    public Product(String name, int price, int secondprice, String discountPercent, String imageUrl) {
+    public Product(String name, int price, int secondprice, int discountPercent, String imageUrl) {
         this.name = name;
         this.price = price;
         this.secondprice = secondprice;
@@ -31,6 +32,10 @@ public class Product {
 
     public String getId() {
         return id;
+    }
+
+    public float getRating() {
+        return rating;
     }
 
     public String getName() {
@@ -65,11 +70,11 @@ public class Product {
         return uses;
     }
 
-    public String getManual() {
-        return manual;
+    public String getInstruction() {
+        return instruction;
     }
 
-    public String getDiscountPercent() {
+    public int getDiscountPercent() {
         return discountPercent;
     }
 

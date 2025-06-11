@@ -1,6 +1,7 @@
 package com.example.applepie.UI;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,32 +64,47 @@ public class ProductListActivity extends AppCompatActivity {
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         Product product = doc.toObject(Product.class);
                         if (product != null) {
-                            addProductToGrid(product);
+                            addProductToGrid(product, doc.getId());
                         }
                     }
                 });
     }
 
-    private void addProductToGrid(Product product) {
+    private void addProductToGrid(Product product, String documentId) {
         View itemView = inflater.inflate(R.layout.item_product, gridLayout, false);
 
         ImageView img = itemView.findViewById(R.id.imgProductListItem);
         TextView tvName = itemView.findViewById(R.id.tvProductName);
         TextView tvPrice = itemView.findViewById(R.id.tvPrice);
         TextView tvSecondPrice = itemView.findViewById(R.id.tvSecondPrice);
-        //TextView tvDiscount = itemView.findViewById(R.id.tvDiscount);
+        TextView tvProductDiscountPercent = itemView.findViewById(R.id.tvProductDiscountPercent);
 
         // Set dữ liệu
         tvName.setText(product.getName());
         tvPrice.setText(String.format("%,d đ", product.getPrice()));
         tvSecondPrice.setText(String.format("%,d đ", product.getSecondprice()));
-        //if (tvDiscount != null) tvDiscount.setText(product.getDiscountPercent() + "%");
+        if (product.getDiscountPercent() > 0 ) {
+            tvProductDiscountPercent.setText(product.getDiscountPercent() + "%");
+            tvProductDiscountPercent.setVisibility(View.VISIBLE);
+        }
+        else {
+            tvProductDiscountPercent.setVisibility(View.GONE);
+        }
+
+
+        // Kiểm tra nếu secondPrice có giá trị
+        if (product.getSecondprice() > 0) {
+            tvSecondPrice.setVisibility(View.VISIBLE);
+            tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            tvSecondPrice.setVisibility(View.GONE);
+        }
 
         Glide.with(this).load(product.getImageUrl()).into(img);
 
         img.setOnClickListener(v -> {
             Intent intent = new Intent(this, ProductDetail.class);
-            intent.putExtra("productId", product.getName()); // Hoặc doc.getId() nếu cần
+            intent.putExtra("productId", documentId);
             startActivity(intent);
         });
 

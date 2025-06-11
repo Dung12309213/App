@@ -5,4 +5,6 @@
     <color name="lightbrown">#c5a25d</color>
     <color name="brown">#833705</color>
     <color name="textcolor">#1f1c17</color>
+    <color name="gray">#CCCCCC</color>
+
 </resources>

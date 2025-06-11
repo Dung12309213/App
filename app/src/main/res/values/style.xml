@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="CircleImageView" parent="">
+
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
-
+    <style name="YellowRatingBarStyle" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">#FFD700</item> <!-- Màu sao được chọn -->
+        <item name="colorControlNormal">#CCCCCC</item>   <!-- Màu sao chưa chọn -->
+    </style>
 </resources>

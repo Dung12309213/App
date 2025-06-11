@@ -39,8 +39,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.firebase.firestore)
     implementation(libs.glide)
+    implementation(libs.firebase.firestore)
     annotationProcessor(libs.glideCompiler)
 
     testImplementation(libs.junit)

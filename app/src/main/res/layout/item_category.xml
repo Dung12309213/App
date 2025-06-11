@@ -15,7 +15,6 @@
         android:clickable="true"
         android:contentDescription="Category 1"
         android:focusable="true"
-        android:onClick="onCategoryClick"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_homepage_mau1" />
 
@@ -29,3 +28,4 @@
         android:textSize="14sp"
         android:textStyle="bold" />
 </LinearLayout>
+

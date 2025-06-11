@@ -72,21 +72,20 @@ public class ProductListActivity extends AppCompatActivity {
     private void addProductToGrid(Product product) {
         View itemView = inflater.inflate(R.layout.item_product, gridLayout, false);
 
-        ImageView img = itemView.findViewById(R.id.imgProductDetail1);
+        ImageView img = itemView.findViewById(R.id.imgProductListItem);
         TextView tvName = itemView.findViewById(R.id.tvProductName);
         TextView tvPrice = itemView.findViewById(R.id.tvPrice);
         TextView tvSecondPrice = itemView.findViewById(R.id.tvSecondPrice);
-        TextView tvDiscount = itemView.findViewById(R.id.tvDiscount);
+        //TextView tvDiscount = itemView.findViewById(R.id.tvDiscount);
 
         // Set dữ liệu
         tvName.setText(product.getName());
         tvPrice.setText(String.format("%,d đ", product.getPrice()));
         tvSecondPrice.setText(String.format("%,d đ", product.getSecondprice()));
-        if (tvDiscount != null) tvDiscount.setText(product.getDiscountPercent() + "%");
+        //if (tvDiscount != null) tvDiscount.setText(product.getDiscountPercent() + "%");
 
         Glide.with(this).load(product.getImageUrl()).into(img);
 
-        // Xử lý khi bấm vào sản phẩm (mở ProductDetailActivity nếu có)
         img.setOnClickListener(v -> {
             Intent intent = new Intent(this, ProductDetail.class);
             intent.putExtra("productId", product.getName()); // Hoặc doc.getId() nếu cần

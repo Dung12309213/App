@@ -57,7 +57,7 @@ public class CategoryList extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
-                        addCategoryToGrid(doc); // truyền cả doc
+                        addCategoryToGrid(doc);
                     }
                 });
     }
@@ -77,7 +77,7 @@ public class CategoryList extends AppCompatActivity {
 
         img.setOnClickListener(v -> {
             Intent intent = new Intent(this, ProductListActivity.class);
-            intent.putExtra("cateId", cateId); // Gửi ID qua intent
+            intent.putExtra("cateId", cateId);
             startActivity(intent);
         });
 

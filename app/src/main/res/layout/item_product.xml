@@ -11,11 +11,11 @@
         android:layout_height="180dp">
 
         <ImageView
-            android:id="@+id/imgProductDetail1"
+            android:id="@+id/imgProductListItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_homepage_mau2" />
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,7 +38,6 @@
             android:id="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="165.000 đ"
             android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -48,7 +47,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="256.000đ"
             android:textColor="#B9966A"
             android:textSize="16sp" />
     </LinearLayout>
@@ -58,7 +56,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Nước dưỡng tóc tinh dầu bưởi 140ml"
         android:textColor="#000000"
         android:textSize="14sp" />
 </LinearLayout>

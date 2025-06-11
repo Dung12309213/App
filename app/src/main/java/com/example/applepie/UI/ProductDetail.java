@@ -18,11 +18,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.applepie.Connector.FirebaseConnector;
+import com.example.applepie.Model.Product;
 import com.example.applepie.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProductDetail extends AppCompatActivity {
 
+    FirebaseFirestore db;
+
+    private TextView tvProductCategory;
+    private TextView tvProductDetailName;
+    private TextView tvProductDetailRating;
     private TextView tvDesc;
     private TextView tvSeeMore;
     private LinearLayout headerIngredients;
@@ -38,21 +46,23 @@ public class ProductDetail extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_product_detail);
 
-        tvDesc = findViewById(R.id.DetailProductDesc);
-        tvSeeMore = findViewById(R.id.tvSeeMore);
-        headerIngredients = findViewById(R.id.headerIngredients);
-        tvIngredientsDetail = findViewById(R.id.tvIngredientsDetail);
-        arrowIngredients = findViewById(R.id.arrowIngredients);
-        headerInstruction = findViewById(R.id.headerInstruction);
-        tvInstructionDetail = findViewById(R.id.tvInstructionDetail);
-        arrowInstruction = findViewById(R.id.arrowInstruction);
+        db = FirebaseConnector.getInstance();
+        String productId = getIntent().getStringExtra("productId");
+
+        if (productId != null) {
+            loadProductDetails(productId);
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        addViews();
+        addEvents();
+    }
 
+    private void addEvents() {
         // Sự kiện "Xem thêm"
         tvSeeMore.setOnClickListener(v -> {
             boolean isExpanded = tvDesc.getMaxLines() == Integer.MAX_VALUE;
@@ -136,5 +146,53 @@ public class ProductDetail extends AppCompatActivity {
                 dialog.dismiss();
             });
         });
+    }
+
+    private void addViews() {
+        tvProductCategory = findViewById(R.id.tvProductDetailCategory);
+        tvProductDetailName = findViewById(R.id.tvProductDetailName);
+        tvProductDetailRating = findViewById(R.id.tvProductDetailRating);
+        tvDesc = findViewById(R.id.tvProductDetailDesc);
+        tvSeeMore = findViewById(R.id.tvProductDetailSeeMore);
+        headerIngredients = findViewById(R.id.headerIngredients);
+        tvIngredientsDetail = findViewById(R.id.tvProductDetailIngredient);
+        arrowIngredients = findViewById(R.id.arrowIngredients);
+        headerInstruction = findViewById(R.id.headerInstruction);
+        tvInstructionDetail = findViewById(R.id.tvProductDetailInstruction);
+        arrowInstruction = findViewById(R.id.arrowInstruction);
+    }
+
+    private void loadProductDetails(String productId) {
+        db.collection("Product")
+                .document(productId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Product product = documentSnapshot.toObject(Product.class);
+                        if (product != null) {
+                            displayProductDetails(product);
+                            String cateid = product.getCateid();
+                            loadCategoryDetails(cateid);
+                        }
+                    }
+                });
+    }
+    private void displayProductDetails(Product product) {
+        tvProductDetailName.setText(product.getName());
+        tvProductDetailRating.setText(String.format("%.1f", product.getRating())); // Hiển thị 1 chữ số thập phân
+        tvDesc.setText(product.getDescription());
+        tvIngredientsDetail.setText(product.getIngredient());
+        tvInstructionDetail.setText(product.getInstruction());
+    }
+    private void loadCategoryDetails(String cateid) {
+        db.collection("Category")
+                .document(cateid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String mcValue = documentSnapshot.getString("MC");
+                        tvProductCategory.setText(mcValue);
+                    }
+                });
     }
 }

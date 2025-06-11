@@ -107,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
         rvFlashSale.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         productList = new ArrayList<>();
-        productList.add(new Product("Nước dưỡng tóc tinh dầu bưởi 140ml", "165.000 đ", "256.000đ", "10", ""));
-        productList.add(new Product("Sản phẩm 2", "120.000 đ", "200.000đ", "15", ""));
-        productList.add(new Product("Sản phẩm 3", "99.000 đ", "150.000đ", "20", ""));
+        productList.add(new Product("Nước dưỡng tóc tinh dầu bưởi 140ml", 165000, 256000, "10", ""));
+        productList.add(new Product("Sản phẩm 2", 120000, 200000, "15", ""));
+        productList.add(new Product("Sản phẩm 3", 99000, 150000, "20", ""));
 
         flashSaleAdapter = new FlashSaleAdapter(this, productList);
         rvFlashSale.setAdapter(flashSaleAdapter);

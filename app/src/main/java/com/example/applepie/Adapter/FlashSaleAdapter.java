@@ -28,14 +28,14 @@ public class FlashSaleAdapter extends RecyclerView.Adapter<FlashSaleAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgProduct;
-        TextView tvDiscount, tvPrice, tvOldPrice, tvName;
+        TextView tvDiscount, tvPrice, tvSecond, tvName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgProduct = itemView.findViewById(R.id.imgProduct);
             tvDiscount = itemView.findViewById(R.id.tvDiscount);
             tvPrice = itemView.findViewById(R.id.tvPrice);
-            tvOldPrice = itemView.findViewById(R.id.tvOldPrice);
+            tvSecond = itemView.findViewById(R.id.tvSecondPrice);
             tvName = itemView.findViewById(R.id.tvName);
         }
     }
@@ -52,9 +52,9 @@ public class FlashSaleAdapter extends RecyclerView.Adapter<FlashSaleAdapter.View
         Product product = productList.get(position);
 
         holder.tvName.setText(product.getName());
-        holder.tvPrice.setText(product.getPrice());
-        holder.tvOldPrice.setText(product.getOldPrice());
-        holder.tvOldPrice.setPaintFlags(holder.tvOldPrice.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.tvPrice.setText(String.valueOf(product.getPrice()));
+        holder.tvSecond.setText(String.valueOf(product.getSecondprice()));
+        holder.tvSecond.setPaintFlags(holder.tvSecond.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tvDiscount.setText(product.getDiscountPercent() + "%");
 
         // Nếu ảnh là url, bạn có thể dùng thư viện Glide/Picasso để load ảnh:

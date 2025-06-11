@@ -2,6 +2,7 @@ package com.example.applepie.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridLayout;
@@ -55,43 +56,32 @@ public class CategoryList extends AppCompatActivity {
         db.collection("Category")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-            for (DocumentSnapshot doc : queryDocumentSnapshots) {
-                Category category = doc.toObject(Category.class);
-                addCategoryTogrid(category);
-            }
-        });
+                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                        addCategoryToGrid(doc); // truyền cả doc
+                    }
+                });
     }
 
-    private void addCategoryTogrid(Category category) {
-        View itemView = inflater.inflate(R.layout.item_category, gridLayout, false);
+    private void addCategoryToGrid(DocumentSnapshot doc) {
+        Category category = doc.toObject(Category.class);
+        if (category == null) return;
 
+        View itemView = inflater.inflate(R.layout.item_category, gridLayout, false);
         ImageView img = itemView.findViewById(R.id.imgCategory);
         TextView txt = itemView.findViewById(R.id.txtCategoryName);
 
         txt.setText(category.getName());
         Glide.with(this).load(category.getImageUrl()).into(img);
 
+        String cateId = doc.getId();
+
         img.setOnClickListener(v -> {
-            // Xử lý khi click vào category, ví dụ: mở Activity mới
+            Intent intent = new Intent(this, ProductListActivity.class);
+            intent.putExtra("cateId", cateId); // Gửi ID qua intent
+            startActivity(intent);
         });
 
         gridLayout.addView(itemView);
     }
 
-    // Xử lý sự kiện click vào từng danh mục
-//    public void onCategoryClick(View v) {
-//        int id = v.getId();
-//
-//        if (id == R.id.ImgCategory1) {
-//            Intent intent = new Intent(this, com.example.applepie.UI.ProductListActivity.class);
-//            startActivity(intent);
-//        }
-//
-//        // TODO: Thêm các điều kiện cho ImgCategory2, ImgCategory3 nếu có
-//        /*
-//        else if (id == R.id.ImgCategory2) {
-//            // mở category khác
-//        }
-//        */
-//    }
 }

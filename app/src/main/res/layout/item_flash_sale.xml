@@ -52,7 +52,7 @@
                 android:textColor="#000000" />
 
             <TextView
-                android:id="@+id/tvOldPrice"
+                android:id="@+id/tvSecondPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="256.000đ"

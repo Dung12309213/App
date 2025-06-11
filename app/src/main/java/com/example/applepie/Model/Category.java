@@ -4,7 +4,7 @@ public class Category {
     private String name;
     private String imageUrl;
 
-    public Category() {} // Needed for Firestore
+    public Category() {}
 
     public Category(String name, String imageUrl) {
         this.name = name;

@@ -1,25 +1,84 @@
 package com.example.applepie.Model;
 
 public class Product {
+    private String id;
     private String name;
-    private String price;
-    private String oldPrice;
+    private String cateid;
+    private int price;
+    private int secondprice;
+    private int quantity;
+    private String description;
+    private String ingredient;
+    private String texture;
+    private String uses;
+    private String manual;
     private String discountPercent;
-    private String imageUrl; // hoặc int drawable nếu bạn dùng ảnh trong resources
+    private String imageUrl;
 
-    public Product(String name, String price, String oldPrice, String discountPercent, String imageUrl) {
+    public Product(String name, int price, int secondprice, String discountPercent, String imageUrl) {
         this.name = name;
         this.price = price;
-        this.oldPrice = oldPrice;
+        this.secondprice = secondprice;
         this.discountPercent = discountPercent;
         this.imageUrl = imageUrl;
     }
 
-    // Getter và Setter (nếu cần)
-    public String getName() { return name; }
-    public String getPrice() { return price; }
-    public String getOldPrice() { return oldPrice; }
-    public String getDiscountPercent() { return discountPercent; }
-    public String getImageUrl() { return imageUrl; }
+    public Product() {
+    }
+
+
+    // Getter và Setter
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCateid() {
+        return cateid;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getSecondprice() {
+        return secondprice;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getIngredient() {
+        return ingredient;
+    }
+
+    public String getTexture() {
+        return texture;
+    }
+
+    public String getUses() {
+        return uses;
+    }
+
+    public String getManual() {
+        return manual;
+    }
+
+    public String getDiscountPercent() {
+        return discountPercent;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
 }
 

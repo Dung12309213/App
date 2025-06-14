@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
         <!-- Avatar -->
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imgProfile"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="88dp"
@@ -46,20 +46,20 @@
 
         <!-- Tên người dùng -->
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/nunito_medium"
-            android:text="Thanh An"
+            android:text="@string/title_guest_name"
             android:textAlignment="center"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView" />
+            app:layout_constraintTop_toBottomOf="@id/imgProfile" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/imgChangeProfileImage"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="30dp"
@@ -67,7 +67,7 @@
             android:background="@drawable/bg_circle"
             android:padding="8dp"
             android:scaleType="centerInside"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintBottom_toTopOf="@+id/tvUsername"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.611"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,11 +83,12 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/profile_header">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/itemYourprofile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="1dp">
+            android:padding="1dp"
+            android:visibility="invisible">
 
             <!-- Icon trái -->
             <ImageView
@@ -137,7 +138,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/icon" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/itemPaymentMethods"
@@ -488,7 +489,7 @@
 
             <!-- Icon trái -->
             <ImageView
-                android:id="@+id/icon5"
+                android:id="@+id/imgLoginLogout"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="20dp"
@@ -499,7 +500,7 @@
 
             <!-- Tiêu đề -->
             <TextView
-                android:id="@+id/title5"
+                android:id="@+id/tvLoginLogout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -509,7 +510,7 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/arrow5"
-                app:layout_constraintStart_toEndOf="@id/icon5"
+                app:layout_constraintStart_toEndOf="@id/imgLoginLogout"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Mũi tên phải -->
@@ -533,7 +534,7 @@
                 android:background="@color/brown"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/icon5" />
+                app:layout_constraintTop_toBottomOf="@+id/imgLoginLogout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

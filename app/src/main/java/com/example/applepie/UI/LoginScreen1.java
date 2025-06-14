@@ -13,9 +13,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.applepie.Connector.FirebaseConnector;
+import com.example.applepie.Connector.SQLiteHelper;
 import  com.example.applepie.MainActivity;
+import com.example.applepie.Model.User;
 import  com.example.applepie.R;
-import  com.example.applepie.Model.UserList;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginScreen1 extends AppCompatActivity {
 
@@ -23,7 +29,7 @@ public class LoginScreen1 extends AppCompatActivity {
     Button btnLogin;
     TextView txtRegister;
 
-    UserList userList = new UserList(); // Mock data
+    SQLiteHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +43,13 @@ public class LoginScreen1 extends AppCompatActivity {
             return insets;
         });
 
-        editEmail = findViewById(R.id.editEmail);
-        editPassword = findViewById(R.id.editPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        txtRegister = findViewById(R.id.txtRegister);
+        addViews();
+        addEvents();
 
+        dbHelper = new SQLiteHelper(this);
+    }
+
+    private void addEvents() {
         // Login button logic
         btnLogin.setOnClickListener(v -> {
             String username = editEmail.getText().toString().trim();
@@ -52,14 +60,8 @@ public class LoginScreen1 extends AppCompatActivity {
                 return;
             }
 
-            if (userList.isValidUser(username, password)) {
-                Toast.makeText(LoginScreen1.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginScreen1.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                Toast.makeText(LoginScreen1.this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
-            }
+            // Gọi Firebase để kiểm tra thông tin đăng nhập
+            checkLogin(username, password);
         });
 
         // Register redirect
@@ -67,5 +69,61 @@ public class LoginScreen1 extends AppCompatActivity {
             Intent intent = new Intent(LoginScreen1.this, LoginScreen2.class);
             startActivity(intent);
         });
+    }
+
+    private void addViews() {
+        editEmail = findViewById(R.id.editEmail);
+        editPassword = findViewById(R.id.editPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        txtRegister = findViewById(R.id.txtRegister);
+    }
+
+    private void checkLogin(String email, String password) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User")
+                .whereEqualTo("email", email)
+                .whereEqualTo("password", password)
+                .get()
+                .addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        QuerySnapshot result = task1.getResult();
+                        if (result != null && !result.isEmpty()) {
+                            DocumentSnapshot document = result.getDocuments().get(0);
+                            User user = document.toObject(User.class);
+
+                            dbHelper.saveUser(document.getId(), user.getName());
+
+                            Toast.makeText(LoginScreen1.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginScreen1.this, MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            db.collection("User")
+                                    .whereEqualTo("phone", email)
+                                    .whereEqualTo("password", password)
+                                    .get()
+                                    .addOnCompleteListener(task2 -> {
+                                        if (task2.isSuccessful()) {
+                                            QuerySnapshot result2 = task2.getResult();
+                                            if (result2 != null && !result2.isEmpty()) {
+                                                DocumentSnapshot document = result2.getDocuments().get(0);
+                                                User user = document.toObject(User.class);
+
+                                                dbHelper.saveUser(document.getId(), user.getName());
+
+                                                Toast.makeText(LoginScreen1.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(LoginScreen1.this, MainActivity.class);
+                                                startActivity(intent);
+                                            } else {
+                                                Toast.makeText(LoginScreen1.this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(LoginScreen1.this, "Lỗi kết nối với Firebase", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    } else {
+                        Toast.makeText(LoginScreen1.this, "Lỗi kết nối với Firebase", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

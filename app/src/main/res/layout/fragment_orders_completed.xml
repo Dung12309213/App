@@ -7,7 +7,7 @@
 
     <!-- Danh sách đơn hàng -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerOrders"
+        android:id="@+id/recyclerOrdersCompleted"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"

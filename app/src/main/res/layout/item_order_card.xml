@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
@@ -63,17 +64,37 @@
             app:layout_constraintTop_toBottomOf="@id/txtQuantity" />
 
         <!-- Action Button -->
-        <Button
-            android:id="@+id/btnAction"
+        <LinearLayout
+            android:id="@+id/btnGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/brown"
-            android:fontFamily="@font/nunito_medium"
-            android:text="Track"
-            android:textColor="@android:color/white"
-            android:textSize="13sp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@id/imgProduct"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <Button
+                android:id="@+id/btnReorder"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/brown"
+                android:text="Mua lại"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnReview"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:background="@drawable/button_with_stroke"
+            android:backgroundTint="@color/white"
+            android:text="Đánh giá"
+            android:textAllCaps="false"
+            android:textColor="@color/brown"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@+id/btnGroup"
+            app:layout_constraintEnd_toEndOf="@+id/btnGroup" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -58,4 +58,37 @@
     <string name="title_signinnow">Sign in now</string>
     <string name="title_productdetail_desc">"Sản phẩm treatment dành cho tóc, phù hợp với tình trạng tóc rụng, tóc yếu, tóc thưa mỏng. Sản phẩm có thành phần từ tinh dầu bưởi Việt Nam truyền thống absakjdfksjdfhksa;fjahdkjfskajf test "</string>
 
-</resources>
+
+    <string name="content_description_back_button">Back button</string>
+    <string name="content_description_payment_method_icon">Payment method icon</string>
+    <string name="content_description_location_icon">Location icon</string>
+
+    <string name="order_detail_title">Order Details</string>
+    <string name="order_status_packaging">Packaging</string>
+    <string name="payment_method_cod">Cash on Delivery (COD)</string>
+    <string name="delivery_name_example">Quoc Trinh</string>
+    <string name="delivery_address_detail_example">University of Economics and Law</string>
+    <string name="delivery_phone_example">0123 456 789</string>
+    <string name="products_purchased_title">Products Purchased</string>
+
+    <string name="product_name_1_example">Hung Yen Turmeric Face Mask</string>
+    <string name="product_volume_1_example">Volume: 100 ml</string>
+    <string name="product_price_1_example">345,000 VND</string>
+    <string name="content_description_product_image_1">Product image of Hung Yen Turmeric Face Mask</string>
+
+    <string name="product_name_2_example">Orange Peach Lip Balm</string>
+    <string name="product_volume_2_example">5g</string>
+    <string name="product_price_2_example">150,000 VND</string>
+    <string name="content_description_product_image_2">Product image of Orange Peach Lip Balm</string>
+    <string name="order_code_label">Order Code</string>
+    <string name="order_code_example">CC12345DH123</string>
+    <string name="copy_code_button_text">Copy Code</string>
+    <string name="delivery_time_label">Delivery Time</string>
+    <string name="delivery_time_example">May 11 - 12, 2025</string>
+    <string name="total_amount_label">Total Amount</string>
+    <string name="total_amount_example">495,000 VND</string>
+    <string name="cancel_order_button_text">CANCEL ORDER</string>
+
+    <string name="MyCoupon">My Coupon</string>
+    </resources>
+

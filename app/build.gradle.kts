@@ -1,6 +1,7 @@
 
 plugins {
     alias(libs.plugins.android.application)
+
     alias(libs.plugins.google.gms.google.services)
 }
 
@@ -42,7 +43,6 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.firebase.firestore)
     annotationProcessor(libs.glideCompiler)
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

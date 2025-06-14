@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_coupon"
+            android:contentDescription="Discount icon"
+            app:tint="#8a8a8a" /> <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="16dp">
+
+        <TextView
+            android:id="@+id/tvVoucherCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GIAM60"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            tools:text="GIAM60" /> <TextView
+        android:id="@+id/tvVoucherCondition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đơn hàng tối thiểu 600.000 đ"
+        android:textSize="14sp"
+        android:textColor="#8a8a8a"
+        android:layout_marginTop="4dp"
+        tools:text="Đơn hàng tối thiểu 600.000 đ" />
+
+        <TextView
+            android:id="@+id/tvVoucherDiscount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giảm 60.000 đ"
+            android:textSize="14sp"
+            android:textColor="#5a5a5a"
+            android:drawablePadding="4dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            tools:text="Giảm 60.000 đ" />
+
+    </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnCopyCode"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="Sao chép mã"
+            android:textSize="12sp"
+            android:textColor="@color/brown"
+            android:background="@drawable/search_box"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:includeFontPadding="false" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

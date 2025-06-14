@@ -76,6 +76,9 @@ public class ProfileActivity extends AppCompatActivity {
         findViewById(R.id.itemLogin).setOnClickListener(v ->
                 startActivity(new Intent(this, LoginScreen1.class)));
 
+        findViewById(R.id.itemMyCoupons).setOnClickListener(v ->
+                startActivity(new Intent(this, Coupon.class)));
+
 
 
         BottomNavHelper.setupBottomNav(this);

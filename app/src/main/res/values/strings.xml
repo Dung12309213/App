@@ -90,5 +90,6 @@
     <string name="cancel_order_button_text">CANCEL ORDER</string>
 
     <string name="MyCoupon">My Coupon</string>
-    </resources>
+    <string name="title_guest_name">Guest</string>
+</resources>
 

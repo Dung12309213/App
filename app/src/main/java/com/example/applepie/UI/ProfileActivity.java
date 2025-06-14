@@ -1,17 +1,22 @@
 package com.example.applepie.UI;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.applepie.Connector.SQLiteHelper;
 import  com.example.applepie.R;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -19,7 +24,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     private ImageButton btnBack, btnEdit;
     private ShapeableImageView profileImage;
-    private TextView txtProfileTitle, txtUserName;
+    private TextView tvLoginLogout, tvUserName;
+    private ImageView imgLoginLogout;
+    private ConstraintLayout itemYourProfile;
+    SQLiteHelper dbHelper;
 
     private ActivityResultLauncher<Intent> imagePickerLauncher;
 
@@ -28,15 +36,16 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // Ánh xạ view
-        btnBack = findViewById(R.id.imageButton2);
-        btnEdit = findViewById(R.id.imageButton3);
-        profileImage = findViewById(R.id.imageView);
-        txtProfileTitle = findViewById(R.id.textView);
-        txtUserName = findViewById(R.id.textView2);
+        dbHelper = new SQLiteHelper(this);
 
+        addViews();
+        addEvents();
 
+        BottomNavHelper.setupBottomNav(this);
+        checkLoggedIn();
+    }
 
+    private void addEvents() {
         // Khởi tạo launcher chọn ảnh
         imagePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -73,14 +82,62 @@ public class ProfileActivity extends AppCompatActivity {
         findViewById(R.id.itemMyorders).setOnClickListener(v ->
                 startActivity(new Intent(this, MyOrdersActivity.class)));
 
-        findViewById(R.id.itemLogin).setOnClickListener(v ->
-                startActivity(new Intent(this, LoginScreen1.class)));
 
         findViewById(R.id.itemMyCoupons).setOnClickListener(v ->
                 startActivity(new Intent(this, Coupon.class)));
+    }
 
+    private void addViews() {
+        btnEdit = findViewById(R.id.imgChangeProfileImage);
+        profileImage = findViewById(R.id.imgProfile);
+        tvUserName = findViewById(R.id.tvUsername);
+        tvLoginLogout=findViewById(R.id.tvLoginLogout);
+        imgLoginLogout = findViewById(R.id.imgLoginLogout);
+        itemYourProfile = findViewById(R.id.itemYourprofile);
+    }
 
+    private void checkLoggedIn() {
+        // Lấy dữ liệu người dùng từ SQLite
+        Cursor cursor = dbHelper.getUser();
 
-        BottomNavHelper.setupBottomNav(this);
+        // Kiểm tra nếu có dữ liệu trong bảng User
+        if (cursor != null && cursor.moveToFirst()) {
+            // Nếu có, tức là người dùng đã đăng nhập
+            tvLoginLogout.setText("Logout");
+            tvUserName.setText(cursor.getString(cursor.getColumnIndex("name")));  // Hiển thị tên người dùng
+            imgLoginLogout.setImageResource(R.drawable.ic_logout);
+            itemYourProfile.setVisibility(View.VISIBLE);
+            // Thay đổi nút thành "Logout"
+            findViewById(R.id.itemLogin).setOnClickListener(v -> logout());
+        } else {
+            // Nếu không có, tức là chưa đăng nhập
+            tvLoginLogout.setText("Login");
+            tvUserName.setText("Guest");
+            imgLoginLogout.setImageResource(R.drawable.ic_login);
+            itemYourProfile.setVisibility(View.INVISIBLE);
+            // Thay đổi nút thành "Login"
+            findViewById(R.id.itemLogin).setOnClickListener(v -> login());
+        }
+    }
+
+    // Phương thức xử lý đăng nhập
+    private void login() {
+        // Xử lý đăng nhập, ví dụ mở màn hình đăng nhập và lưu trạng thái khi đăng nhập thành công
+        Intent intent = new Intent(ProfileActivity.this, LoginScreen1.class);
+        startActivity(intent);
+    }
+
+    // Phương thức xử lý đăng xuất
+    private void logout() {
+        // Xóa thông tin người dùng trong SQLite khi đăng xuất
+        dbHelper.logoutUser();
+
+        // Cập nhật giao diện
+        tvLoginLogout.setText("Login");
+        tvUserName.setText("Guest");
+        itemYourProfile.setVisibility(View.INVISIBLE);
+
+        // Cập nhật nút Login
+        findViewById(R.id.itemLogin).setOnClickListener(v -> login());
     }
 }

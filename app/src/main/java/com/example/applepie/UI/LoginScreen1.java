@@ -1,9 +1,6 @@
 package com.example.applepie.UI;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,8 +18,7 @@ import com.example.applepie.Connector.SQLiteHelper;
 import  com.example.applepie.MainActivity;
 import com.example.applepie.Model.User;
 import  com.example.applepie.R;
-import com.example.applepie.Utils.NetworkUtils;
-import com.google.android.gms.tasks.Task;
+import com.example.applepie.Util.NetworkUtils;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -83,12 +79,12 @@ public class LoginScreen1 extends AppCompatActivity {
     }
 
     private void checkLogin(String email, String password) {
-        if (!NetworkUtils.isNetworkAvailable(this)) { // 'this' là context của ProfileActivity
+        if (!NetworkUtils.isNetworkAvailable(this)) {
             Toast.makeText(LoginScreen1.this, getString(R.string.internet_required), Toast.LENGTH_SHORT).show();
-            return; // Nếu không có kết nối, không tiếp tục thực hiện login
+            return;
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseConnector.getInstance();
         db.collection("User")
                 .whereEqualTo("email", email)
                 .whereEqualTo("password", password)
@@ -132,5 +128,4 @@ public class LoginScreen1 extends AppCompatActivity {
                 });
     }
 
-    //Kiểm tra kết nối internet
 }

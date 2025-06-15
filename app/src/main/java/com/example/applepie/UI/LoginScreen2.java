@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.applepie.Connector.FirebaseConnector;
 import com.example.applepie.Model.User;
 import  com.example.applepie.R;
+import com.example.applepie.Service.EmailSender;
 import com.example.applepie.Util.NetworkUtils;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -128,13 +129,23 @@ public class LoginScreen2 extends AppCompatActivity {
                                             userMap.put("email", newUser.getEmail());
                                             userMap.put("password", newUser.getPassword());
 
-                                            // Thêm người dùng vào Firestore
+                                            // Tạo mã OTP ngẫu nhiên
+                                            String otpCode = generateOtp();
+
+                                            EmailSender.sendOTP(email, otpCode);
+
+                                            Intent intent = new Intent(LoginScreen2.this, LoginScreenOTP.class);
+                                            intent.putExtra("otpCode", otpCode);  // Truyền mã OTP cho màn hình OTP
+                                            intent.putExtra("userMap", (Serializable) userMap);
+                                            startActivity(intent);
+
+                                            /*// Thêm người dùng vào Firestore
                                             db.collection("User")
                                                     .add(userMap)
                                                     .addOnSuccessListener(documentReference -> {
                                                         Intent intent = new Intent(LoginScreen2.this, LoginScreen1.class);
                                                         startActivity(intent);
-                                                    });
+                                                    });*/
                                         }
                                     });
                         }
@@ -150,5 +161,10 @@ public class LoginScreen2 extends AppCompatActivity {
     }
     private boolean isValidPhone(String phone) {
         return phone.length() == 10 && phone.startsWith("0");
+    }
+    private String generateOtp() {
+        // Tạo mã OTP ngẫu nhiên 4 chữ số
+        int otp = 1000 + new Random().nextInt(9000);
+        return String.valueOf(otp);
     }
 }

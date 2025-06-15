@@ -18,10 +18,16 @@ import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
 
-    private List<OrderModel> orderList;
+    public interface OnReorderClickListener {
+        void onReorder(OrderModel order);
+    }
 
-    public OrderAdapter(List<OrderModel> orderList) {
+    private final List<OrderModel> orderList;
+    private final OnReorderClickListener reorderListener;
+
+    public OrderAdapter(List<OrderModel> orderList, OnReorderClickListener listener) {
         this.orderList = orderList;
+        this.reorderListener = listener;
     }
 
     @NonNull
@@ -46,15 +52,16 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.txtQuantity.setText(quantity);
         holder.txtPrice.setText(price);
 
-        // Ẩn hết mặc định
+        // Ẩn tất cả nút trước
         holder.btnReview.setVisibility(View.GONE);
         holder.btnReorder.setVisibility(View.GONE);
 
+        // Hiển thị tuỳ loại đơn
         switch (order.getOrderType()) {
             case "completed":
                 holder.btnReview.setText("Đánh giá");
-                holder.btnReorder.setText("Mua lại");
                 holder.btnReview.setVisibility(View.VISIBLE);
+                holder.btnReorder.setText("Mua lại");
                 holder.btnReorder.setVisibility(View.VISIBLE);
                 break;
             case "canceled":
@@ -62,11 +69,19 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 holder.btnReorder.setVisibility(View.VISIBLE);
                 break;
             case "ongoing":
-                holder.btnReorder.setText("Theo dõi"); // hoặc “Track”
+                holder.btnReorder.setText("Theo dõi");
                 holder.btnReorder.setVisibility(View.VISIBLE);
                 break;
         }
+
+        // Gán sự kiện click cho btnReorder nếu là "Mua lại"
+        holder.btnReorder.setOnClickListener(v -> {
+            if (reorderListener != null && holder.btnReorder.getText().toString().equalsIgnoreCase("Mua lại")) {
+                reorderListener.onReorder(order);
+            }
+        });
     }
+
     @Override
     public int getItemCount() {
         return orderList.size();
@@ -88,5 +103,3 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         }
     }
 }
-
-

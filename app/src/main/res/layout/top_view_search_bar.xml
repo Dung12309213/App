@@ -48,13 +48,33 @@
             android:contentDescription="Search"
             android:src="@drawable/ic_search" />
 
-        <ImageButton
-            android:id="@+id/btn_notification"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@mipmap/ic_notification"
-            android:background="@android:color/transparent"
-            android:contentDescription="Notifications" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- Nút notification -->
+            <ImageButton
+                android:id="@+id/btn_notification"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Notifications"
+                android:src="@drawable/ic_notification" />
+
+            <!-- Badge số lượng -->
+            <TextView
+                android:id="@+id/notification_badge"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end|top"
+                android:background="@drawable/badge_background"
+                android:text="3"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
     </LinearLayout>
 
     <!-- Khu vực filter (mặc định ẩn) -->

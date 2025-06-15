@@ -40,6 +40,14 @@
         <activity android:name=".UI.MyOrdersActivity" />
         <activity android:name=".UI.ChangePasswordActivity" />
         <activity android:name=".UI.CartActivity" />
+        <activity android:name=".UI.NotificationActivity" />
+        <activity android:name=".UI.CheckoutActivity" />
+        <activity android:name=".UI.AddressActivity" />
+        <activity android:name=".UI.CardPaymentActivity" android:exported="true" />
+        <activity android:name=".UI.PaymentSuccessActivity" />
+
+
+
         <activity android:name=".UI.ProfileActivity" android:exported="false" />
 
         <meta-data

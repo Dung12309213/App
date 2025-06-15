@@ -86,8 +86,11 @@ public class CartActivity extends AppCompatActivity {
         });
 
         btnCheckout.setOnClickListener(v -> {
-            // xử lý thanh toán ở đây
+            Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
+            // Nếu cần truyền dữ liệu giỏ hàng qua (chưa serialize), bạn có thể dùng singleton tạm
+            startActivity(intent);
         });
+
 
         updatePrice();
     }

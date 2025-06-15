@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+>
+
+    <!-- Nút Back và Tiêu đề -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/vollkorn"
+            android:gravity="center"
+            android:text="@string/title_checkout"
+            android:textColor="@color/textcolor"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Khoảng trống -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="32dp" />
+
+    <!-- Icon xác nhận -->
+    <ImageView
+        android:id="@+id/imgSuccess"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_success_check"
+        android:contentDescription="Success Icon" />
+
+    <!-- Tiêu đề chính -->
+    <TextView
+        android:id="@+id/txtSuccessTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/nunito_bold"
+        android:gravity="center"
+        android:text="Thanh toán thành công"
+        android:textColor="@color/brown"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Mô tả -->
+    <TextView
+        android:id="@+id/txtSuccessSub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/nunito_medium"
+        android:gravity="center"
+        android:text="Cảm ơn bạn đã mua hàng."
+        android:textColor="@color/textcolor"
+        android:textSize="20sp" />
+
+    <!-- Khoảng cách -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Nút Theo dõi đơn hàng -->
+    <Button
+        android:id="@+id/btnTrackOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/brown"
+        android:fontFamily="@font/nunito_bold"
+        android:text="Theo dõi đơn hàng"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Text tiếp tục mua sắm -->
+    <TextView
+        android:id="@+id/btnContinueShopping"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_with_stroke"
+        android:fontFamily="@font/nunito_medium"
+        android:gravity="center"
+        android:text="Tiếp tục mua sắm"
+        android:textColor="@color/brown"
+        android:textSize="20sp" />
+</LinearLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:paddingVertical="12dp">
+
+    <ImageView
+        android:id="@+id/imgLocation"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtFullName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="Quốc Trịnh"
+        android:textColor="@color/textcolor"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@id/radioSelected"
+        app:layout_constraintStart_toEndOf="@id/imgLocation"
+        app:layout_constraintTop_toTopOf="@id/imgLocation" />
+
+    <TextView
+        android:id="@+id/txtAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_medium"
+        android:text="Trường Đại học Kinh tế - Luật"
+        android:textColor="@color/textcolor"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toStartOf="@id/radioSelected"
+        app:layout_constraintStart_toStartOf="@id/txtFullName"
+        app:layout_constraintTop_toBottomOf="@id/txtFullName" />
+
+    <TextView
+        android:id="@+id/txtPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_medium"
+        android:text="0123 456 789"
+        android:textColor="@color/textcolor"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toStartOf="@id/radioSelected"
+        app:layout_constraintStart_toStartOf="@id/txtFullName"
+        app:layout_constraintTop_toBottomOf="@id/txtAddress" />
+
+    <RadioButton
+        android:id="@+id/radioSelected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/brown"
+        android:clickable="false"
+        android:focusable="false"
+        app:layout_constraintBottom_toBottomOf="@id/txtPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imgLocation" />
+</androidx.constraintlayout.widget.ConstraintLayout>

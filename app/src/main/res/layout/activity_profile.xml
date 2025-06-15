@@ -7,12 +7,27 @@
     android:layout_height="match_parent"
     android:backgroundTint="@color/white">
 
-    <!-- profile options -->
+    <!-- HEADER PROFILE -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profile_header"
         android:layout_width="match_parent"
         android:layout_height="230dp"
         app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Tiêu đề -->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/vollkorn"
+            android:text="PROFILE"
+            android:textColor="@color/textcolor"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <!-- Avatar -->
         <com.google.android.material.imageview.ShapeableImageView
@@ -20,30 +35,12 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="88dp"
-            android:scaleType="centerCrop"
             android:src="@drawable/ic_homepage_mau2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/CircleImageView" />
-
-        <!-- Text PROFILE -->
-
-        <!-- Back Button -->
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
-            android:fontFamily="@font/vollkorn"
-            android:text="@string/title_profile"
-            android:textColor="@color/textcolor"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <!-- Tên người dùng -->
         <TextView
@@ -51,399 +48,84 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/nunito_medium"
-            android:text="Thanh An"
-            android:textAlignment="center"
+            android:text=""
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/nunito_medium"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/imageView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Nút chỉnh ảnh -->
         <ImageButton
             android:id="@+id/imageButton3"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="12dp"
             android:background="@drawable/bg_circle"
             android:padding="8dp"
             android:scaleType="centerInside"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:srcCompat="@drawable/ic_edit"
+            app:layout_constraintTop_toBottomOf="@id/textView"
+            app:layout_constraintBottom_toTopOf="@id/textView2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.611"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.882"
-            app:srcCompat="@drawable/ic_edit" />
+            app:layout_constraintVertical_bias="0.88"
+            app:layout_constraintHorizontal_bias="0.61" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- DANH SÁCH CHỨC NĂNG -->
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="379dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/profile_header">
+        app:layout_constraintTop_toBottomOf="@id/profile_header">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
             android:id="@+id/itemYourprofile"
+            layout="@layout/item_profile_option_your_profile" />
+
+        <include
+            android:id="@+id/itemPaymentMethods"
+            layout="@layout/item_profile_option_payment_methods" />
+
+        <include
+            android:id="@+id/itemMyorders"
+            layout="@layout/item_profile_option_my_orders" />
+
+        <include
+            android:id="@+id/itemSettings"
+            layout="@layout/item_profile_option_settings" />
+
+        <include
+            android:id="@+id/itemHelpcenter"
+            layout="@layout/item_profile_option_helpcenter" />
+
+        <include
+            android:id="@+id/itemPolicy"
+            layout="@layout/item_profile_option_policy" />
+
+        <!-- Nút login/logout -->
+        <!-- Nút login/logout -->
+        <!-- file: item_profile_option_payment_methods.xml -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="1dp">
 
-            <!-- Icon trái -->
             <ImageView
                 android:id="@+id/icon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="20dp"
-                android:src="@drawable/ic_yourprofile"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Tiêu đề -->
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:fontFamily="@font/nunito_medium"
-                android:text="@string/title_your_profile"
-                android:textColor="@color/textcolor"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/arrow"
-                app:layout_constraintStart_toEndOf="@id/icon"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Mũi tên phải -->
-            <ImageView
-                android:id="@+id/arrow"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_arrowright"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Gạch chân -->
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:background="@color/brown"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/icon" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/itemPaymentMethods"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="1dp">
-
-            <!-- Icon trái -->
-            <ImageView
-                android:id="@+id/icon1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="20dp"
-                android:src="@drawable/ic_paymentmethods"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Tiêu đề -->
-            <TextView
-                android:id="@+id/title1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:fontFamily="@font/nunito_medium"
-                android:text="@string/title_payment_methods"
-                android:textColor="@color/textcolor"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/arrow1"
-                app:layout_constraintStart_toEndOf="@id/icon1"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Mũi tên phải -->
-            <ImageView
-                android:id="@+id/arrow1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_arrowright"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Gạch chân -->
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:background="@color/brown"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/icon1" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/itemMyorders"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="1dp">
-
-            <!-- Icon trái -->
-
-            <ImageView
-                android:id="@+id/icon2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="20dp"
-                android:src="@drawable/ic_myorders"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Tiêu đề -->
-            <TextView
-                android:id="@+id/title2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:fontFamily="@font/nunito_medium"
-                android:text="@string/title_my_orders"
-                android:textColor="@color/textcolor"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/arrow2"
-                app:layout_constraintStart_toEndOf="@id/icon2"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Mũi tên phải -->
-            <ImageView
-                android:id="@+id/arrow2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_arrowright"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Gạch chân -->
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:background="@color/brown"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/icon2" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/itemSettings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="1dp">
-
-            <!-- Icon trái -->
-
-            <ImageView
-                android:id="@+id/icon7"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="20dp"
-                android:src="@drawable/ic_setting"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Tiêu đề -->
-            <TextView
-                android:id="@+id/title7"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:fontFamily="@font/nunito_medium"
-                android:text="@string/title_settings"
-                android:textColor="@color/textcolor"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/arrow7"
-                app:layout_constraintStart_toEndOf="@id/icon7"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Mũi tên phải -->
-            <ImageView
-                android:id="@+id/arrow7"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_arrowright"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Gạch chân -->
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:background="@color/brown"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/icon7" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/itemHelpcenter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="1dp">
-
-            <!-- Icon trái -->
-
-            <ImageView
-                android:id="@+id/icon3"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="20dp"
-                android:src="@drawable/ic_helpcenter"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Tiêu đề -->
-            <TextView
-                android:id="@+id/title3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:fontFamily="@font/nunito_medium"
-                android:text="@string/title_help_center"
-                android:textColor="@color/textcolor"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/arrow3"
-                app:layout_constraintStart_toEndOf="@id/icon3"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Mũi tên phải -->
-            <ImageView
-                android:id="@+id/arrow3"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_arrowright"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Gạch chân -->
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:background="@color/brown"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/icon3" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/itemPolicy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="1dp">
-
-            <!-- Icon trái -->
-
-            <ImageView
-                android:id="@+id/icon4"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="20dp"
-                android:src="@drawable/ic_policy"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Tiêu đề -->
-            <TextView
-                android:id="@+id/title4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:fontFamily="@font/nunito_medium"
-                android:text="@string/title_Policy"
-                android:textColor="@color/textcolor"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/arrow4"
-                app:layout_constraintStart_toEndOf="@id/icon4"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Mũi tên phải -->
-            <ImageView
-                android:id="@+id/arrow4"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_arrowright"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Gạch chân -->
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:background="@color/brown"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/icon4" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/itemLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="1dp">
-
-            <!-- Icon trái -->
-            <ImageView
-                android:id="@+id/icon5"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="20dp"
                 android:src="@drawable/ic_login"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
-            <!-- Tiêu đề -->
             <TextView
-                android:id="@+id/title5"
+                android:id="@+id/itemLogin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -452,45 +134,42 @@
                 android:textColor="@color/textcolor"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/arrow5"
-                app:layout_constraintStart_toEndOf="@id/icon5"
+                app:layout_constraintEnd_toStartOf="@id/arrow"
+                app:layout_constraintStart_toEndOf="@id/icon"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Mũi tên phải -->
             <ImageView
-                android:id="@+id/arrow5"
+                android:id="@+id/arrow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="20dp"
                 android:src="@drawable/ic_arrowright"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
-            <!-- Gạch chân -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="0.5dp"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:background="@color/brown"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/icon"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/icon5" />
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </LinearLayout>
 
-    <!-- RecyclerView: phía dưới header -->
-
-    <!-- BottomNavigation -->
+    <!-- BOTTOM MENU -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <include layout="@layout/bottom_menu"></include>
+        <include layout="@layout/bottom_menu" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

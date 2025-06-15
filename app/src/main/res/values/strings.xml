@@ -20,7 +20,7 @@
     <!-- Login messages -->
     <string name="login_fill_info">Please fill in all the information</string>
     <string name="login_success">Login successful!</string>
-    <string name="login_failed">Incorrect username or password</string>
+    <string name="login_failed">Incorrect Email/Phone or password</string>
     <string name="title_activity_product">Product</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -91,5 +91,6 @@
 
     <string name="MyCoupon">My Coupon</string>
     <string name="title_guest_name">Guest</string>
+    <string name="internet_required">Internet Required!</string>
 </resources>
 

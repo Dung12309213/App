@@ -26,7 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ShapeableImageView profileImage;
     private TextView tvLoginLogout, tvUserName;
     private ImageView imgLoginLogout;
-    private ConstraintLayout itemYourProfile;
+    private ConstraintLayout itemYourProfile, itemPaymentMethods, itemMyCoupons, itemMyorders;
     SQLiteHelper dbHelper;
 
     private ActivityResultLauncher<Intent> imagePickerLauncher;
@@ -94,6 +94,9 @@ public class ProfileActivity extends AppCompatActivity {
         tvLoginLogout=findViewById(R.id.tvLoginLogout);
         imgLoginLogout = findViewById(R.id.imgLoginLogout);
         itemYourProfile = findViewById(R.id.itemYourprofile);
+        itemPaymentMethods = findViewById(R.id.itemPaymentMethods);
+        itemMyCoupons = findViewById(R.id.itemMyCoupons);
+        itemMyorders = findViewById(R.id.itemMyorders);
     }
 
     private void checkLoggedIn() {
@@ -107,6 +110,9 @@ public class ProfileActivity extends AppCompatActivity {
             tvUserName.setText(cursor.getString(cursor.getColumnIndex("name")));  // Hiển thị tên người dùng
             imgLoginLogout.setImageResource(R.drawable.ic_logout);
             itemYourProfile.setVisibility(View.VISIBLE);
+            itemPaymentMethods.setVisibility(View.VISIBLE);
+            itemMyCoupons.setVisibility(View.VISIBLE);
+            itemMyorders.setVisibility(View.VISIBLE);
             // Thay đổi nút thành "Logout"
             findViewById(R.id.itemLogin).setOnClickListener(v -> logout());
         } else {
@@ -114,7 +120,10 @@ public class ProfileActivity extends AppCompatActivity {
             tvLoginLogout.setText("Login");
             tvUserName.setText("Guest");
             imgLoginLogout.setImageResource(R.drawable.ic_login);
-            itemYourProfile.setVisibility(View.INVISIBLE);
+            itemYourProfile.setVisibility(View.GONE);
+            itemPaymentMethods.setVisibility(View.GONE);
+            itemMyCoupons.setVisibility(View.GONE);
+            itemMyorders.setVisibility(View.GONE);
             // Thay đổi nút thành "Login"
             findViewById(R.id.itemLogin).setOnClickListener(v -> login());
         }
@@ -135,7 +144,10 @@ public class ProfileActivity extends AppCompatActivity {
         // Cập nhật giao diện
         tvLoginLogout.setText("Login");
         tvUserName.setText("Guest");
-        itemYourProfile.setVisibility(View.INVISIBLE);
+        itemYourProfile.setVisibility(View.GONE);
+        itemPaymentMethods.setVisibility(View.GONE);
+        itemMyCoupons.setVisibility(View.GONE);
+        itemMyorders.setVisibility(View.GONE);
 
         // Cập nhật nút Login
         findViewById(R.id.itemLogin).setOnClickListener(v -> login());

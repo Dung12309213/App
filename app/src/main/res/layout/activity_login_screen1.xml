@@ -74,40 +74,6 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/txtOrLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/nunito_medium"
-        android:text="@string/title_login_screen_orSigninwith"
-        android:textColor="#888" />
-
-    <LinearLayout
-        android:id="@+id/socialLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp">
-
-        <ImageView
-            android:id="@+id/btnGoogle"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="16dp"
-
-            android:src="@drawable/ic_google" />
-
-        <ImageView
-            android:id="@+id/btnFacebook"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-
-            android:src="@drawable/ic_facebook" />
-    </LinearLayout>
-
-    <TextView
         android:id="@+id/txtNoAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

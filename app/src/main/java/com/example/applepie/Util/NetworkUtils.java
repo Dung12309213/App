@@ -1,4 +1,4 @@
-package com.example.applepie.Utils;
+package com.example.applepie.Util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

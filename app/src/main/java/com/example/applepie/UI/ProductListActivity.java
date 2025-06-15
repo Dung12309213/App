@@ -17,6 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.applepie.Connector.FirebaseConnector;
 import com.example.applepie.MainActivity;
 import com.example.applepie.Model.Product;
 import com.example.applepie.R;
@@ -50,7 +51,7 @@ public class ProductListActivity extends AppCompatActivity {
         cateId = getIntent().getStringExtra("cateId");
         gridLayout = findViewById(R.id.gridProducts);
         inflater = LayoutInflater.from(this);
-        db = FirebaseFirestore.getInstance();
+        db = FirebaseConnector.getInstance();
 
         if (cateId != null) {
             loadProductsByCategory(cateId);

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <!-- Nội dung cuộn được -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Back"
+                    app:srcCompat="@drawable/ic_backbutton" />
+
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/vollkorn"
+                    android:gravity="center"
+                    android:text="@string/title_paymentmethod"
+                    android:textColor="@color/textcolor"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Card Visual -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="203dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_card_mock"
+                android:clipToOutline="true"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/txtCardNumberMock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="1234 5678 9101 1121"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chủ thẻ"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/txtCardHolderMock"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Quốc Trịnh"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hết hạn"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/txtExpiryMock"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="8/2027"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="VISA"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Form Fields -->
+            <EditText
+                android:id="@+id/edtCardHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/nunito_medium"
+                android:hint="Chủ thẻ"
+                android:padding="12dp"
+                android:textColor="@color/textcolor" />
+
+            <EditText
+                android:id="@+id/edtCardNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/nunito_medium"
+                android:hint="Số thẻ"
+                android:inputType="number"
+                android:padding="12dp"
+                android:textColor="@color/textcolor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtExpiry"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_background"
+                    android:fontFamily="@font/nunito_medium"
+                    android:hint="Hết hạn"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColor="@color/textcolor" />
+
+                <EditText
+                    android:id="@+id/edtCVV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_background"
+                    android:fontFamily="@font/nunito_medium"
+                    android:hint="CVV"
+                    android:inputType="numberPassword"
+                    android:maxLength="3"
+                    android:padding="12dp"
+                    android:textColor="@color/textcolor" />
+            </LinearLayout>
+
+            <!-- Checkbox lưu thẻ -->
+            <CheckBox
+                android:id="@+id/checkSaveCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:buttonTint="@color/brown"
+                android:fontFamily="@font/nunito_medium"
+                android:text="Lưu thẻ"
+                android:textColor="@color/textcolor" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Nút xác nhận nằm cố định dưới cùng -->
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/brown"
+        android:fontFamily="@font/nunito_bold"
+        android:text="@string/title_confirm"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+</LinearLayout>

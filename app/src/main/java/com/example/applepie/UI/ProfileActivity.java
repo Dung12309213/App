@@ -62,6 +62,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Bấm nút chỉnh sửa ảnh đại diện => mở thư viện ảnh
         btnEdit.setOnClickListener(v -> {
+            if (!isLoggedIn) {
+                Toast.makeText(this, "Bạn cần đăng nhập để chỉnh sửa ảnh", Toast.LENGTH_SHORT).show();
+                return;
+            }
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             imagePickerLauncher.launch(intent);
         });
@@ -138,18 +142,29 @@ public class ProfileActivity extends AppCompatActivity {
 
     // Phương thức xử lý đăng xuất
     private void logout() {
-        // Xóa thông tin người dùng trong SQLite khi đăng xuất
-        dbHelper.logoutUser();
+        // Hiển thị hộp thoại xác nhận trước khi thực hiện logout
+        new AlertDialog.Builder(this)
+                .setTitle("Đăng xuất")
+                .setMessage("Bạn có chắc muốn đăng xuất?")
+                .setPositiveButton("Đăng xuất", (dialog, which) -> {
+                    // Xóa thông tin người dùng trong SQLite khi đăng xuất
+                    dbHelper.logoutUser();
 
-        // Cập nhật giao diện
-        tvLoginLogout.setText("Login");
-        tvUserName.setText("Guest");
-        itemYourProfile.setVisibility(View.GONE);
-        itemPaymentMethods.setVisibility(View.GONE);
-        itemMyCoupons.setVisibility(View.GONE);
-        itemMyorders.setVisibility(View.GONE);
+                    // Cập nhật giao diện
+                    tvLoginLogout.setText("Login");
+                    tvUserName.setText("Guest");
+                    itemYourProfile.setVisibility(View.GONE);
+                    itemPaymentMethods.setVisibility(View.GONE);
+                    itemMyCoupons.setVisibility(View.GONE);
+                    itemMyorders.setVisibility(View.GONE);
 
-        // Cập nhật nút Login
-        findViewById(R.id.itemLogin).setOnClickListener(v -> login());
+                    // Cập nhật nút Login
+                    findViewById(R.id.itemLogin).setOnClickListener(v -> login());
+                })
+                .setNegativeButton("Hủy", (dialog, which) -> {
+                    // Nếu người dùng chọn "Hủy", không thực hiện gì cả
+                    dialog.dismiss();
+                })
+                .show();
     }
 }

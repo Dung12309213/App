@@ -31,28 +31,17 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Các activity còn lại -->
-        <activity
-            android:name=".UI.ProductDetail"
-            android:exported="false" />
-        <activity
-            android:name=".UI.ProductListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UI.CategoryList"
-            android:exported="false" />
-        <activity
-            android:name=".UI.LoginScreenOTP"
-            android:exported="false" />
-        <activity
-            android:name=".UI.LoginScreen1"
-            android:exported="false" />
-        <activity
-            android:name=".UI.LoginScreen2"
-            android:exported="false" />
+        </activity>
+
+        <!-- Các activity còn lại -->
+        <activity android:name=".UI.ProductDetail" android:exported="false" />
+        <activity android:name=".UI.ProductListActivity" android:exported="false" />
+        <activity android:name=".UI.CategoryList" android:exported="false" />
+        <activity android:name=".UI.LoginScreenOTP" android:exported="false" />
+        <activity android:name=".UI.LoginScreen1" android:exported="true" />
+        <activity android:name=".UI.LoginScreen2" android:exported="false" />
         <activity android:name=".UI.HelpCenterActivity" />
         <activity android:name=".UI.PaymentMethodsActivity" />
         <activity android:name=".UI.SettingsActivity" />
@@ -61,9 +50,20 @@
         <activity android:name=".UI.MyOrdersActivity" />
         <activity android:name=".UI.ChangePasswordActivity" />
         <activity android:name=".UI.CartActivity" />
-        <activity
-            android:name=".UI.ProfileActivity"
-            android:exported="false" />
+        <activity android:name=".UI.NotificationActivity" />
+        <activity android:name=".UI.CheckoutActivity" />
+        <activity android:name=".UI.AddressActivity" />
+        <activity android:name=".UI.CardPaymentActivity" android:exported="true" />
+        <activity android:name=".UI.PaymentSuccessActivity" />
+        <activity android:name=".UI.ForgotPasswordActivity" />
+        <activity android:name=".UI.YourProfileActivity" />
+        <activity android:name=".UI.AddAddressActivity" />
+
+
+
+
+
+        <activity android:name=".UI.ProfileActivity" android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

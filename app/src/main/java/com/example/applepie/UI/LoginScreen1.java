@@ -1,9 +1,11 @@
 package com.example.applepie.UI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +29,7 @@ public class LoginScreen1 extends AppCompatActivity {
 
     EditText editEmail, editPassword;
     Button btnLogin;
-    TextView txtRegister;
+    TextView txtRegister, txtForgotPassword;
 
     SQLiteHelper dbHelper;
 
@@ -69,6 +71,10 @@ public class LoginScreen1 extends AppCompatActivity {
             Intent intent = new Intent(LoginScreen1.this, LoginScreen2.class);
             startActivity(intent);
         });
+        // Mở trang quên mật khẩu
+        txtForgotPassword.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginScreen1.this, ForgotPasswordActivity.class);
+            startActivity(intent);
     }
 
     private void addViews() {
@@ -127,5 +133,4 @@ public class LoginScreen1 extends AppCompatActivity {
                     }
                 });
     }
-
 }

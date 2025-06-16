@@ -31,7 +31,7 @@
 
         <!-- Avatar -->
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imgProfile"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="88dp"
@@ -66,7 +66,6 @@
             android:background="@drawable/bg_circle"
             android:padding="8dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_edit"
             app:layout_constraintBottom_toTopOf="@+id/tvUsername"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.611"
@@ -112,10 +111,12 @@
         <!-- Nút login/logout -->
         <!-- file: item_profile_option_payment_methods.xml -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/itemLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="1dp">
 
+            <!-- Icon trái -->
             <ImageView
                 android:id="@+id/imgLoginLogout"
                 android:layout_width="20dp"
@@ -137,13 +138,13 @@
                 android:textColor="@color/textcolor"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/arrow"
-                app:layout_constraintStart_toEndOf="@id/icon"
+                app:layout_constraintEnd_toStartOf="@id/arrow5"
+                app:layout_constraintStart_toEndOf="@id/imgLoginLogout"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Mũi tên phải -->
             <ImageView
-                android:id="@+id/arrow"
+                android:id="@+id/arrow5"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="20dp"
@@ -160,9 +161,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:background="@color/brown"
-                app:layout_constraintTop_toBottomOf="@id/icon"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/imgLoginLogout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

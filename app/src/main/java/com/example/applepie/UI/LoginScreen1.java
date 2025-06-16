@@ -51,6 +51,16 @@ public class LoginScreen1 extends AppCompatActivity {
         dbHelper = new SQLiteHelper(this);
     }
 
+    private void addViews() {
+        editEmail = findViewById(R.id.editEmail);
+        editPassword = findViewById(R.id.editPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        txtRegister = findViewById(R.id.txtRegister);
+        txtForgotPassword = findViewById(R.id.txtForgotPassword);
+
+    }
+
+
     private void addEvents() {
         // Login button logic
         btnLogin.setOnClickListener(v -> {
@@ -75,13 +85,7 @@ public class LoginScreen1 extends AppCompatActivity {
         txtForgotPassword.setOnClickListener(v -> {
             Intent intent = new Intent(LoginScreen1.this, ForgotPasswordActivity.class);
             startActivity(intent);
-    }
-
-    private void addViews() {
-        editEmail = findViewById(R.id.editEmail);
-        editPassword = findViewById(R.id.editPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        txtRegister = findViewById(R.id.txtRegister);
+        });
     }
 
     private void checkLogin(String email, String password) {

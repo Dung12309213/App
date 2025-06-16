@@ -33,7 +33,7 @@ public class YourProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_your_profile);
 
         // ÁNH XẠ VIEW
-        imageView = findViewById(R.id.imageView);
+        imageView = findViewById(R.id.imgProfile);
         textViewName = findViewById(R.id.textView2);
         edtFullName = findViewById(R.id.edtFullName);
         edtPhone = findViewById(R.id.edtPhone);

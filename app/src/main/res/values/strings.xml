@@ -62,6 +62,11 @@
     <string name="title_add_address">Add more address</string>
     <string name="title_confirm">CONFIRM</string>
     <string name="title_change">Change</string>
+    <string name="title_forgot_password">Forgot password</string>
+    <string name="title_birthday">Date of birth</string>
+    <string name="title_add_addres">Add address</string>
+    <string name="title_receiver_name">Receiver</string>
+    <string name="title_default_address">Default address</string>
     <string-array name="payment_methods">
         <item>Thanh toán khi nhận hàng</item>
         <item>Ví Momo</item>

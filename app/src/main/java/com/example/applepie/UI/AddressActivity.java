@@ -1,5 +1,6 @@
 package com.example.applepie.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -48,8 +49,10 @@ public class AddressActivity extends AppCompatActivity {
         });
 
         btnAdd.setOnClickListener(v -> {
-            // TODO: Hiển thị dialog hoặc chuyển sang màn thêm địa chỉ
+            Intent intent = new Intent(AddressActivity.this, AddAddressActivity.class);
+            startActivity(intent);
         });
+
     }
 
     private void loadMockAddresses() {

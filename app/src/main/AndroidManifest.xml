@@ -45,6 +45,11 @@
         <activity android:name=".UI.AddressActivity" />
         <activity android:name=".UI.CardPaymentActivity" android:exported="true" />
         <activity android:name=".UI.PaymentSuccessActivity" />
+        <activity android:name=".UI.ForgotPasswordActivity" />
+        <activity android:name=".UI.YourProfileActivity" />
+        <activity android:name=".UI.AddAddressActivity" />
+
+
 
 
 

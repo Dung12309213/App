@@ -40,8 +40,8 @@ public class ProfileActivity extends AppCompatActivity {
         txtUserName = findViewById(R.id.textView2);
         txtLoginButton = findViewById(R.id.itemLogin);
 
-        // Đọc trạng thái đăng nhập
-        prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        // Đọc trạng thái đăng nhập (THỐNG NHẤT LẠI TÊN "MyPrefs")
+        prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         isLoggedIn = prefs.getBoolean("is_logged_in", false);
 
         updateUI();
@@ -72,6 +72,9 @@ public class ProfileActivity extends AppCompatActivity {
         // Các mục cần đăng nhập mới được truy cập
         findViewById(R.id.itemHelpcenter).setOnClickListener(v ->
                 startActivity(new Intent(this, HelpCenterActivity.class)));
+
+        findViewById(R.id.itemYourprofile).setOnClickListener(v ->
+                startActivity(new Intent(this, YourProfileActivity.class)));
 
         findViewById(R.id.itemPaymentMethods).setOnClickListener(v -> {
             if (checkLogin()) startActivity(new Intent(this, PaymentMethodsActivity.class));

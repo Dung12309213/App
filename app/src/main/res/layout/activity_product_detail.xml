@@ -39,15 +39,41 @@
             </RelativeLayout>
 
             <!-- Product Info -->
-            <TextView
-                android:id="@+id/tvProductDetailCategory"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="16dp"
-                android:text="Chăm sóc tóc"
-                android:textColor="#B46A00"
-                android:textSize="14sp" />
+                android:gravity="start|center_vertical">
+
+                <!-- Product Category -->
+                <TextView
+                    android:id="@+id/tvProductDetailCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chăm sóc tóc"
+                    android:textColor="#B46A00"
+                    android:textSize="14sp" />
+
+                <!-- Star Icon -->
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/ic_star_yellow" />
+
+                <!-- Product Rating -->
+                <TextView
+                    android:id="@+id/tvProductDetailRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="4.9"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -64,24 +90,44 @@
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:textColor="#000000" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/ic_star_yellow" />
-
-                <TextView
-                    android:id="@+id/tvProductDetailRating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="4.9"
-                    android:textColor="#000000"
-                    android:textSize="14sp" />
             </LinearLayout>
 
-            <!-- Description -->
+            <!-- Price -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:gravity="start|center_vertical">
+
+                <!-- Discounted price of the product (larger font) -->
+                <TextView
+                    android:id="@+id/tvDiscountedPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="600.000 VND"
+                    android:textColor="@color/brown"
+                    android:textSize="20sp"
+                    android:gravity="start"
+                    android:layout_marginEnd="10dp"
+                    android:textStyle="bold" />
+
+                <!-- Original price of the product (with strikethrough and smaller font) -->
+                <TextView
+                    android:id="@+id/tvOriginalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="800.000 VND"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:gravity="start"
+                android:layout_marginEnd="10dp"
+                android:textStyle="italic"
+             />
+
+
+            </LinearLayout>
 
             <!-- Short Features -->
             <LinearLayout

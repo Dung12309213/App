@@ -2,6 +2,7 @@ package com.example.applepie.UI;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -63,6 +64,8 @@ public class ProductDetail extends AppCompatActivity {
     }
 
     private void addEvents() {
+        TextView originalPrice = findViewById(R.id.tvOriginalPrice);
+        originalPrice.setPaintFlags(originalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         // Sự kiện "Xem thêm"
         tvSeeMore.setOnClickListener(v -> {
             boolean isExpanded = tvDesc.getMaxLines() == Integer.MAX_VALUE;

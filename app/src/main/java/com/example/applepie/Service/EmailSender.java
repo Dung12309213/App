@@ -35,7 +35,7 @@ public class EmailSender {
                 MimeMessage message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(senderEmail));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
-                message.setSubject("Mã OTP xác nhận đăng ký tài khoản Apple Pie");
+                message.setSubject("Apple Pie - Mã OTP xác nhận đăng ký tài khoản ");
                 message.setText("Chào bạn,\n\nMã OTP Apple Pie của bạn là: " + otpCode + "\n\nVui lòng nhập mã này để xác nhận đăng ký của bạn.");
 
                 Transport.send(message);

@@ -1,9 +1,11 @@
 package com.example.applepie.UI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +29,7 @@ public class LoginScreen1 extends AppCompatActivity {
 
     EditText editEmail, editPassword;
     Button btnLogin;
-    TextView txtRegister;
+    TextView txtRegister, txtForgotPassword;
 
     SQLiteHelper dbHelper;
 
@@ -49,6 +51,16 @@ public class LoginScreen1 extends AppCompatActivity {
         dbHelper = new SQLiteHelper(this);
     }
 
+    private void addViews() {
+        editEmail = findViewById(R.id.editEmail);
+        editPassword = findViewById(R.id.editPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        txtRegister = findViewById(R.id.txtRegister);
+        txtForgotPassword = findViewById(R.id.txtForgotPassword);
+
+    }
+
+
     private void addEvents() {
         // Login button logic
         btnLogin.setOnClickListener(v -> {
@@ -69,13 +81,11 @@ public class LoginScreen1 extends AppCompatActivity {
             Intent intent = new Intent(LoginScreen1.this, LoginScreen2.class);
             startActivity(intent);
         });
-    }
-
-    private void addViews() {
-        editEmail = findViewById(R.id.editEmail);
-        editPassword = findViewById(R.id.editPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        txtRegister = findViewById(R.id.txtRegister);
+        // Mở trang quên mật khẩu
+        txtForgotPassword.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginScreen1.this, ForgotPasswordActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void checkLogin(String email, String password) {
@@ -127,5 +137,4 @@ public class LoginScreen1 extends AppCompatActivity {
                     }
                 });
     }
-
 }

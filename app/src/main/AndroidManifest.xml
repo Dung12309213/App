@@ -5,9 +5,9 @@
 
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -19,13 +19,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ApplePieApp"
         tools:targetApi="31">
-
+        <activity
+            android:name=".UI.DeleteOtpActivity"
+            android:exported="false" />
         <activity
             android:name=".UI.Order_Detail"
             android:exported="false" />
         <activity
             android:name=".UI.Coupon"
-            android:exported="false" /> <!-- Đặt ProductReviewActivity làm launcher -->
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -61,9 +63,15 @@
         <activity android:name=".UI.MyOrdersActivity" />
         <activity android:name=".UI.ChangePasswordActivity" />
         <activity android:name=".UI.CartActivity" />
-        <activity
-            android:name=".UI.ProfileActivity"
-            android:exported="false" />
+        <activity android:name=".UI.NotificationActivity" />
+        <activity android:name=".UI.CheckoutActivity" />
+        <activity android:name=".UI.AddressActivity" />
+        <activity android:name=".UI.CardPaymentActivity" />
+        <activity android:name=".UI.PaymentSuccessActivity" />
+        <activity android:name=".UI.ForgotPasswordActivity" />
+        <activity android:name=".UI.YourProfileActivity" />
+        <activity android:name=".UI.AddAddressActivity" />
+        <activity android:name=".UI.ProfileActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

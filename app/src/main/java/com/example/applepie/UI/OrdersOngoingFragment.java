@@ -34,7 +34,8 @@ public class OrdersOngoingFragment extends Fragment {
         mockOrders.add(new OrderModel("DH001", 2, "450.000", R.drawable.ic_homepage_mau2, "Mua lại", "ongoing"));
         mockOrders.add(new OrderModel("DH002", 1, "300.000", R.drawable.ic_homepage_mau2, "Mua lại", "ongoing"));
 
-        OrderAdapter adapter = new OrderAdapter(mockOrders);
+        OrderAdapter adapter = new OrderAdapter(mockOrders, null);
+
         recyclerView.setAdapter(adapter);
 
         return view;

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.example.applepie.R;
 import com.example.applepie.UI.CartActivity;
 import com.example.applepie.UI.CategoryList;
 import com.example.applepie.UI.ChatBotActivity;
+import com.example.applepie.UI.NotificationActivity;
 import com.example.applepie.UI.ProfileActivity;
 
 import java.util.ArrayList;
@@ -101,6 +103,26 @@ public class MainActivity extends AppCompatActivity {
 
         edtSearch.setOnClickListener(v -> filterPanel.setVisibility(View.VISIBLE));
         btnCloseFilter.setOnClickListener(v -> filterPanel.setVisibility(View.GONE));
+
+        ImageButton btnNotification = findViewById(R.id.btn_notification);
+
+        btnNotification.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+            startActivity(intent);
+        });
+        TextView badge = findViewById(R.id.notification_badge);
+
+// Ví dụ giả định có 5 thông báo mới
+        int unreadCount = 5;
+
+        if (unreadCount > 0) {
+            badge.setText(String.valueOf(unreadCount));
+            badge.setVisibility(View.VISIBLE);
+        } else {
+            badge.setVisibility(View.GONE);
+        }
+
+
 
         // Flash Sale
         rvFlashSale = findViewById(R.id.rvFlashSale);

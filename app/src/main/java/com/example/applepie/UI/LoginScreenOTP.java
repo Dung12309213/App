@@ -53,7 +53,7 @@ public class LoginScreenOTP extends AppCompatActivity {
             String newOtp = String.valueOf((int)(Math.random() * 9000) + 1000);
 
             // Gửi email
-            EmailSender.sendOTP(email, newOtp);
+            EmailSender.sendRegisterOTP(email, newOtp);
 
             // Gửi lại mã sang activity này nếu bạn muốn cập nhật để so sánh
             getIntent().putExtra("otpCode", newOtp);  // Cập nhật mã mới vào intent
@@ -109,7 +109,7 @@ public class LoginScreenOTP extends AppCompatActivity {
         otp4.addTextChangedListener(new GenericTextWatcher(otp4, null));
     }
 
-    private static class GenericTextWatcher implements TextWatcher {
+    static class GenericTextWatcher implements TextWatcher {
         private final EditText currentView;
         private final EditText nextView;
 

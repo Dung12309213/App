@@ -28,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
    ShapeableImageView profileImage;
     TextView tvLoginLogout, tvUserName;
     ImageView imgLoginLogout;
-    ConstraintLayout itemYourProfile, itemPaymentMethods, itemMyCoupons, itemMyorders;
+    ConstraintLayout itemYourProfile, itemPaymentMethods, itemMyCoupons, itemMyorders, ItemMyCoupons;
     SQLiteHelper dbHelper;
 
     private ActivityResultLauncher<Intent> imagePickerLauncher;
@@ -77,6 +77,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         findViewById(R.id.itemSettings).setOnClickListener(v ->
                 startActivity(new Intent(this, SettingsActivity.class)));
+        findViewById(R.id.Coupon).setOnClickListener(v ->
+                startActivity(new Intent(this, Coupon.class)));
 
         findViewById(R.id.itemPolicy).setOnClickListener(v ->
                 startActivity(new Intent(this, PolicyActivity.class)));

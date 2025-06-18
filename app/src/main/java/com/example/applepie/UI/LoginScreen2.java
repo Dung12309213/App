@@ -132,7 +132,7 @@ public class LoginScreen2 extends AppCompatActivity {
                                             // Tạo mã OTP ngẫu nhiên
                                             String otpCode = generateOtp();
 
-                                            EmailSender.sendOTP(email, otpCode);
+                                            EmailSender.sendRegisterOTP(email, otpCode);
 
                                             Intent intent = new Intent(LoginScreen2.this, LoginScreenOTP.class);
                                             intent.putExtra("otpCode", otpCode);  // Truyền mã OTP cho màn hình OTP

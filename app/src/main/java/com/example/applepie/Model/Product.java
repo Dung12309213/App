@@ -28,7 +28,7 @@ public class Product {
     }
 
 
-    // Getter và Setter
+    // Getter Setter
 
     public String getId() {
         return id;

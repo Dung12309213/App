@@ -74,7 +74,6 @@
     </string-array>
 
 
-
     <string name="content_description_back_button">Back button</string>
     <string name="content_description_payment_method_icon">Payment method icon</string>
     <string name="content_description_location_icon">Location icon</string>
@@ -110,5 +109,6 @@
     <string name="internet_required">Internet Required!</string>
     <string name="register_success">Register Successfull</string>
     <string name="OTP_wrong">Wrong OTP! Please try again.</string>
+    <string name="User_Delete_Successfull">User Delete Successfull</string>
 </resources>
 

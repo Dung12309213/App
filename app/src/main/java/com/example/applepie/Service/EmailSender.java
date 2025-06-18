@@ -13,9 +13,9 @@ import javax.mail.Message;
 public class EmailSender {
 
     // Hàm gửi OTP qua email
-    public static void sendOTP(String recipientEmail, String otpCode) {
+    public static void sendRegisterOTP(String recipientEmail, String otpCode) {
         new Thread(() -> {
-            String senderEmail = "lop9c.thd.ngqtrinh@gmail.com"; // thay bằng email thật
+            String senderEmail = "lop9c.thd.ngqtrinh@gmail.com";
             String senderPassword = "guun lnuw pghr ftap"; // App Password
 
             Properties properties = new Properties();
@@ -39,12 +39,46 @@ public class EmailSender {
                 message.setText("Chào bạn,\n\nMã OTP Apple Pie của bạn là: " + otpCode + "\n\nVui lòng nhập mã này để xác nhận đăng ký của bạn.");
 
                 Transport.send(message);
-                Log.d("EmailSender", "Email đã được gửi thành công!");
+                Log.d("EmailSender", "Email đăng ký đã được gửi thành công!");
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("EmailSender", "Gửi email thất bại: " + e.toString());
+                Log.e("EmailSender", "Gửi email đăng ký thất bại: " + e.toString());
             }
-        }).start(); // <-- chạy trên thread riêng
+        }).start();
+    }
+    // Email Delete OTP
+    public static void sendDeleteOTP(String recipientEmail, String otpCode) {
+        new Thread(() -> {
+            String senderEmail = "lop9c.thd.ngqtrinh@gmail.com";
+            String senderPassword = "guun lnuw pghr ftap"; // App Password
+
+            Properties properties = new Properties();
+            properties.put("mail.smtp.host", "smtp.gmail.com");
+            properties.put("mail.smtp.port", "465");
+            properties.put("mail.smtp.auth", "true");
+            properties.put("mail.smtp.socketFactory.port", "465");
+            properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+
+            Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(senderEmail, senderPassword);
+                }
+            });
+
+            try {
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(senderEmail));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
+                message.setSubject("Apple Pie - Mã OTP xác nhận xoá tài khoản ");
+                message.setText("Chào bạn,\n\nMã OTP Apple Pie của bạn là: " + otpCode + "\n\nVui lòng nhập mã này để xác nhận xoá của bạn.");
+
+                Transport.send(message);
+                Log.d("EmailSender", "Email xoá đã được gửi thành công!");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("EmailSender", "Gửi email xoá thất bại: " + e.toString());
+            }
+        }).start();
     }
 }
 

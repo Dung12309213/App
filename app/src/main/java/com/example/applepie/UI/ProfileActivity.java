@@ -131,6 +131,7 @@ public class ProfileActivity extends AppCompatActivity {
             // Thay đổi nút thành "Login"
             findViewById(R.id.itemLogin).setOnClickListener(v -> login());
         }
+        cursor.close();
     }
 
     // Phương thức xử lý đăng nhập

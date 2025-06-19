@@ -29,6 +29,7 @@ public class LoginScreen1 extends AppCompatActivity {
 
     EditText editEmail, editPassword;
     Button btnLogin;
+    ImageButton btnBack;
     TextView txtRegister, txtForgotPassword;
 
     SQLiteHelper dbHelper;
@@ -57,7 +58,7 @@ public class LoginScreen1 extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         txtRegister = findViewById(R.id.txtRegister);
         txtForgotPassword = findViewById(R.id.txtForgotPassword);
-
+        btnBack = findViewById(R.id.btnBack);
     }
 
 
@@ -85,6 +86,9 @@ public class LoginScreen1 extends AppCompatActivity {
         txtForgotPassword.setOnClickListener(v -> {
             Intent intent = new Intent(LoginScreen1.this, ForgotPasswordActivity.class);
             startActivity(intent);
+        });
+        btnBack.setOnClickListener(v -> {
+            finish();
         });
     }
 

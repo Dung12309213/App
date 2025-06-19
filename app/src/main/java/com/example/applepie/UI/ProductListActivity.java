@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.applepie.Connector.FirebaseConnector;
 import com.example.applepie.MainActivity;
 import com.example.applepie.Model.Product;
+import com.example.applepie.Model.Variant;
 import com.example.applepie.R;
 import com.example.applepie.UI.ProductDetail;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -82,9 +83,42 @@ public class ProductListActivity extends AppCompatActivity {
 
         // Set dữ liệu
         tvName.setText(product.getName());
-        tvPrice.setText(String.format("%,d đ", product.getPrice()));
+        db.collection("Product")
+                .document(documentId)
+                        .collection("variant")
+                                .document("V1")
+                                        .get()
+                                                .addOnSuccessListener(variantDoc ->{
+                                                    if (variantDoc.exists()) {
+                                                        Variant v = variantDoc.toObject(Variant.class);
+                                                        if (v != null) {
+                                                            Log.d("VariantDebug", "Variant loaded: " +
+                                                                    "price=" + v.getPrice() +
+                                                                    ", secondPrice=" + v.getSecondprice() +
+                                                                    ", quantity=" + v.getQuantity() +
+                                                                    ", variant=" + v.getVariant());
+
+                                                            tvPrice.setText(String.format("%,d đ", v.getPrice()));
+                                                            tvSecondPrice.setText(String.format("%,d đ", v.getSecondprice()));
+
+                                                            if (v.getSecondprice() > 0) {
+                                                                tvSecondPrice.setVisibility(View.VISIBLE);
+                                                                tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                                                                int discountPercent = (v.getPrice() - v.getSecondprice()) * 100 / v.getPrice();
+                                                                tvProductDiscountPercent.setText(discountPercent + "%");
+                                                                tvProductDiscountPercent.setVisibility(View.VISIBLE);
+                                                            } else {
+                                                                tvSecondPrice.setVisibility(View.GONE);
+                                                                tvPrice.setPaintFlags(0); // bỏ gạch ngang nếu không có khuyến mãi
+                                                                tvProductDiscountPercent.setVisibility(View.GONE);
+                                                            }
+                                                        }
+                                                    }
+                                                });
+        /*tvPrice.setText(String.format("%,d đ", product.getPrice()));
         tvSecondPrice.setText(String.format("%,d đ", product.getSecondprice()));
-        if (product.getDiscountPercent() > 0 ) {
+        if (product.getSecondprice() > 0 ) {
             tvProductDiscountPercent.setText(product.getDiscountPercent() + "%");
             tvProductDiscountPercent.setVisibility(View.VISIBLE);
         }
@@ -99,7 +133,7 @@ public class ProductListActivity extends AppCompatActivity {
             tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
             tvSecondPrice.setVisibility(View.GONE);
-        }
+        }*/
 
         Glide.with(this).load(product.getImageUrl()).into(img);
 

@@ -49,7 +49,7 @@ public class FlashSaleAdapter extends RecyclerView.Adapter<FlashSaleAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Product product = productList.get(position);
+        /*Product product = productList.get(position);
 
         holder.tvName.setText(product.getName());
         holder.tvPrice.setText(String.valueOf(product.getPrice()));
@@ -61,7 +61,7 @@ public class FlashSaleAdapter extends RecyclerView.Adapter<FlashSaleAdapter.View
         // Glide.with(context).load(product.getImageUrl()).into(holder.imgProduct);
 
         // Tạm thời dùng ảnh mẫu trong drawable
-        holder.imgProduct.setImageResource(com.example.applepie.R.drawable.ic_homepage_mau2);
+        holder.imgProduct.setImageResource(com.example.applepie.R.drawable.ic_homepage_mau2);*/
     }
 
     @Override

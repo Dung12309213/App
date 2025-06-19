@@ -1,5 +1,6 @@
 package com.example.applepie.UI;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -19,11 +20,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.applepie.Connector.FirebaseConnector;
 import com.example.applepie.Model.Product;
+import com.example.applepie.Model.Variant;
 import com.example.applepie.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDetail extends AppCompatActivity {
 
@@ -34,12 +41,14 @@ public class ProductDetail extends AppCompatActivity {
     private TextView tvProductDetailRating;
     private TextView tvDesc;
     private TextView tvSeeMore;
-    private LinearLayout headerIngredients;
+    private LinearLayout headerIngredients, sameCateProductLayout;
     private TextView tvIngredientsDetail;
     private ImageView arrowIngredients;
     private LinearLayout headerInstruction;
     private TextView tvInstructionDetail;
-    private ImageView arrowInstruction;
+    private ImageView arrowInstruction, imgAvrStar, imgProduct;
+    private TextView tvDiscountedPrice, tvOriginalPrice;
+    private TextView txtUses1,txtUses2,txtUses3,txtUses4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +112,8 @@ public class ProductDetail extends AppCompatActivity {
                 tvInstructionDetail.setVisibility(View.GONE);
                 arrowInstruction.setRotation(0);
             }
-        });findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
+        });
+        findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
             View quantityPopup = LayoutInflater.from(this).inflate(R.layout.product_buy_now_popup, null);
             BottomSheetDialog dialog = new BottomSheetDialog(ProductDetail.this);
             dialog.setContentView(quantityPopup);
@@ -163,6 +173,15 @@ public class ProductDetail extends AppCompatActivity {
         headerInstruction = findViewById(R.id.headerInstruction);
         tvInstructionDetail = findViewById(R.id.tvProductDetailInstruction);
         arrowInstruction = findViewById(R.id.arrowInstruction);
+        imgAvrStar = findViewById(R.id.imgAvrStar);
+        tvOriginalPrice = findViewById(R.id.tvOriginalPrice);
+        tvDiscountedPrice = findViewById(R.id.tvDiscountedPrice);
+        imgProduct = findViewById(R.id.imgProduct);
+        txtUses1 = findViewById(R.id.txtUses1);
+        txtUses2 = findViewById(R.id.txtUses2);
+        txtUses3 = findViewById(R.id.txtUses3);
+        txtUses4 = findViewById(R.id.txtUses4);
+        sameCateProductLayout = findViewById(R.id.sameCateProduct);
     }
 
     private void loadProductDetails(String productId) {
@@ -181,11 +200,46 @@ public class ProductDetail extends AppCompatActivity {
                 });
     }
     private void displayProductDetails(Product product) {
+        Glide.with(this).load(product.getImageUrl()).into(imgProduct);
+
         tvProductDetailName.setText(product.getName());
-        tvProductDetailRating.setText(String.format("%.1f", product.getRating())); // Hiển thị 1 chữ số thập phân
+        float rating = product.getRating();
+        if (rating == 0) {
+            tvProductDetailRating.setText("Chưa có đánh giá");
+            imgAvrStar.setVisibility(View.GONE);
+        } else {
+            tvProductDetailRating.setText(String.format("%.1f", rating));
+        }
         tvDesc.setText(product.getDescription());
         tvIngredientsDetail.setText(product.getIngredient());
         tvInstructionDetail.setText(product.getInstruction());
+
+        db.collection("Product")
+                .document(product.getId())
+                .collection("Variant")
+                .document("V1")
+                .get()
+                .addOnSuccessListener(variantDoc -> {
+                    if (variantDoc.exists()) {
+                        Variant v = variantDoc.toObject(Variant.class);
+                        if (v != null) {
+                            // Hiển thị giá từ biến thể
+                            if (v.getSecondprice() == 0) {
+                                tvOriginalPrice.setVisibility(View.GONE);
+                                tvDiscountedPrice.setText(String.format("%,d đ", v.getPrice()));
+                            } else {
+                                tvOriginalPrice.setVisibility(View.VISIBLE);
+                                tvOriginalPrice.setText(String.format("%,d đ", v.getPrice()));
+                                tvDiscountedPrice.setText(String.format("%,d đ", v.getSecondprice()));
+                            }
+                        }
+                    }
+                });
+        txtUses1.setText(product.getUses1());
+        txtUses2.setText(product.getUses2());
+        txtUses3.setText(product.getUses3());
+        txtUses4.setText(product.getUses4());
+
     }
     private void loadCategoryDetails(String cateid) {
         db.collection("Category")
@@ -197,5 +251,51 @@ public class ProductDetail extends AppCompatActivity {
                         tvProductCategory.setText(mcValue);
                     }
                 });
+        loadSameCategoryProducts(cateid);
+    }
+    private void loadSameCategoryProducts(String cateid) {
+        db.collection("Product")
+                .whereEqualTo("cateid", cateid)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    List<Product> sameCateProducts = new ArrayList<>();
+                    String currentProductId = getIntent().getStringExtra("productId");
+
+                    for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                        Product p = doc.toObject(Product.class);
+                        p.setId(doc.getId());
+
+                        // Kiểm tra null trước khi so sánh
+                        if (p != null && p.getId() != null && currentProductId != null && !p.getId().equals(currentProductId)) {
+                            sameCateProducts.add(p);
+                        }
+                    }
+
+                    displaySameCategoryProducts(sameCateProducts);
+                });
+    }
+    private void displaySameCategoryProducts(List<Product> productList) {
+        sameCateProductLayout.removeAllViews(); // Xóa cũ trước khi thêm mới
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        for (Product p : productList) {
+            View itemView = inflater.inflate(R.layout.item_same_cate_product, sameCateProductLayout, false);
+
+            ImageView img = itemView.findViewById(R.id.imgSameCateProduct);
+            TextView name = itemView.findViewById(R.id.txtSameCateProduct);
+
+            Glide.with(this).load(p.getImageUrl()).into(img);
+            name.setText(p.getName());
+
+            // Optional: set onClick to đi đến chi tiết
+            itemView.setOnClickListener(v -> {
+                // Load lại activity với sản phẩm mới
+                Intent intent = new Intent(this, ProductDetail.class);
+                intent.putExtra("productId", p.getId());
+                startActivity(intent);
+            });
+
+            sameCateProductLayout.addView(itemView);
+        }
     }
 }

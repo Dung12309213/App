@@ -124,16 +124,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // Flash Sale
+        /*// Flash Sale
         rvFlashSale = findViewById(R.id.rvFlashSale);
         rvFlashSale.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        productList = new ArrayList<>();
-        productList.add(new Product("Nước dưỡng tóc tinh dầu bưởi 140ml", 165000, 256000, 10, ""));
-        productList.add(new Product("Sản phẩm 2", 120000, 200000, 15, ""));
-        productList.add(new Product("Sản phẩm 3", 99000, 150000, 20, ""));
-
         flashSaleAdapter = new FlashSaleAdapter(this, productList);
-        rvFlashSale.setAdapter(flashSaleAdapter);
+        rvFlashSale.setAdapter(flashSaleAdapter);*/
     }
 }

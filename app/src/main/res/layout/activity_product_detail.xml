@@ -58,6 +58,7 @@
 
                 <!-- Star Icon -->
                 <ImageView
+                    android:id="@+id/imgAvrStar"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginStart="10dp"
@@ -119,12 +120,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="800.000 VND"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:gravity="start"
-                android:layout_marginEnd="10dp"
-                android:textStyle="italic"
-             />
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:gravity="start"
+                    android:layout_marginEnd="10dp"
+                    android:textStyle="italic" />
 
 
             </LinearLayout>
@@ -170,33 +170,37 @@
 
                 <!-- Cột 1 -->
                 <TextView
+                    android:id="@+id/txtUses1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="❌ Không Sulfate àhakshfkashfkashk"
-                    android:layout_columnWeight="1"/>
+                    android:layout_columnWeight="1"
+                    android:text="❌ Không Sulfate àhakshfkashfkashk" />
 
                 <!-- Cột 2 (dịch qua phải) -->
                 <TextView
+                    android:id="@+id/txtUses3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="✔ Tóc gãy rụng test độ dài "
+                    android:layout_columnWeight="1"
                     android:layout_marginStart="45dp"
-                    android:layout_columnWeight="1"/>
+                    android:text="✔ Tóc gãy rụng test độ dài " />
 
                 <!-- Cột 1 -->
                 <TextView
+                    android:id="@+id/txtUses2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="❌ Không Paraben test độ dài"
-                    android:layout_columnWeight="1"/>
+                    android:layout_columnWeight="1"
+                    android:text="❌ Không Paraben test độ dài" />
 
                 <!-- Cột 2 (dịch qua phải) -->
                 <TextView
+                    android:id="@+id/txtUses4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="✔ Tóc yếu"
+                    android:layout_columnWeight="1"
                     android:layout_marginStart="45dp"
-                    android:layout_columnWeight="1"/>
+                    android:text="✔ Tóc yếu" />
             </GridLayout>
 
             <!-- Tabs HDSD -->
@@ -386,6 +390,7 @@
                 android:layout_marginTop="8dp">
 
                 <LinearLayout
+                    android:id="@+id/sameCateProduct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -395,15 +400,17 @@
                     <LinearLayout
                         android:layout_width="160dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="8dp">
+                        android:layout_marginEnd="8dp"
+                        android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/imgSameCateProduct"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
                             android:src="@drawable/productmau" />
 
                         <TextView
+                            android:id="@+id/txtSameCateProduct"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Nước dưỡng tóc tinh dầu bưởi 140ml" />
@@ -413,8 +420,8 @@
                     <LinearLayout
                         android:layout_width="160dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="8dp">
+                        android:layout_marginEnd="8dp"
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -431,8 +438,8 @@
                     <LinearLayout
                         android:layout_width="160dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="8dp">
+                        android:layout_marginEnd="8dp"
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="match_parent"

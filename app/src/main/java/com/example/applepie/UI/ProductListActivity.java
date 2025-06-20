@@ -85,19 +85,13 @@ public class ProductListActivity extends AppCompatActivity {
         tvName.setText(product.getName());
         db.collection("Product")
                 .document(documentId)
-                        .collection("variant")
+                        .collection("Variant")
                                 .document("V1")
                                         .get()
                                                 .addOnSuccessListener(variantDoc ->{
                                                     if (variantDoc.exists()) {
                                                         Variant v = variantDoc.toObject(Variant.class);
                                                         if (v != null) {
-                                                            Log.d("VariantDebug", "Variant loaded: " +
-                                                                    "price=" + v.getPrice() +
-                                                                    ", secondPrice=" + v.getSecondprice() +
-                                                                    ", quantity=" + v.getQuantity() +
-                                                                    ", variant=" + v.getVariant());
-
                                                             tvPrice.setText(String.format("%,d đ", v.getPrice()));
                                                             tvSecondPrice.setText(String.format("%,d đ", v.getSecondprice()));
 
@@ -116,24 +110,6 @@ public class ProductListActivity extends AppCompatActivity {
                                                         }
                                                     }
                                                 });
-        /*tvPrice.setText(String.format("%,d đ", product.getPrice()));
-        tvSecondPrice.setText(String.format("%,d đ", product.getSecondprice()));
-        if (product.getSecondprice() > 0 ) {
-            tvProductDiscountPercent.setText(product.getDiscountPercent() + "%");
-            tvProductDiscountPercent.setVisibility(View.VISIBLE);
-        }
-        else {
-            tvProductDiscountPercent.setVisibility(View.GONE);
-        }
-
-
-        // Kiểm tra nếu secondPrice có giá trị
-        if (product.getSecondprice() > 0) {
-            tvSecondPrice.setVisibility(View.VISIBLE);
-            tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        } else {
-            tvSecondPrice.setVisibility(View.GONE);
-        }*/
 
         Glide.with(this).load(product.getImageUrl()).into(img);
 

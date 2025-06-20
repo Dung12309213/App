@@ -217,7 +217,7 @@ public class ProductDetail extends AppCompatActivity {
 
         db.collection("Product")
                 .document(product.getId())
-                .collection("variant")
+                .collection("Variant")
                 .document("V1")
                 .get()
                 .addOnSuccessListener(variantDoc -> {

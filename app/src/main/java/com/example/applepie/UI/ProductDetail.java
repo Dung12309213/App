@@ -191,6 +191,7 @@ public class ProductDetail extends AppCompatActivity {
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         Product product = documentSnapshot.toObject(Product.class);
+                        product.setId(productId);
                         if (product != null) {
                             displayProductDetails(product);
                             String cateid = product.getCateid();
@@ -216,7 +217,7 @@ public class ProductDetail extends AppCompatActivity {
 
         db.collection("Product")
                 .document(product.getId())
-                .collection("Variant")
+                .collection("variant")
                 .document("V1")
                 .get()
                 .addOnSuccessListener(variantDoc -> {

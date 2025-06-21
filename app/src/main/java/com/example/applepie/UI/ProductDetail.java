@@ -6,13 +6,16 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,6 +52,7 @@ public class ProductDetail extends AppCompatActivity {
     private ImageView arrowInstruction, imgAvrStar, imgProduct;
     private TextView tvDiscountedPrice, tvOriginalPrice;
     private TextView txtUses1,txtUses2,txtUses3,txtUses4;
+    LayoutInflater inflate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,30 +118,65 @@ public class ProductDetail extends AppCompatActivity {
             }
         });
         findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
-            View quantityPopup = LayoutInflater.from(this).inflate(R.layout.product_buy_now_popup, null);
+            // Khởi tạo BottomSheetDialog và popup
+            View quantityPopup = inflate.from(this).inflate(R.layout.product_buy_now_popup, null);
             BottomSheetDialog dialog = new BottomSheetDialog(ProductDetail.this);
             dialog.setContentView(quantityPopup);
             dialog.show();
 
+            // Khởi tạo container cho các biến thể (item_variant)
+            GridLayout variantContainer = quantityPopup.findViewById(R.id.gridVariant);
+            String productId = getIntent().getStringExtra("productId");
+
+            // Lấy thông tin biến thể từ Firestore
+            db.collection("Product")
+                    .document(productId)
+                    .collection("Variant")
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                        for (DocumentSnapshot variantDoc : queryDocumentSnapshots.getDocuments()) {
+                            Variant variant = variantDoc.toObject(Variant.class);
+                            variant.setId(variantDoc.getId());
+
+                            if (variant != null) {
+                                // Inflate item_variant và cập nhật thông tin
+                                View variantItem = LayoutInflater.from(ProductDetail.this)
+                                        .inflate(R.layout.item_variant, variantContainer, false);
+
+                                // Lấy Button trong item_variant và cập nhật với tên biến thể
+                                Button btnVariant = variantItem.findViewById(R.id.btnVariant);
+                                btnVariant.setText(variant.getVariant());
+
+                                // Đặt sự kiện click cho btnVariant
+                                btnVariant.setOnClickListener(v1 -> {
+                                    // Đặt lại màu cho tất cả các nút variant
+                                    for (int i = 0; i < variantContainer.getChildCount(); i++) {
+                                        View variantItemChild = variantContainer.getChildAt(i);
+                                        Button btn = variantItemChild.findViewById(R.id.btnVariant);
+
+                                        // Đặt lại màu mặc định cho các nút chưa được chọn
+                                        btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E0E0E0")));
+                                    }
+
+                                    // Thay đổi màu cho nút đã được chọn
+                                    btnVariant.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#9C5221")));
+
+                                    // Hiển thị thông báo khi người dùng chọn biến thể
+                                    Toast.makeText(ProductDetail.this, "Chọn biến thể: " + variant.getVariant(), Toast.LENGTH_SHORT).show();
+                                });
+
+                                // Thêm item vào container
+                                variantContainer.addView(variantItem);
+                            }
+                        }
+                    });
+
             // Khởi tạo các view trong popup
-            Button btn140 = quantityPopup.findViewById(R.id.btn140ml);
-            Button btn360 = quantityPopup.findViewById(R.id.btn360ml);
             ImageButton btnMinus = quantityPopup.findViewById(R.id.btnMinus);
             ImageButton btnPlus = quantityPopup.findViewById(R.id.btnPlus);
             TextView tvQuantity = quantityPopup.findViewById(R.id.tvQuantity);
             Button btnConfirm = quantityPopup.findViewById(R.id.btnProductBuyConfirm);
-
-            // Xử lý chọn dung tích 140ml
-            btn140.setOnClickListener(vol -> {
-                btn140.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#9C5221")));
-                btn360.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E0E0E0")));
-            });
-
-            // Xử lý chọn dung tích 360ml
-            btn360.setOnClickListener(vol -> {
-                btn360.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#9C5221")));
-                btn140.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E0E0E0")));
-            });
 
             // Giảm số lượng
             btnMinus.setOnClickListener(vol -> {
@@ -156,9 +195,16 @@ public class ProductDetail extends AppCompatActivity {
             // Xác nhận mua hàng
             btnConfirm.setOnClickListener(vol -> {
                 // TODO: Gửi thông tin đặt hàng hoặc thêm vào giỏ hàng ở đây
+                int quantity = Integer.parseInt(tvQuantity.getText().toString());
+
+                // Lấy thông tin về biến thể đã chọn (nếu cần)
+                // Có thể lấy tên biến thể và giá từ các nút đã chọn.
+
+                Log.d("ProductDetail", "Quantity: " + quantity);
                 dialog.dismiss();
             });
         });
+
     }
 
     private void addViews() {

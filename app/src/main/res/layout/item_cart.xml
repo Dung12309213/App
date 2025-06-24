@@ -18,7 +18,6 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_homepage_mau2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,27 +29,27 @@
             android:layout_marginStart="12dp"
             android:fontFamily="@font/nunito_bold"
             android:maxLines="2"
-            android:text="Mặt nạ nghệ Hưng Yên"
+            android:text="Name"
             android:textColor="@color/textcolor"
             android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgProduct"
-            app:layout_constraintTop_toTopOf="@id/imgProduct"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/imgProduct" />
 
         <!-- Dung tích -->
         <TextView
             android:id="@+id/txtSize"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:layout_marginStart="12dp"
+            android:layout_marginTop="2dp"
             android:fontFamily="@font/nunito_medium"
-            android:text="Dung tích: 100ml"
+            android:text="Variant"
             android:textColor="@color/textcolor"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/txtName"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgProduct"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/txtName" />
 
         <!-- Giá tiền -->
         <TextView
@@ -59,13 +58,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/nunito_bold"
-            android:text="345.000 đ"
+            android:text="Price"
             android:textColor="@color/black"
             android:textSize="24sp"
-            app:layout_constraintTop_toBottomOf="@id/txtSize"
-            app:layout_constraintStart_toStartOf="@id/txtSize" />
+            app:layout_constraintStart_toStartOf="@id/txtSize"
+            app:layout_constraintTop_toBottomOf="@id/txtSize" />
 
         <!-- Nút giảm -->
+
         <ImageButton
             android:id="@+id/btnDecrease"
             android:layout_width="28dp"

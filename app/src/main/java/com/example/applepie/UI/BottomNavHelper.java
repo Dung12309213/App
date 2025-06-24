@@ -3,6 +3,7 @@ package com.example.applepie.UI;
 import android.app.Activity;
 import android.content.Intent;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.applepie.MainActivity;
 import com.example.applepie.R;
@@ -10,6 +11,7 @@ import com.example.applepie.UI.CategoryList;
 import com.example.applepie.UI.ChatBotActivity;
 import com.example.applepie.UI.CartActivity;
 import com.example.applepie.UI.ProfileActivity;
+import com.example.applepie.Util.UserSessionManager;
 
 public class BottomNavHelper {
 
@@ -38,7 +40,18 @@ public class BottomNavHelper {
         }
 
         if (btnBuy != null && !(activity instanceof CartActivity)) {
-            btnBuy.setOnClickListener(v -> startNewActivity(activity, CartActivity.class, "buy"));
+            btnBuy.setOnClickListener(v -> {
+                UserSessionManager userSessionManager = new UserSessionManager(activity);
+                String userId = userSessionManager.getUserId();
+
+                if (userId.isEmpty()) {
+                    startNewActivity(activity, LoginScreen1.class, "login");
+                    Toast.makeText(activity, "Vui lòng đăng nhập để tiếp tục", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Nếu đã đăng nhập, chuyển đến CartActivity
+                    startNewActivity(activity, CartActivity.class, "cart");
+                }
+            });
         }
 
         if (btnChat != null && !(activity instanceof ChatBotActivity)) {

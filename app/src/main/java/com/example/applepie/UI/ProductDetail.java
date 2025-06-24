@@ -301,13 +301,13 @@ public class ProductDetail extends AppCompatActivity {
                         // Đẩy các biến thể sản phẩm vào Firestore
                         for (Variant variant : variants) {
                             Map<String, Object> cartItem = new HashMap<>();
-                            cartItem.put("productId", variant.getProductid());
-                            cartItem.put("variantId", variant.getId());
+                            cartItem.put("productid", variant.getProductid());
+                            cartItem.put("id", variant.getId());
                             cartItem.put("quantity", variant.getQuantity());
 
                             // Kiểm tra nếu sản phẩm đã tồn tại trong giỏ hàng (dựa trên productId và variantId)
-                            cartRef.whereEqualTo("productId", variant.getProductid())
-                                    .whereEqualTo("variantId", variant.getId())
+                            cartRef.whereEqualTo("productid", variant.getProductid())
+                                    .whereEqualTo("id", variant.getId())
                                     .get()
                                     .addOnSuccessListener(querySnapshot -> {
                                         if (!querySnapshot.isEmpty()) {
@@ -330,44 +330,11 @@ public class ProductDetail extends AppCompatActivity {
                                     });
                         }
                     } else {
-                        // Nếu chưa đăng nhập, lưu vào SharedPreferences
-                        SharedPreferences preferences = getSharedPreferences("Cart", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-
-                        // Lấy danh sách giỏ hàng hiện tại (nếu có)
-                        Gson gson = new Gson();
-                        String json = preferences.getString("cartItems", ""); // Lấy dữ liệu cũ, nếu có
-                        Type type = new TypeToken<ArrayList<Variant>>() {}.getType(); // Định dạng của danh sách
-                        ArrayList<Variant> cartItems = gson.fromJson(json, type);
-
-                        // Nếu giỏ hàng chưa có, khởi tạo giỏ hàng mới
-                        if (cartItems == null) {
-                            cartItems = new ArrayList<>();
-                        }
-
-                        // Kiểm tra nếu sản phẩm đã có trong giỏ hàng
-                        boolean productExists = false;
-                        for (Variant variant : variants) {
-                            for (Variant cartItem : cartItems) {
-                                if (cartItem.getProductid().equals(variant.getProductid()) && cartItem.getId().equals(variant.getId())) {
-                                    // Nếu sản phẩm đã tồn tại, cộng số lượng vào
-                                    cartItem.setQuantity(cartItem.getQuantity() + variant.getQuantity());
-                                    productExists = true;
-                                    break;
-                                }
-                            }
-                            if (!productExists) {
-                                // Nếu sản phẩm chưa có, thêm mới vào giỏ hàng
-                                cartItems.add(variant);
-                            }
-                        }
-
-                        // Lưu giỏ hàng mới vào SharedPreferences dưới dạng JSON
-                        String updatedJson = gson.toJson(cartItems);
-                        editor.putString("cartItems", updatedJson);
-                        editor.apply();
-
-                        Toast.makeText(ProductDetail.this, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                        // Nếu chưa đăng nhập
+                        Intent intent = new Intent(ProductDetail.this, LoginScreen1.class);
+                        startActivity(intent);
+                        finish();  // Để không quay lại màn hình hiện tại khi nhấn nút quay lại
+                        Toast.makeText(ProductDetail.this, "Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
                     }
                 }
 

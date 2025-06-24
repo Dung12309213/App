@@ -58,4 +58,16 @@ public class Variant implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "Variant{" +
+                "productId='" + productid + '\'' +
+                ", variantId='" + id + '\'' +
+                ", price=" + price +
+                ", secondPrice=" + secondprice +
+                ", quantity=" + quantity +
+                ", name='" + variant + '\'' +
+                '}';
+    }
 }

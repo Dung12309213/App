@@ -11,6 +11,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,11 +24,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.applepie.Adapter.FlashSaleAdapter;
 import com.example.applepie.Model.Product;
 import com.example.applepie.R;
+import com.example.applepie.UI.BottomNavHelper;
 import com.example.applepie.UI.CartActivity;
 import com.example.applepie.UI.CategoryList;
 import com.example.applepie.UI.ChatBotActivity;
+import com.example.applepie.UI.LoginScreen1;
 import com.example.applepie.UI.NotificationActivity;
+import com.example.applepie.UI.ProductDetail;
 import com.example.applepie.UI.ProfileActivity;
+import com.example.applepie.Util.UserSessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,27 +58,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        // 👉 BẮT SỰ KIỆN CHO CÁC NÚT ĐIỀU HƯỚNG
-        findViewById(R.id.btn_home).setOnClickListener(v -> {
-            // Đang ở trang chủ, không cần chuyển
-        });
-
-        findViewById(R.id.btn_category).setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, CategoryList.class));
-        });
-
-        findViewById(R.id.btn_buy).setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, CartActivity.class));
-        });
-
-        findViewById(R.id.btn_chat).setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, ChatBotActivity.class));
-        });
-
-        findViewById(R.id.btn_profile).setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-        });
+        BottomNavHelper.setupBottomNav(this);
 
         // Scroll ngang danh mục
         scrollHomepage = findViewById(R.id.scrollHomepage);

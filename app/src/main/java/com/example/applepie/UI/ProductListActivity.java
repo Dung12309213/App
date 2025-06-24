@@ -77,8 +77,8 @@ public class ProductListActivity extends AppCompatActivity {
 
         ImageView img = itemView.findViewById(R.id.imgProductListItem);
         TextView tvName = itemView.findViewById(R.id.tvProductName);
-        TextView tvPrice = itemView.findViewById(R.id.tvPrice);
-        TextView tvSecondPrice = itemView.findViewById(R.id.tvSecondPrice);
+        TextView tvProductPrice = itemView.findViewById(R.id.tvProductPrice);
+        TextView tvProductSecondPrice = itemView.findViewById(R.id.tvProductSecondPrice);
         TextView tvProductDiscountPercent = itemView.findViewById(R.id.tvProductDiscountPercent);
 
         // Set dữ liệu
@@ -92,19 +92,19 @@ public class ProductListActivity extends AppCompatActivity {
                                                     if (variantDoc.exists()) {
                                                         Variant v = variantDoc.toObject(Variant.class);
                                                         if (v != null) {
-                                                            tvPrice.setText(String.format("%,d đ", v.getPrice()));
-                                                            tvSecondPrice.setText(String.format("%,d đ", v.getSecondprice()));
+                                                            tvProductPrice.setText(String.format("%,d đ", v.getPrice()));
+                                                            tvProductSecondPrice.setText(String.format("%,d đ", v.getSecondprice()));
 
                                                             if (v.getSecondprice() > 0) {
-                                                                tvSecondPrice.setVisibility(View.VISIBLE);
-                                                                tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                                                tvProductSecondPrice.setVisibility(View.VISIBLE);
+                                                                tvProductPrice.setPaintFlags(tvProductPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
                                                                 int discountPercent = (v.getPrice() - v.getSecondprice()) * 100 / v.getPrice();
                                                                 tvProductDiscountPercent.setText(discountPercent + "%");
                                                                 tvProductDiscountPercent.setVisibility(View.VISIBLE);
                                                             } else {
-                                                                tvSecondPrice.setVisibility(View.GONE);
-                                                                tvPrice.setPaintFlags(0); // bỏ gạch ngang nếu không có khuyến mãi
+                                                                tvProductSecondPrice.setVisibility(View.GONE);
+                                                                tvProductPrice.setPaintFlags(0); // bỏ gạch ngang nếu không có khuyến mãi
                                                                 tvProductDiscountPercent.setVisibility(View.GONE);
                                                             }
                                                         }

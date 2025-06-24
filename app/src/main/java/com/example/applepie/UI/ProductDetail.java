@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup; // Import thêm ViewGroup cho Adapter
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -24,7 +23,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2; // Quan trọng cho ViewPager2
-import androidx.recyclerview.widget.RecyclerView; // Quan trọng cho Adapter của ViewPager2
 
 import com.bumptech.glide.Glide;
 import com.example.applepie.Adapter.ProductImageAdapter;
@@ -57,11 +55,16 @@ public class ProductDetail extends AppCompatActivity {
     private ImageView arrowInstruction, imgAvrStar; // imgProduct sẽ được thay bằng ViewPager2
     private TextView tvDiscountedPrice, tvOriginalPrice;
     private TextView txtUses1, txtUses2, txtUses3, txtUses4;
+    private TextView tvVariantPrice, tvVariantSecondPrice, tvQuantity;
     LayoutInflater inflate; // Biến này nên được khởi tạo trong onCreate hoặc constructor
 
     // Biến cho ViewPager2
     private ViewPager2 productImageViewPager;
     private ImageView btnBack; // Đã có ở trên, nhưng khai báo lại để rõ ràng hơn
+
+    private int currentVariantQuantity = 1;
+    private int currentVariantPrice = 0;
+    private int currentVariantSecondPrice = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +135,11 @@ public class ProductDetail extends AppCompatActivity {
         txtUses4 = findViewById(R.id.txtUses4);
         sameCateProductLayout = findViewById(R.id.sameCateProduct);
         btnBack = findViewById(R.id.btnBack); // Ánh xạ nút back ở đây
+
+        tvVariantPrice=findViewById(R.id.tvVariantPrice);
+        tvVariantSecondPrice=findViewById(R.id.tvVariantSecondPrice);
+        tvQuantity=findViewById(R.id.tvQuantity);
+
     }
 
     // Phương thức để thêm các sự kiện click, v.v.
@@ -180,90 +188,118 @@ public class ProductDetail extends AppCompatActivity {
 
         // Xử lý sự kiện khi nhấn nút "MUA NGAY"
         findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
-            // Khởi tạo BottomSheetDialog và popup
-            View quantityPopup = inflate.inflate(R.layout.product_buy_now_popup, null); // Sử dụng biến inflate đã khởi tạo
+            View quantityPopup = inflate.inflate(R.layout.product_buy_now_popup, null);
             BottomSheetDialog dialog = new BottomSheetDialog(ProductDetail.this);
             dialog.setContentView(quantityPopup);
             dialog.show();
 
-            // Khởi tạo container cho các biến thể (item_variant)
+            TextView tvVariantPrice = quantityPopup.findViewById(R.id.tvVariantPrice);
+            TextView tvVariantSecondPrice = quantityPopup.findViewById(R.id.tvVariantSecondPrice);
             GridLayout variantContainer = quantityPopup.findViewById(R.id.gridVariant);
+            TextView tvQuantity = quantityPopup.findViewById(R.id.tvQuantity);
+
             String productId = getIntent().getStringExtra("productId");
 
             // Lấy thông tin biến thể từ Firestore
-            db.collection("Product")
-                    .document(productId)
-                    .collection("Variant")
-                    .get()
-                    .addOnSuccessListener(queryDocumentSnapshots -> {
-                        for (DocumentSnapshot variantDoc : queryDocumentSnapshots.getDocuments()) {
-                            Variant variant = variantDoc.toObject(Variant.class);
-                            variant.setId(variantDoc.getId());
+            loadVariantsAndUpdateUI(productId, variantContainer, tvVariantPrice, tvVariantSecondPrice, tvQuantity);
 
-                            if (variant != null) {
-                                // Inflate item_variant và cập nhật thông tin
-                                View variantItem = LayoutInflater.from(ProductDetail.this)
-                                        .inflate(R.layout.item_variant, variantContainer, false);
-
-                                // Lấy Button trong item_variant và cập nhật với tên biến thể
-                                Button btnVariant = variantItem.findViewById(R.id.btnVariant);
-                                btnVariant.setText(variant.getVariant());
-
-                                // Đặt sự kiện click cho btnVariant
-                                btnVariant.setOnClickListener(v1 -> {
-                                    // Đặt lại màu cho tất cả các nút variant
-                                    for (int i = 0; i < variantContainer.getChildCount(); i++) {
-                                        View variantItemChild = variantContainer.getChildAt(i);
-                                        Button btn = variantItemChild.findViewById(R.id.btnVariant);
-
-                                        // Đặt lại màu mặc định cho các nút chưa được chọn
-                                        btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E0E0E0")));
-                                    }
-
-                                    // Thay đổi màu cho nút đã được chọn
-                                    btnVariant.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#9C5221")));
-
-                                    // Hiển thị thông báo khi người dùng chọn biến thể
-                                    Toast.makeText(ProductDetail.this, "Chọn biến thể: " + variant.getVariant(), Toast.LENGTH_SHORT).show();
-                                });
-
-                                // Thêm item vào container
-                                variantContainer.addView(variantItem);
-                            }
-                        }
-                    });
-
-            // Khởi tạo các view trong popup
             ImageButton btnMinus = quantityPopup.findViewById(R.id.btnMinus);
             ImageButton btnPlus = quantityPopup.findViewById(R.id.btnPlus);
-            TextView tvQuantity = quantityPopup.findViewById(R.id.tvQuantity);
             Button btnConfirm = quantityPopup.findViewById(R.id.btnProductBuyConfirm);
 
-            // Giảm số lượng
-            btnMinus.setOnClickListener(vol -> {
-                int current = Integer.parseInt(tvQuantity.getText().toString());
-                if (current > 1) {
-                    tvQuantity.setText(String.valueOf(current - 1));
-                }
-            });
-
-            // Tăng số lượng
-            btnPlus.setOnClickListener(vol -> {
-                int current = Integer.parseInt(tvQuantity.getText().toString());
-                tvQuantity.setText(String.valueOf(current + 1));
-            });
+            // Thiết lập sự kiện tăng số lượng
+            setQuantityChangeListener(tvQuantity, btnPlus, btnMinus, tvVariantPrice, tvVariantSecondPrice);
 
             // Xác nhận mua hàng
             btnConfirm.setOnClickListener(vol -> {
-                // TODO: Gửi thông tin đặt hàng hoặc thêm vào giỏ hàng ở đây
                 int quantity = Integer.parseInt(tvQuantity.getText().toString());
-
-                // Lấy thông tin về biến thể đã chọn (nếu cần)
-                // Có thể lấy tên biến thể và giá từ các nút đã chọn.
-
                 Log.d("ProductDetail", "Quantity: " + quantity);
                 dialog.dismiss();
             });
+        });
+    }
+
+    private void loadVariantsAndUpdateUI(String productId, GridLayout variantContainer, TextView tvVariantPrice, TextView tvVariantSecondPrice, TextView tvQuantity) {
+        db.collection("Product")
+                .document(productId)
+                .collection("Variant")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (DocumentSnapshot variantDoc : queryDocumentSnapshots.getDocuments()) {
+                        Variant variant = variantDoc.toObject(Variant.class);
+                        variant.setId(variantDoc.getId());
+
+                        if (variant != null) {
+                            View variantItem = LayoutInflater.from(ProductDetail.this)
+                                    .inflate(R.layout.item_variant, variantContainer, false);
+
+                            Button btnVariant = variantItem.findViewById(R.id.btnVariant);
+                            btnVariant.setText(variant.getVariant());
+
+                            btnVariant.setOnClickListener(v1 -> {
+                                updateVariantSelection(variant, variantContainer, btnVariant);
+                                updateVariantPrice(variant, tvVariantPrice, tvVariantSecondPrice);
+                                updateTotalPrice(tvVariantPrice, tvVariantSecondPrice, tvQuantity);
+                            });
+
+                            variantContainer.addView(variantItem);
+                        }
+                    }
+                });
+    }
+
+    private void updateVariantSelection(Variant variant, GridLayout variantContainer, Button selectedBtn) {
+        for (int i = 0; i < variantContainer.getChildCount(); i++) {
+            View variantItemChild = variantContainer.getChildAt(i);
+            Button btn = variantItemChild.findViewById(R.id.btnVariant);
+            btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E0E0E0")));
+        }
+
+        selectedBtn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#9C5221")));
+    }
+
+    private void updateVariantPrice(Variant variant, TextView tvVariantPrice, TextView tvVariantSecondPrice) {
+        currentVariantPrice = variant.getPrice();  // Lưu giá chính vào biến
+        currentVariantSecondPrice = variant.getSecondprice();  // Lưu giá giảm vào biến
+
+        if (currentVariantSecondPrice == 0) {
+            tvVariantPrice.setText(String.format("%,d đ", currentVariantPrice));
+            tvVariantSecondPrice.setVisibility(View.GONE);
+        } else {
+            tvVariantPrice.setText(String.format("%,d đ", currentVariantPrice));
+            tvVariantSecondPrice.setText(String.format("%,d đ", currentVariantSecondPrice));
+            tvVariantSecondPrice.setVisibility(View.VISIBLE);
+            tvVariantSecondPrice.setPaintFlags(tvVariantSecondPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+    }
+
+    private void updateTotalPrice(TextView tvVariantPrice, TextView tvVariantSecondPrice, TextView tvQuantity) {
+        int quantity = Integer.parseInt(tvQuantity.getText().toString());
+
+        // Tính tổng giá và giá giảm
+        int totalPrice = currentVariantPrice * quantity;
+        int totalSecondPrice = currentVariantSecondPrice * quantity;
+
+        // Cập nhật giá tổng
+        tvVariantPrice.setText(String.format("%,d đ", totalPrice));
+        if (currentVariantSecondPrice != 0) {
+            tvVariantSecondPrice.setText(String.format("%,d đ", totalSecondPrice));
+        }
+    }
+
+    private void setQuantityChangeListener(TextView tvQuantity, ImageButton btnPlus, ImageButton btnMinus, TextView tvVariantPrice, TextView tvVariantSecondPrice) {
+        btnPlus.setOnClickListener(v -> {
+            currentVariantQuantity++;
+            tvQuantity.setText(String.valueOf(currentVariantQuantity));
+            updateTotalPrice(tvVariantPrice, tvVariantSecondPrice, tvQuantity);
+        });
+
+        btnMinus.setOnClickListener(v -> {
+            if (currentVariantQuantity > 1) {
+                currentVariantQuantity--;
+                tvQuantity.setText(String.valueOf(currentVariantQuantity));
+                updateTotalPrice(tvVariantPrice, tvVariantSecondPrice, tvQuantity);
+            }
         });
     }
 

@@ -1,7 +1,6 @@
 package com.example.applepie.UI;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,11 +15,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.applepie.Connector.FirebaseConnector;
-import com.example.applepie.Connector.SQLiteHelper;
 import  com.example.applepie.MainActivity;
 import com.example.applepie.Model.User;
 import  com.example.applepie.R;
 import com.example.applepie.Util.NetworkUtils;
+import com.example.applepie.Util.UserSessionManager;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -32,7 +31,8 @@ public class LoginScreen1 extends AppCompatActivity {
     ImageButton btnBack;
     TextView txtRegister, txtForgotPassword;
 
-    SQLiteHelper dbHelper;
+    private UserSessionManager sessionManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,6 @@ public class LoginScreen1 extends AppCompatActivity {
         addViews();
         addEvents();
 
-        dbHelper = new SQLiteHelper(this);
     }
 
     private void addViews() {
@@ -110,7 +109,8 @@ public class LoginScreen1 extends AppCompatActivity {
                             DocumentSnapshot document = result.getDocuments().get(0);
                             User user = document.toObject(User.class);
 
-                            dbHelper.saveUser(document.getId(), user.getName());
+                            sessionManager = new UserSessionManager(LoginScreen1.this);
+                            sessionManager.saveUser(document.getId(), user.getName());
 
                             Toast.makeText(LoginScreen1.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginScreen1.this, MainActivity.class);
@@ -127,7 +127,8 @@ public class LoginScreen1 extends AppCompatActivity {
                                                 DocumentSnapshot document = result2.getDocuments().get(0);
                                                 User user = document.toObject(User.class);
 
-                                                dbHelper.saveUser(document.getId(), user.getName());
+                                                sessionManager = new UserSessionManager(LoginScreen1.this);
+                                                sessionManager.saveUser(document.getId(), user.getName());
 
                                                 Toast.makeText(LoginScreen1.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(LoginScreen1.this, MainActivity.class);

@@ -92,7 +92,7 @@
             android:id="@+id/itemPaymentMethods"
             layout="@layout/item_profile_option_payment_methods" />
         <include
-            android:id="@+id/Coupon"
+            android:id="@+id/itemCoupon"
             layout="@layout/item_profile_option_coupon" />
         <include
             android:id="@+id/itemMyorders"

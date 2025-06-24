@@ -16,13 +16,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.applepie.Connector.SQLiteHelper;
 import com.example.applepie.MainActivity;
 import com.example.applepie.R;
 import com.example.applepie.Service.EmailSender;
+import com.example.applepie.Util.UserSessionManager;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Map;
 
 public class DeleteOtpActivity extends AppCompatActivity {
 
@@ -31,7 +29,7 @@ public class DeleteOtpActivity extends AppCompatActivity {
     ImageButton btnBack;
     TextView txtResend;
     FirebaseFirestore db;
-    SQLiteHelper dbHelper;
+    private UserSessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,7 @@ public class DeleteOtpActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        dbHelper = new SQLiteHelper(this);
+        sessionManager = new UserSessionManager(this);
         addViews();
         addEvents();
         setupOtpInput();
@@ -84,7 +82,7 @@ public class DeleteOtpActivity extends AppCompatActivity {
                         .document(userId)
                         .delete();
                 Toast.makeText(DeleteOtpActivity.this, getString(R.string.User_Delete_Successfull), Toast.LENGTH_SHORT).show();
-                dbHelper.logoutUser();
+                sessionManager.logout();
                 Intent intent = new Intent(DeleteOtpActivity.this, MainActivity.class);
                 startActivity(intent);
             } else {

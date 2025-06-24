@@ -34,8 +34,8 @@ public class FlashSaleAdapter extends RecyclerView.Adapter<FlashSaleAdapter.View
             super(itemView);
             imgProduct = itemView.findViewById(R.id.imgProduct);
             tvDiscount = itemView.findViewById(R.id.tvDiscount);
-            tvPrice = itemView.findViewById(R.id.tvPrice);
-            tvSecond = itemView.findViewById(R.id.tvSecondPrice);
+            tvPrice = itemView.findViewById(R.id.tvVariantPrice);
+            tvSecond = itemView.findViewById(R.id.tvVariantSecondPrice);
             tvName = itemView.findViewById(R.id.tvName);
         }
     }

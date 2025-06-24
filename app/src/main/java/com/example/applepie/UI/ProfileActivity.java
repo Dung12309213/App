@@ -2,7 +2,6 @@ package com.example.applepie.UI;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,8 +17,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.applepie.Connector.SQLiteHelper;
 import  com.example.applepie.R;
+import com.example.applepie.Util.UserSessionManager;
 import com.google.android.material.imageview.ShapeableImageView;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -28,8 +27,8 @@ public class ProfileActivity extends AppCompatActivity {
    ShapeableImageView profileImage;
     TextView tvLoginLogout, tvUserName;
     ImageView imgLoginLogout;
-    ConstraintLayout itemYourProfile, itemPaymentMethods, itemMyCoupons, itemMyorders, ItemMyCoupons;
-    SQLiteHelper dbHelper;
+    ConstraintLayout itemYourProfile, itemPaymentMethods, itemCoupon, itemMyorders;
+    private UserSessionManager sessionManager;
 
     private ActivityResultLauncher<Intent> imagePickerLauncher;
 
@@ -38,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        dbHelper = new SQLiteHelper(this);
+        sessionManager = new UserSessionManager(this);
 
         addViews();
         addEvents();
@@ -77,7 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         findViewById(R.id.itemSettings).setOnClickListener(v ->
                 startActivity(new Intent(this, SettingsActivity.class)));
-        findViewById(R.id.Coupon).setOnClickListener(v ->
+        findViewById(R.id.itemCoupon).setOnClickListener(v ->
                 startActivity(new Intent(this, Coupon.class)));
 
         findViewById(R.id.itemPolicy).setOnClickListener(v ->
@@ -87,8 +86,11 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MyOrdersActivity.class)));
 
 
-        /*findViewById(R.id.itemMyCoupons).setOnClickListener(v ->
-                startActivity(new Intent(this, Coupon.class)));*/
+        findViewById(R.id.itemCoupon).setOnClickListener(v ->
+                startActivity(new Intent(this, Coupon.class)));
+
+        findViewById(R.id.itemYourprofile).setOnClickListener(v ->
+                startActivity(new Intent(this, YourProfileActivity.class)));
     }
 
     private void addViews() {
@@ -97,43 +99,35 @@ public class ProfileActivity extends AppCompatActivity {
         tvUserName = findViewById(R.id.tvUsername);
         tvLoginLogout=findViewById(R.id.tvLoginLogout);
         imgLoginLogout = findViewById(R.id.imgLoginLogout);
-        itemYourProfile = findViewById(R.id.itemYourprofile);
         itemPaymentMethods = findViewById(R.id.itemPaymentMethods);
-        //itemMyCoupons = findViewById(R.id.itemMyCoupons);
+        itemYourProfile = findViewById(R.id.itemYourprofile);
+        itemCoupon = findViewById(R.id.itemCoupon);
         itemMyorders = findViewById(R.id.itemMyorders);
 
     }
 
     @SuppressLint("Range")
     private void checkLoggedIn() {
-        // Lấy dữ liệu người dùng từ SQLite
-        Cursor cursor = dbHelper.getUser();
+        String userName = sessionManager.getUserName();
 
-        // Kiểm tra nếu có dữ liệu trong bảng User
-        if (cursor != null && cursor.moveToFirst()) {
-            // Nếu có, tức là người dùng đã đăng nhập
+        if (!userName.equals("Guest")) {
             tvLoginLogout.setText("Logout");
-            tvUserName.setText(cursor.getString(cursor.getColumnIndex("name")));  // Hiển thị tên người dùng
+            tvUserName.setText(userName);
             imgLoginLogout.setImageResource(R.drawable.ic_logout);
             itemYourProfile.setVisibility(View.VISIBLE);
             itemPaymentMethods.setVisibility(View.VISIBLE);
-            //itemMyCoupons.setVisibility(View.VISIBLE);
             itemMyorders.setVisibility(View.VISIBLE);
-            // Thay đổi nút thành "Logout"
             findViewById(R.id.itemLogin).setOnClickListener(v -> logout());
         } else {
-            // Nếu không có, tức là chưa đăng nhập
             tvLoginLogout.setText("Login");
             tvUserName.setText("Guest");
             imgLoginLogout.setImageResource(R.drawable.ic_login);
             itemYourProfile.setVisibility(View.GONE);
             itemPaymentMethods.setVisibility(View.GONE);
-            //itemMyCoupons.setVisibility(View.GONE);
             itemMyorders.setVisibility(View.GONE);
-            // Thay đổi nút thành "Login"
+            itemCoupon.setVisibility(View.GONE);
             findViewById(R.id.itemLogin).setOnClickListener(v -> login());
         }
-        cursor.close();
     }
 
     // Phương thức xử lý đăng nhập
@@ -145,30 +139,20 @@ public class ProfileActivity extends AppCompatActivity {
 
     // Phương thức xử lý đăng xuất
     private void logout() {
-        // Hiển thị hộp thoại xác nhận trước khi thực hiện logout
         new AlertDialog.Builder(this)
                 .setTitle("Đăng xuất")
                 .setMessage("Bạn có chắc muốn đăng xuất?")
                 .setPositiveButton("Đăng xuất", (dialog, which) -> {
-                    // Xóa thông tin người dùng trong SQLite khi đăng xuất
-                    dbHelper.logoutUser();
-
-                    // Cập nhật giao diện
+                    sessionManager.logout();
                     tvLoginLogout.setText("Login");
                     imgLoginLogout.setImageResource(R.drawable.ic_login);
                     tvUserName.setText("Guest");
                     itemYourProfile.setVisibility(View.GONE);
                     itemPaymentMethods.setVisibility(View.GONE);
-                    //itemMyCoupons.setVisibility(View.GONE);
                     itemMyorders.setVisibility(View.GONE);
-
-                    // Cập nhật nút Login
                     findViewById(R.id.itemLogin).setOnClickListener(v -> login());
                 })
-                .setNegativeButton("Hủy", (dialog, which) -> {
-                    // Nếu người dùng chọn "Hủy", không thực hiện gì cả
-                    dialog.dismiss();
-                })
+                .setNegativeButton("Hủy", (dialog, which) -> dialog.dismiss())
                 .show();
     }
 }

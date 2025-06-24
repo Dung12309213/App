@@ -26,17 +26,15 @@
                 android:padding="16dp"
                 android:background="#FFFFFF">
 
-
-
                 <!-- Product grid: 2 columns -->
-                <GridLayout
-                    android:id="@+id/gridProducts"
+                <!-- Đã thay thế GridLayout bằng RecyclerView để tối ưu hiệu suất và xử lý hiển thị tốt hơn -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProducts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:columnCount="2"
-                    android:alignmentMode="alignMargins"
-                    android:useDefaultMargins="true">
-                </GridLayout>
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    tools:listitem="@layout/item_product" />
             </LinearLayout>
 
             <!-- Bạn có thể chèn các phần khác phía dưới -->
@@ -54,6 +52,5 @@
 
         <include layout="@layout/bottom_menu"></include>
     </LinearLayout>
-
 
 </RelativeLayout>

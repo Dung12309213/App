@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup; // Import thêm ViewGroup cho Adapter
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -19,12 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.viewpager2.widget.ViewPager2; // Quan trọng cho ViewPager2
-import androidx.recyclerview.widget.RecyclerView; // Quan trọng cho Adapter của ViewPager2
+import androidx.viewpager2.widget.ViewPager2;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.applepie.Adapter.ProductImageAdapter;
@@ -37,7 +38,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductDetail extends AppCompatActivity {
 
@@ -54,20 +57,21 @@ public class ProductDetail extends AppCompatActivity {
     private ImageView arrowIngredients;
     private LinearLayout headerInstruction;
     private TextView tvInstructionDetail;
-    private ImageView arrowInstruction, imgAvrStar; // imgProduct sẽ được thay bằng ViewPager2
+    private ImageView arrowInstruction, imgAvrStar;
     private TextView tvDiscountedPrice, tvOriginalPrice;
     private TextView txtUses1, txtUses2, txtUses3, txtUses4;
-    LayoutInflater inflate; // Biến này nên được khởi tạo trong onCreate hoặc constructor
+    LayoutInflater inflate;
 
     // Biến cho ViewPager2
     private ViewPager2 productImageViewPager;
-    private ImageView btnBack; // Đã có ở trên, nhưng khai báo lại để rõ ràng hơn
+    private TextView tvImagePageIndicator; // Đã khai báo ở đây
+    private ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_product_detail); // Đảm bảo đây là layout chính của bạn
+        setContentView(R.layout.activity_product_detail);
 
         // Khởi tạo Firebase
         db = FirebaseConnector.getInstance();
@@ -81,24 +85,14 @@ public class ProductDetail extends AppCompatActivity {
         });
 
         // Khởi tạo LayoutInflater
-        inflate = LayoutInflater.from(this); // Khởi tạo ở đây
+        inflate = LayoutInflater.from(this);
 
         // Ánh xạ các Views từ layout
         addViews();
 
-        // Thiết lập ViewPager2 cho hình ảnh sản phẩm
-        // Tìm ViewPager2 trong layout
-        productImageViewPager = findViewById(R.id.productImageViewPager);
-        // Chuẩn bị dữ liệu hình ảnh (ví dụ với 3 hình ảnh)
-        List<Integer> imageList = new ArrayList<>();
-        // Bạn cần thay thế bằng các tài nguyên drawable thực tế của mình trong res/drawable/
-        imageList.add(R.drawable.ic_homepage_mau1);
-        imageList.add(R.drawable.ic_homepage_mau2);
-        imageList.add(R.drawable.ic_homepage_mau3);
-        // Bạn có thể thêm bao nhiêu hình tùy thích vào đây
-        // Tạo Adapter và gán cho ViewPager2
-        ProductImageAdapter adapter = new ProductImageAdapter(imageList);
-        productImageViewPager.setAdapter(adapter);
+        // DÒNG MỚI THÊM: Ánh xạ TextView cho chỉ số trang
+        tvImagePageIndicator = findViewById(R.id.tvImagePageIndicator);
+
 
         // Load chi tiết sản phẩm nếu có productId
         if (productId != null) {
@@ -125,13 +119,13 @@ public class ProductDetail extends AppCompatActivity {
         imgAvrStar = findViewById(R.id.imgAvrStar);
         tvOriginalPrice = findViewById(R.id.tvOriginalPrice);
         tvDiscountedPrice = findViewById(R.id.tvDiscountedPrice);
-        // imgProduct đã được thay bằng productImageViewPager nên không cần ánh xạ ở đây
+        productImageViewPager = findViewById(R.id.productImageViewPager); // Ánh xạ ViewPager2
         txtUses1 = findViewById(R.id.txtUses1);
         txtUses2 = findViewById(R.id.txtUses2);
         txtUses3 = findViewById(R.id.txtUses3);
         txtUses4 = findViewById(R.id.txtUses4);
         sameCateProductLayout = findViewById(R.id.sameCateProduct);
-        btnBack = findViewById(R.id.btnBack); // Ánh xạ nút back ở đây
+        btnBack = findViewById(R.id.btnBack);
     }
 
     // Phương thức để thêm các sự kiện click, v.v.
@@ -181,7 +175,7 @@ public class ProductDetail extends AppCompatActivity {
         // Xử lý sự kiện khi nhấn nút "MUA NGAY"
         findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
             // Khởi tạo BottomSheetDialog và popup
-            View quantityPopup = inflate.inflate(R.layout.product_buy_now_popup, null); // Sử dụng biến inflate đã khởi tạo
+            View quantityPopup = inflate.inflate(R.layout.product_buy_now_popup, null);
             BottomSheetDialog dialog = new BottomSheetDialog(ProductDetail.this);
             dialog.setContentView(quantityPopup);
             dialog.show();
@@ -278,13 +272,40 @@ public class ProductDetail extends AppCompatActivity {
                         product.setId(productId);
                         if (product != null) {
                             displayProductDetails(product);
+
+                            // DÒNG MỚI THÊM/SỬA: Thiết lập ViewPager2 với dữ liệu ảnh hiện có
+                            // VÌ BẠN KHÔNG MUỐN SỬA LOGIC TẢI ẢNH, NÊN MÌNH GIỮ NGUYÊN CÁCH BẠN KHỞI TẠO ADAPTER BAN ĐẦU
+                            List<Integer> imageList = new ArrayList<>(); // Đây là List<Integer> như bạn đang dùng
+                            // Bạn cần thay thế bằng các tài nguyên drawable thực tế của mình trong res/drawable/
+                            imageList.add(R.drawable.ic_homepage_mau1);
+                            imageList.add(R.drawable.ic_homepage_mau2);
+                            imageList.add(R.drawable.ic_homepage_mau3);
+                            // Nếu bạn có nhiều ảnh từ Firebase, bạn sẽ phải chuyển đổi chúng sang drawable resource IDs
+                            // HOẶC CẬP NHẬT ProductImageAdapter để nhận List<String> URL và dùng Glide như mình đã gợi ý TRƯỚC ĐÓ.
+
+                            ProductImageAdapter adapter = new ProductImageAdapter(imageList); // Sử dụng List<Integer> hiện tại của bạn
+                            productImageViewPager.setAdapter(adapter);
+
+                            // DÒNG MỚI THÊM: Cập nhật chỉ số trang ban đầu và lắng nghe sự kiện
+                            if (!imageList.isEmpty()) { // Đảm bảo có ảnh để hiển thị chỉ số
+                                updatePageIndicator(0, imageList.size());
+                                productImageViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                                    @Override
+                                    public void onPageSelected(int position) {
+                                        super.onPageSelected(position);
+                                        updatePageIndicator(position, imageList.size());
+                                    }
+                                });
+                            } else {
+                                tvImagePageIndicator.setVisibility(View.GONE); // Ẩn nếu không có ảnh
+                            }
+
                             String cateid = product.getCateid();
                             loadCategoryDetails(cateid);
                         }
                     } else {
-                        // Xử lý trường hợp không tìm thấy sản phẩm
                         Toast.makeText(this, "Không tìm thấy sản phẩm này.", Toast.LENGTH_SHORT).show();
-                        finish(); // Đóng Activity nếu sản phẩm không tồn tại
+                        finish();
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -294,11 +315,21 @@ public class ProductDetail extends AppCompatActivity {
                 });
     }
 
+    // DÒNG MỚI THÊM: Phương thức để cập nhật chỉ số trang của ViewPager2
+    private void updatePageIndicator(int currentPosition, int totalPages) {
+        if (totalPages > 0) {
+            String indicatorText = (currentPosition + 1) + "/" + totalPages;
+            tvImagePageIndicator.setText(indicatorText);
+            tvImagePageIndicator.setVisibility(View.VISIBLE);
+        } else {
+            tvImagePageIndicator.setVisibility(View.GONE); // Ẩn nếu không có ảnh
+        }
+    }
+
+
     // Phương thức để hiển thị chi tiết sản phẩm lên giao diện
     private void displayProductDetails(Product product) {
-        // imgProduct đã được thay thế bằng ViewPager2, nên không cần Glide.with(...).into(imgProduct) ở đây
-        // ViewPager2 sẽ được set Adapter với danh sách ảnh trong onCreate.
-
+        // tvProductCategory sẽ được set sau khi loadCategoryDetails
         tvProductDetailName.setText(product.getName());
         float rating = product.getRating();
         if (rating == 0) {
@@ -306,7 +337,7 @@ public class ProductDetail extends AppCompatActivity {
             imgAvrStar.setVisibility(View.GONE);
         } else {
             tvProductDetailRating.setText(String.format("%.1f", rating));
-            imgAvrStar.setVisibility(View.VISIBLE); // Đảm bảo sao hiển thị nếu có rating
+            imgAvrStar.setVisibility(View.VISIBLE);
         }
         tvDesc.setText(product.getDescription());
         tvIngredientsDetail.setText(product.getIngredient());
@@ -316,13 +347,12 @@ public class ProductDetail extends AppCompatActivity {
         db.collection("Product")
                 .document(product.getId())
                 .collection("Variant")
-                .document("V1") // Giả sử V1 là biến thể mặc định để hiển thị giá
+                .document("V1")
                 .get()
                 .addOnSuccessListener(variantDoc -> {
                     if (variantDoc.exists()) {
                         Variant v = variantDoc.toObject(Variant.class);
                         if (v != null) {
-                            // Hiển thị giá từ biến thể
                             if (v.getSecondprice() == 0) {
                                 tvOriginalPrice.setVisibility(View.GONE);
                                 tvDiscountedPrice.setText(String.format("%,d đ", v.getPrice()));
@@ -334,14 +364,12 @@ public class ProductDetail extends AppCompatActivity {
                         }
                     } else {
                         Log.w("ProductDetail", "Variant V1 not found for product: " + product.getId());
-                        // Xử lý trường hợp không có biến thể V1, ví dụ: ẩn giá
                         tvOriginalPrice.setVisibility(View.GONE);
                         tvDiscountedPrice.setText("Đang cập nhật giá");
                     }
                 })
                 .addOnFailureListener(e -> {
                     Log.e("ProductDetail", "Error loading variant V1: " + e.getMessage());
-                    // Xử lý lỗi khi tải biến thể
                     tvOriginalPrice.setVisibility(View.GONE);
                     tvDiscountedPrice.setText("Lỗi tải giá");
                 });
@@ -370,7 +398,7 @@ public class ProductDetail extends AppCompatActivity {
                     Log.e("ProductDetail", "Error loading category details: " + e.getMessage());
                     tvProductCategory.setText("Lỗi tải danh mục");
                 });
-        loadSameCategoryProducts(cateid); // Gọi để tải các sản phẩm cùng danh mục
+        loadSameCategoryProducts(cateid);
     }
 
     // Phương thức để tải các sản phẩm cùng danh mục
@@ -386,7 +414,6 @@ public class ProductDetail extends AppCompatActivity {
                         Product p = doc.toObject(Product.class);
                         p.setId(doc.getId());
 
-                        // Kiểm tra null trước khi so sánh và loại bỏ sản phẩm hiện tại
                         if (p != null && p.getId() != null && currentProductId != null && !p.getId().equals(currentProductId)) {
                             sameCateProducts.add(p);
                         }
@@ -401,8 +428,8 @@ public class ProductDetail extends AppCompatActivity {
 
     // Phương thức để hiển thị các sản phẩm cùng danh mục
     private void displaySameCategoryProducts(List<Product> productList) {
-        sameCateProductLayout.removeAllViews(); // Xóa các View cũ trước khi thêm mới
-        LayoutInflater inflater = LayoutInflater.from(this); // Sử dụng LayoutInflater cục bộ
+        sameCateProductLayout.removeAllViews();
+        LayoutInflater inflater = LayoutInflater.from(this);
 
         for (Product p : productList) {
             View itemView = inflater.inflate(R.layout.item_same_cate_product, sameCateProductLayout, false);
@@ -413,13 +440,11 @@ public class ProductDetail extends AppCompatActivity {
             Glide.with(this).load(p.getImageUrl()).into(img);
             name.setText(p.getName());
 
-            // Thiết lập sự kiện click cho mỗi sản phẩm tương tự
             itemView.setOnClickListener(v -> {
-                // Tải lại Activity với sản phẩm mới
                 Intent intent = new Intent(this, ProductDetail.class);
                 intent.putExtra("productId", p.getId());
                 startActivity(intent);
-                finish(); // Đóng Activity hiện tại để tránh chồng chất
+                finish();
             });
 
             sameCateProductLayout.addView(itemView);

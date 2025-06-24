@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,22 +14,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView; // Import RecyclerView
 
 import com.bumptech.glide.Glide;
+import com.example.applepie.Adapter.ProductAdapter;
 import com.example.applepie.Connector.FirebaseConnector;
 import com.example.applepie.MainActivity;
 import com.example.applepie.Model.Product;
 import com.example.applepie.Model.Variant;
 import com.example.applepie.R;
-import com.example.applepie.UI.ProductDetail;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList; // Import ArrayList
+import java.util.List; // Import List
 
 public class ProductListActivity extends AppCompatActivity {
 
     FirebaseFirestore db;
-    GridLayout gridLayout;
-    LayoutInflater inflater;
+    RecyclerView recyclerView; // Đã thay đổi thành RecyclerView
+    ProductAdapter productAdapter; // Khai báo ProductAdapter
+    List<Product> productList; // Danh sách để giữ dữ liệu sản phẩm
+    List<String> productIds; // Danh sách để giữ ID tài liệu sản phẩm
     String cateId;
 
     @Override
@@ -50,75 +56,44 @@ public class ProductListActivity extends AppCompatActivity {
         BottomNavHelper.setupBottomNav(this);
 
         cateId = getIntent().getStringExtra("cateId");
-        gridLayout = findViewById(R.id.gridProducts);
-        inflater = LayoutInflater.from(this);
+        recyclerView = findViewById(R.id.rvProducts); // Đã thay đổi ID thành rvProducts
         db = FirebaseConnector.getInstance();
+
+        // Khởi tạo danh sách
+        productList = new ArrayList<>();
+        productIds = new ArrayList<>();
+
+        // Thiết lập RecyclerView với GridLayoutManager (2 cột)
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        productAdapter = new ProductAdapter(this, productList, productIds);
+        recyclerView.setAdapter(productAdapter);
 
         if (cateId != null) {
             loadProductsByCategory(cateId);
         }
     }
+
     private void loadProductsByCategory(String cateId) {
         db.collection("Product")
                 .whereEqualTo("cateid", cateId)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    productList.clear(); // Xóa dữ liệu hiện có
+                    productIds.clear(); // Xóa ID hiện có
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         Product product = doc.toObject(Product.class);
                         if (product != null) {
-                            addProductToGrid(product, doc.getId());
+                            productList.add(product);
+                            productIds.add(doc.getId());
                         }
                     }
+                    productAdapter.notifyDataSetChanged(); // Thông báo cho adapter dữ liệu đã thay đổi
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ProductListActivity", "Lỗi khi tải sản phẩm: " + e.getMessage());
+                    // Tùy chọn: hiển thị thông báo cho người dùng
                 });
     }
 
-    private void addProductToGrid(Product product, String documentId) {
-        View itemView = inflater.inflate(R.layout.item_product, gridLayout, false);
-
-        ImageView img = itemView.findViewById(R.id.imgProductListItem);
-        TextView tvName = itemView.findViewById(R.id.tvProductName);
-        TextView tvPrice = itemView.findViewById(R.id.tvPrice);
-        TextView tvSecondPrice = itemView.findViewById(R.id.tvSecondPrice);
-        TextView tvProductDiscountPercent = itemView.findViewById(R.id.tvProductDiscountPercent);
-
-        // Set dữ liệu
-        tvName.setText(product.getName());
-        db.collection("Product")
-                .document(documentId)
-                        .collection("Variant")
-                                .document("V1")
-                                        .get()
-                                                .addOnSuccessListener(variantDoc ->{
-                                                    if (variantDoc.exists()) {
-                                                        Variant v = variantDoc.toObject(Variant.class);
-                                                        if (v != null) {
-                                                            tvPrice.setText(String.format("%,d đ", v.getPrice()));
-                                                            tvSecondPrice.setText(String.format("%,d đ", v.getSecondprice()));
-
-                                                            if (v.getSecondprice() > 0) {
-                                                                tvSecondPrice.setVisibility(View.VISIBLE);
-                                                                tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
-                                                                int discountPercent = (v.getPrice() - v.getSecondprice()) * 100 / v.getPrice();
-                                                                tvProductDiscountPercent.setText(discountPercent + "%");
-                                                                tvProductDiscountPercent.setVisibility(View.VISIBLE);
-                                                            } else {
-                                                                tvSecondPrice.setVisibility(View.GONE);
-                                                                tvPrice.setPaintFlags(0); // bỏ gạch ngang nếu không có khuyến mãi
-                                                                tvProductDiscountPercent.setVisibility(View.GONE);
-                                                            }
-                                                        }
-                                                    }
-                                                });
-
-        Glide.with(this).load(product.getImageUrl()).into(img);
-
-        img.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ProductDetail.class);
-            intent.putExtra("productId", documentId);
-            startActivity(intent);
-        });
-
-        gridLayout.addView(itemView);
-    }
+    // Phương thức addProductToGrid không còn cần thiết vì logic đã chuyển sang ProductAdapter
 }

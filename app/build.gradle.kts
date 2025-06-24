@@ -60,4 +60,5 @@ dependencies {
     implementation ("com.sun.mail:android-mail:1.6.6")
     implementation ("com.sun.mail:android-activation:1.6.6")
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    implementation ("com.google.code.gson:gson:2.8.8")
 }

@@ -15,7 +15,7 @@
 
         <!-- Ảnh sản phẩm -->
         <ImageView
-            android:id="@+id/imgProduct"
+            android:id="@+id/imgCheckOutSummaryProduct"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:scaleType="centerCrop"
@@ -36,8 +36,8 @@
             android:textColor="@color/textcolor"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imgProduct"
-            app:layout_constraintTop_toTopOf="@id/imgProduct" />
+            app:layout_constraintStart_toEndOf="@id/imgCheckOutSummaryProduct"
+            app:layout_constraintTop_toTopOf="@id/imgCheckOutSummaryProduct" />
 
         <!-- Dung tích hoặc phân loại -->
         <TextView
@@ -51,12 +51,12 @@
             android:textColor="#777"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imgProduct"
+            app:layout_constraintStart_toEndOf="@id/imgCheckOutSummaryProduct"
             app:layout_constraintTop_toBottomOf="@id/txtName" />
 
         <!-- Giá tiền -->
         <TextView
-            android:id="@+id/txtPrice"
+            android:id="@+id/txtSummaryPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -68,6 +68,20 @@
             app:layout_constraintTop_toBottomOf="@id/txtSize" />
 
         <!-- Số lượng -->
+
+        <TextView
+            android:id="@+id/txtSummarySecondPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="690.000 đ"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtSize" />
+
         <TextView
             android:id="@+id/txtQuantity"
             android:layout_width="wrap_content"
@@ -78,7 +92,7 @@
             android:text="x2"
             android:textColor="@color/textcolor"
             android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/imgProduct"
+            app:layout_constraintStart_toEndOf="@+id/imgCheckOutSummaryProduct"
             app:layout_constraintTop_toBottomOf="@+id/txtSize" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

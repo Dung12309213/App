@@ -1,6 +1,7 @@
 package com.example.applepie.UI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -30,12 +31,20 @@ import com.example.applepie.Connector.FirebaseConnector;
 import com.example.applepie.Model.Product;
 import com.example.applepie.Model.Variant;
 import com.example.applepie.R;
+import com.example.applepie.Util.UserSessionManager;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductDetail extends AppCompatActivity {
 
@@ -52,7 +61,7 @@ public class ProductDetail extends AppCompatActivity {
     private ImageView arrowIngredients;
     private LinearLayout headerInstruction;
     private TextView tvInstructionDetail;
-    private ImageView arrowInstruction, imgAvrStar; // imgProduct sẽ được thay bằng ViewPager2
+    private ImageView arrowInstruction, imgAvrStar;
     private TextView tvDiscountedPrice, tvOriginalPrice;
     private TextView txtUses1, txtUses2, txtUses3, txtUses4;
     private TextView tvVariantPrice, tvVariantSecondPrice, tvQuantity;
@@ -60,17 +69,21 @@ public class ProductDetail extends AppCompatActivity {
 
     // Biến cho ViewPager2
     private ViewPager2 productImageViewPager;
-    private ImageView btnBack; // Đã có ở trên, nhưng khai báo lại để rõ ràng hơn
+    private TextView tvImagePageIndicator; // Đã khai báo ở đây
+    private ImageView btnBack;
+    private LinearLayout btnAddToCart;
 
     private int currentVariantQuantity = 1;
     private int currentVariantPrice = 0;
     private int currentVariantSecondPrice = 0;
+    private String currentVarriantId;
+    private String currentVarriantName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_product_detail); // Đảm bảo đây là layout chính của bạn
+        setContentView(R.layout.activity_product_detail);
 
         // Khởi tạo Firebase
         db = FirebaseConnector.getInstance();
@@ -89,19 +102,8 @@ public class ProductDetail extends AppCompatActivity {
         // Ánh xạ các Views từ layout
         addViews();
 
-        // Thiết lập ViewPager2 cho hình ảnh sản phẩm
-        // Tìm ViewPager2 trong layout
-        productImageViewPager = findViewById(R.id.productImageViewPager);
-        // Chuẩn bị dữ liệu hình ảnh (ví dụ với 3 hình ảnh)
-        List<Integer> imageList = new ArrayList<>();
-        // Bạn cần thay thế bằng các tài nguyên drawable thực tế của mình trong res/drawable/
-        imageList.add(R.drawable.ic_homepage_mau1);
-        imageList.add(R.drawable.ic_homepage_mau2);
-        imageList.add(R.drawable.ic_homepage_mau3);
-        // Bạn có thể thêm bao nhiêu hình tùy thích vào đây
-        // Tạo Adapter và gán cho ViewPager2
-        ProductImageAdapter adapter = new ProductImageAdapter(imageList);
-        productImageViewPager.setAdapter(adapter);
+        // DÒNG MỚI THÊM: Ánh xạ TextView cho chỉ số trang
+        tvImagePageIndicator = findViewById(R.id.tvImagePageIndicator);
 
         // Load chi tiết sản phẩm nếu có productId
         if (productId != null) {
@@ -128,13 +130,13 @@ public class ProductDetail extends AppCompatActivity {
         imgAvrStar = findViewById(R.id.imgAvrStar);
         tvOriginalPrice = findViewById(R.id.tvOriginalPrice);
         tvDiscountedPrice = findViewById(R.id.tvDiscountedPrice);
-        // imgProduct đã được thay bằng productImageViewPager nên không cần ánh xạ ở đây
+        productImageViewPager = findViewById(R.id.productImageViewPager);
         txtUses1 = findViewById(R.id.txtUses1);
         txtUses2 = findViewById(R.id.txtUses2);
         txtUses3 = findViewById(R.id.txtUses3);
         txtUses4 = findViewById(R.id.txtUses4);
         sameCateProductLayout = findViewById(R.id.sameCateProduct);
-        btnBack = findViewById(R.id.btnBack); // Ánh xạ nút back ở đây
+        btnBack = findViewById(R.id.btnBack);
 
         tvVariantPrice=findViewById(R.id.tvVariantPrice);
         tvVariantSecondPrice=findViewById(R.id.tvVariantSecondPrice);
@@ -212,9 +214,174 @@ public class ProductDetail extends AppCompatActivity {
 
             // Xác nhận mua hàng
             btnConfirm.setOnClickListener(vol -> {
-                int quantity = Integer.parseInt(tvQuantity.getText().toString());
-                Log.d("ProductDetail", "Quantity: " + quantity);
+                // Kiểm tra số lượng và giá đã được cập nhật
+                if (currentVariantPrice == 0) {
+                    // Nếu chưa chọn biến thể (currentVariantPrice vẫn bằng 0)
+                    Toast.makeText(ProductDetail.this, "Vui lòng chọn biến thể cần mua", Toast.LENGTH_SHORT).show();
+                } else {
+                    ArrayList<Variant> variants = new ArrayList<>();
+
+                    Variant selectedVariant = new Variant();
+                    selectedVariant.setProductid(productId);
+                    selectedVariant.setId(currentVarriantId);
+                    selectedVariant.setVariant(currentVarriantName);
+                    selectedVariant.setPrice(currentVariantPrice);
+                    selectedVariant.setSecondprice(currentVariantSecondPrice);
+                    selectedVariant.setQuantity(currentVariantQuantity); // Gán số lượng
+                    variants.add(selectedVariant); // Thêm vào ArrayList
+
+                    Intent checkoutIntent = new Intent(ProductDetail.this, CheckoutActivity.class);
+                    checkoutIntent.putExtra("selectedVariants", variants);
+                    startActivity(checkoutIntent);
+                }
+
+                // Đóng BottomSheetDialog
                 dialog.dismiss();
+            });
+            // Thêm onDismissListener để reset giá trị khi popup đóng
+            dialog.setOnDismissListener(dialogInterface -> {
+                // Reset lại giá trị khi popup đóng
+                currentVariantPrice = 0;
+                currentVariantSecondPrice = 0;
+                currentVariantQuantity = 1;
+                currentVarriantId = null;
+                currentVarriantName = null;
+            });
+
+        });
+        findViewById(R.id.btnAddToCart).setOnClickListener(v -> {
+            View quantityPopup = inflate.inflate(R.layout.product_add_to_cart_popup, null);
+            BottomSheetDialog dialog = new BottomSheetDialog(ProductDetail.this);
+            dialog.setContentView(quantityPopup);
+            dialog.show();
+
+            TextView tvVariantPrice = quantityPopup.findViewById(R.id.tvVariantPrice);
+            TextView tvVariantSecondPrice = quantityPopup.findViewById(R.id.tvVariantSecondPrice);
+            GridLayout variantContainer = quantityPopup.findViewById(R.id.gridVariant);
+            TextView tvQuantity = quantityPopup.findViewById(R.id.tvQuantity);
+
+            String productId = getIntent().getStringExtra("productId");
+
+            // Lấy thông tin biến thể từ Firestore
+            loadVariantsAndUpdateUI(productId, variantContainer, tvVariantPrice, tvVariantSecondPrice, tvQuantity);
+
+            ImageButton btnMinus = quantityPopup.findViewById(R.id.btnMinus);
+            ImageButton btnPlus = quantityPopup.findViewById(R.id.btnPlus);
+            Button btnAddCart = quantityPopup.findViewById(R.id.btnAddCart);
+
+            // Thiết lập sự kiện tăng số lượng
+            setQuantityChangeListener(tvQuantity, btnPlus, btnMinus, tvVariantPrice, tvVariantSecondPrice);
+
+            // Xác nhận mua hàng
+            btnAddCart.setOnClickListener(vol -> {
+                // Kiểm tra số lượng và giá đã được cập nhật
+                if (currentVariantPrice == 0) {
+                    // Nếu chưa chọn biến thể (currentVariantPrice vẫn bằng 0)
+                    Toast.makeText(ProductDetail.this, "Vui lòng chọn biến thể cần mua", Toast.LENGTH_SHORT).show();
+                } else {
+                    ArrayList<Variant> variants = new ArrayList<>();
+
+                    Variant selectedVariant = new Variant();
+                    selectedVariant.setProductid(productId);
+                    selectedVariant.setId(currentVarriantId);
+                    selectedVariant.setQuantity(currentVariantQuantity); // Gán số lượng
+                    variants.add(selectedVariant); // Thêm vào ArrayList
+
+                    // Kiểm tra người dùng đã đăng nhập hay chưa
+                    UserSessionManager userSessionManager = new UserSessionManager(ProductDetail.this);
+                    String userId = userSessionManager.getUserId();
+
+                    if (!userId.isEmpty()) {
+                        // Nếu đã đăng nhập, đẩy lên Firestore
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        DocumentReference userRef = db.collection("User").document(userId);
+
+                        CollectionReference cartRef = userRef.collection("Cart");
+
+                        // Đẩy các biến thể sản phẩm vào Firestore
+                        for (Variant variant : variants) {
+                            Map<String, Object> cartItem = new HashMap<>();
+                            cartItem.put("productId", variant.getProductid());
+                            cartItem.put("variantId", variant.getId());
+                            cartItem.put("quantity", variant.getQuantity());
+
+                            // Kiểm tra nếu sản phẩm đã tồn tại trong giỏ hàng (dựa trên productId và variantId)
+                            cartRef.whereEqualTo("productId", variant.getProductid())
+                                    .whereEqualTo("variantId", variant.getId())
+                                    .get()
+                                    .addOnSuccessListener(querySnapshot -> {
+                                        if (!querySnapshot.isEmpty()) {
+                                            // Nếu sản phẩm đã tồn tại, cập nhật số lượng
+                                            DocumentSnapshot existingCartItem = querySnapshot.getDocuments().get(0); // Lấy sản phẩm đầu tiên trong kết quả
+                                            long existingQuantity = existingCartItem.getLong("quantity"); // Lấy số lượng hiện tại
+                                            long newQuantity = existingQuantity + variant.getQuantity(); // Cộng thêm số lượng
+
+                                            // Cập nhật lại số lượng trong giỏ hàng
+                                            existingCartItem.getReference().update("quantity", newQuantity)
+                                                    .addOnSuccessListener(aVoid -> {
+                                                        Toast.makeText(ProductDetail.this, "Số lượng sản phẩm đã được cập nhật", Toast.LENGTH_SHORT).show();
+                                                    });
+                                        } else {
+                                            // Nếu sản phẩm chưa tồn tại, thêm mới vào giỏ hàng
+                                            cartRef.add(cartItem).addOnSuccessListener(documentReference -> {
+                                                Toast.makeText(ProductDetail.this, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                                            });
+                                        }
+                                    });
+                        }
+                    } else {
+                        // Nếu chưa đăng nhập, lưu vào SharedPreferences
+                        SharedPreferences preferences = getSharedPreferences("Cart", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+
+                        // Lấy danh sách giỏ hàng hiện tại (nếu có)
+                        Gson gson = new Gson();
+                        String json = preferences.getString("cartItems", ""); // Lấy dữ liệu cũ, nếu có
+                        Type type = new TypeToken<ArrayList<Variant>>() {}.getType(); // Định dạng của danh sách
+                        ArrayList<Variant> cartItems = gson.fromJson(json, type);
+
+                        // Nếu giỏ hàng chưa có, khởi tạo giỏ hàng mới
+                        if (cartItems == null) {
+                            cartItems = new ArrayList<>();
+                        }
+
+                        // Kiểm tra nếu sản phẩm đã có trong giỏ hàng
+                        boolean productExists = false;
+                        for (Variant variant : variants) {
+                            for (Variant cartItem : cartItems) {
+                                if (cartItem.getProductid().equals(variant.getProductid()) && cartItem.getId().equals(variant.getId())) {
+                                    // Nếu sản phẩm đã tồn tại, cộng số lượng vào
+                                    cartItem.setQuantity(cartItem.getQuantity() + variant.getQuantity());
+                                    productExists = true;
+                                    break;
+                                }
+                            }
+                            if (!productExists) {
+                                // Nếu sản phẩm chưa có, thêm mới vào giỏ hàng
+                                cartItems.add(variant);
+                            }
+                        }
+
+                        // Lưu giỏ hàng mới vào SharedPreferences dưới dạng JSON
+                        String updatedJson = gson.toJson(cartItems);
+                        editor.putString("cartItems", updatedJson);
+                        editor.apply();
+
+                        Toast.makeText(ProductDetail.this, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                // Đóng BottomSheetDialog
+                dialog.dismiss();
+            });
+            // Thêm onDismissListener để reset giá trị khi popup đóng
+            dialog.setOnDismissListener(dialogInterface -> {
+                // Reset lại giá trị khi popup đóng
+                currentVariantPrice = 0;
+                currentVariantSecondPrice = 0;
+                currentVariantQuantity = 1;
+                currentVarriantId = null;
+                currentVarriantName = null;
             });
         });
     }
@@ -240,6 +407,9 @@ public class ProductDetail extends AppCompatActivity {
                                 updateVariantSelection(variant, variantContainer, btnVariant);
                                 updateVariantPrice(variant, tvVariantPrice, tvVariantSecondPrice);
                                 updateTotalPrice(tvVariantPrice, tvVariantSecondPrice, tvQuantity);
+                                currentVarriantId=variant.getId();
+                                currentVarriantName=variant.getVariant();
+
                             });
 
                             variantContainer.addView(variantItem);
@@ -266,8 +436,8 @@ public class ProductDetail extends AppCompatActivity {
             tvVariantPrice.setText(String.format("%,d đ", currentVariantPrice));
             tvVariantSecondPrice.setVisibility(View.GONE);
         } else {
-            tvVariantPrice.setText(String.format("%,d đ", currentVariantPrice));
-            tvVariantSecondPrice.setText(String.format("%,d đ", currentVariantSecondPrice));
+            tvVariantPrice.setText(String.format("%,d đ", currentVariantSecondPrice));
+            tvVariantSecondPrice.setText(String.format("%,d đ", currentVariantPrice));
             tvVariantSecondPrice.setVisibility(View.VISIBLE);
             tvVariantSecondPrice.setPaintFlags(tvVariantSecondPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
@@ -283,7 +453,8 @@ public class ProductDetail extends AppCompatActivity {
         // Cập nhật giá tổng
         tvVariantPrice.setText(String.format("%,d đ", totalPrice));
         if (currentVariantSecondPrice != 0) {
-            tvVariantSecondPrice.setText(String.format("%,d đ", totalSecondPrice));
+            tvVariantSecondPrice.setText(String.format("%,d đ", totalPrice));
+            tvVariantPrice.setText(String.format("%,d đ", totalSecondPrice));
         }
     }
 
@@ -314,6 +485,27 @@ public class ProductDetail extends AppCompatActivity {
                         product.setId(productId);
                         if (product != null) {
                             displayProductDetails(product);
+
+                            List<String> imageUrl = product.getImageUrl();
+
+                            ProductImageAdapter adapter = new ProductImageAdapter(imageUrl);
+                            productImageViewPager.setAdapter(adapter);
+
+                            // DÒNG MỚI THÊM: Cập nhật chỉ số trang ban đầu và lắng nghe sự kiện
+                            if (!imageUrl.isEmpty()) { // Đảm bảo có ảnh để hiển thị chỉ số
+                                updatePageIndicator(0, imageUrl.size());
+                                productImageViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                                    @Override
+                                    public void onPageSelected(int position) {
+                                        super.onPageSelected(position);
+                                        updatePageIndicator(position, imageUrl.size());
+                                    }
+                                });
+                            } else {
+                                tvImagePageIndicator.setVisibility(View.GONE); // Ẩn nếu không có ảnh
+                            }
+
+
                             String cateid = product.getCateid();
                             loadCategoryDetails(cateid);
                         }
@@ -322,18 +514,23 @@ public class ProductDetail extends AppCompatActivity {
                         Toast.makeText(this, "Không tìm thấy sản phẩm này.", Toast.LENGTH_SHORT).show();
                         finish(); // Đóng Activity nếu sản phẩm không tồn tại
                     }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("ProductDetail", "Error loading product details: " + e.getMessage());
-                    Toast.makeText(this, "Lỗi khi tải chi tiết sản phẩm.", Toast.LENGTH_SHORT).show();
-                    finish();
                 });
+    }
+
+    // DÒNG MỚI THÊM: Phương thức để cập nhật chỉ số trang của ViewPager2
+    private void updatePageIndicator(int currentPosition, int totalPages) {
+        if (totalPages > 0) {
+            String indicatorText = (currentPosition + 1) + "/" + totalPages;
+            tvImagePageIndicator.setText(indicatorText);
+            tvImagePageIndicator.setVisibility(View.VISIBLE);
+        } else {
+            tvImagePageIndicator.setVisibility(View.GONE); // Ẩn nếu không có ảnh
+        }
     }
 
     // Phương thức để hiển thị chi tiết sản phẩm lên giao diện
     private void displayProductDetails(Product product) {
-        // imgProduct đã được thay thế bằng ViewPager2, nên không cần Glide.with(...).into(imgProduct) ở đây
-        // ViewPager2 sẽ được set Adapter với danh sách ảnh trong onCreate.
+        // tvProductCategory sẽ được set sau khi loadCategoryDetails
 
         tvProductDetailName.setText(product.getName());
         float rating = product.getRating();
@@ -374,12 +571,6 @@ public class ProductDetail extends AppCompatActivity {
                         tvOriginalPrice.setVisibility(View.GONE);
                         tvDiscountedPrice.setText("Đang cập nhật giá");
                     }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("ProductDetail", "Error loading variant V1: " + e.getMessage());
-                    // Xử lý lỗi khi tải biến thể
-                    tvOriginalPrice.setVisibility(View.GONE);
-                    tvDiscountedPrice.setText("Lỗi tải giá");
                 });
 
         txtUses1.setText(product.getUses1());
@@ -401,10 +592,6 @@ public class ProductDetail extends AppCompatActivity {
                         Log.w("ProductDetail", "Category not found for ID: " + cateid);
                         tvProductCategory.setText("Danh mục không xác định");
                     }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("ProductDetail", "Error loading category details: " + e.getMessage());
-                    tvProductCategory.setText("Lỗi tải danh mục");
                 });
         loadSameCategoryProducts(cateid); // Gọi để tải các sản phẩm cùng danh mục
     }
@@ -428,17 +615,13 @@ public class ProductDetail extends AppCompatActivity {
                         }
                     }
                     displaySameCategoryProducts(sameCateProducts);
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("ProductDetail", "Error loading same category products: " + e.getMessage());
-                    Toast.makeText(this, "Lỗi khi tải sản phẩm cùng danh mục.", Toast.LENGTH_SHORT).show();
                 });
     }
 
     // Phương thức để hiển thị các sản phẩm cùng danh mục
     private void displaySameCategoryProducts(List<Product> productList) {
-        sameCateProductLayout.removeAllViews(); // Xóa các View cũ trước khi thêm mới
-        LayoutInflater inflater = LayoutInflater.from(this); // Sử dụng LayoutInflater cục bộ
+        sameCateProductLayout.removeAllViews();
+        LayoutInflater inflater = LayoutInflater.from(this);
 
         for (Product p : productList) {
             View itemView = inflater.inflate(R.layout.item_same_cate_product, sameCateProductLayout, false);
@@ -446,7 +629,9 @@ public class ProductDetail extends AppCompatActivity {
             ImageView img = itemView.findViewById(R.id.imgSameCateProduct);
             TextView name = itemView.findViewById(R.id.txtSameCateProduct);
 
-            Glide.with(this).load(p.getImageUrl()).into(img);
+            List<String> imageUrl = p.getImageUrl();
+            Glide.with(this).load(imageUrl.get(0)).into(img);
+
             name.setText(p.getName());
 
             // Thiết lập sự kiện click cho mỗi sản phẩm tương tự

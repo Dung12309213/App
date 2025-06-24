@@ -1,12 +1,23 @@
 package com.example.applepie.Model;
 
-public class Variant {
+import java.io.Serializable;
+
+public class Variant implements Serializable {
+    private String productid;
     private String id;
     private String variant;
     private int price;
     private int secondprice;
     private int quantity;
     public Variant() {}
+
+    public String getProductid() {
+        return productid;
+    }
+
+    public void setProductid(String productid) {
+        this.productid = productid;
+    }
 
     public String getId() {
         return id;

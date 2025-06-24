@@ -1,5 +1,7 @@
 package com.example.applepie.Model;
 
+import java.util.List;
+
 public class Product {
     private String id;
     private String name;
@@ -14,11 +16,27 @@ public class Product {
     private String uses3;
     private String uses4;
     private String instruction;
-    private String imageUrl;
+    private List<String> imageUrl;
 
     public Product() {
     }
 
+    public Product(String id, String name, String cateid, int quantity, float rating, String description, String ingredient, String texture, String uses1, String uses2, String uses3, String uses4, String instruction, List<String> imageUrl) {
+        this.id = id;
+        this.name = name;
+        this.cateid = cateid;
+        this.quantity = quantity;
+        this.rating = rating;
+        this.description = description;
+        this.ingredient = ingredient;
+        this.texture = texture;
+        this.uses1 = uses1;
+        this.uses2 = uses2;
+        this.uses3 = uses3;
+        this.uses4 = uses4;
+        this.instruction = instruction;
+        this.imageUrl = imageUrl;
+    }
 
     // Getter Setter
 
@@ -126,11 +144,11 @@ public class Product {
         this.instruction = instruction;
     }
 
-    public String getImageUrl() {
+    public List<String> getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public void setImageUrl(List<String> imageUrl) {
         this.imageUrl = imageUrl;
     }
 }

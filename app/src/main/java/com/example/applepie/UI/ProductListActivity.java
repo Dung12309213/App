@@ -54,6 +54,10 @@ public class ProductListActivity extends AppCompatActivity {
             return insets;
         });
 
+        SearchBarHelper.setupSearchBar(this, keyword -> {
+            SearchResultHelper.searchAndShow(this, keyword, SearchResultHelper.SearchMode.PRODUCT_AND_CATEGORY);
+        });
+
         // Dùng custom bottom_menu
         BottomNavHelper.setupBottomNav(this);
 

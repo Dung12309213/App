@@ -71,7 +71,7 @@ public class BottomNavHelper {
         currentActivity.finish();
     }
 
-    private static void highlightSelected(Activity activity, String current) {
+    public static void highlightSelected(Activity activity, String current) {
         int defaultBg = R.drawable.bg_tab_default;
         int selectedBg = R.drawable.bg_tab_selected;
 

@@ -3,21 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <LinearLayout
+        android:id="@+id/layout_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:paddingTop="16dp"
+        android:paddingHorizontal="3dp"
+        android:background="@color/white">
+        <include layout="@layout/top_view_search_bar" />
+    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:layout_below="@id/layout_top_bar"
+        >
 
         <LinearLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingBottom="10dp"
+            android:paddingHorizontal="10dp">
 
-            <!-- Search bar with clickable icons -->
-            <include layout="@layout/top_view_search_bar" />
 
 
             <GridLayout
@@ -31,6 +42,12 @@
 
                 android:useDefaultMargins="false">
             </GridLayout>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="62sp" />
 
 
         </LinearLayout>

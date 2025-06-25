@@ -1,6 +1,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -43,13 +44,6 @@
             android:drawablePadding="8dp"/>
 
         <!-- Search Button -->
-        <ImageButton
-            android:id="@+id/btnSearch"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="Search"
-            android:src="@drawable/ic_search" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -79,65 +73,28 @@
         </RelativeLayout>
 
     </LinearLayout>
-
-    <!-- Khu vực filter (mặc định ẩn) -->
-    <LinearLayout
-        android:id="@+id/filter_panel"
+    <!-- Kết quả sản phẩm (RecyclerView) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchProducts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
         android:visibility="gone"
-        android:background="@drawable/search_box"
-        android:elevation="4dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:listitem="@layout/item_product" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Filter by Category"
-            android:textColor="#4A4A4A"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingBottom="12dp" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/check_filter_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Category 1"
-                android:textColor="#555555"
-                android:buttonTint="#6A4F4F"
-                android:paddingVertical="8dp"
-                android:layout_marginEnd="16dp" />
-
-            <CheckBox
-                android:id="@+id/check_filter_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Category 2"
-                android:textColor="#555555"
-                android:buttonTint="#6A4F4F"
-                android:paddingVertical="8dp" />
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_close_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Close Filter"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_gravity="start"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_user_message"
-            android:backgroundTint="@null"/>
-
-    </LinearLayout>
+    <!-- Kết quả danh mục (GridLayout) -->
+    <GridLayout
+        android:id="@+id/gridSearchCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:columnCount="2"
+        android:alignmentMode="alignMargins"
+        android:layout_margin="12dp"
+        android:useDefaultMargins="false" />
 </LinearLayout>

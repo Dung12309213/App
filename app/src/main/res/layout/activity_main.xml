@@ -3,12 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <LinearLayout
+        android:id="@+id/layout_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:paddingTop="16dp"
+        android:paddingHorizontal="3dp"
+        android:background="@color/white">
+        <include layout="@layout/top_view_search_bar" />
+    </LinearLayout>
 
     <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:layout_below="@id/layout_top_bar"
+        >
 
 
         <LinearLayout
@@ -16,11 +28,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingTop="0dp"
+            android:paddingBottom="16dp"
+            android:paddingHorizontal="16dp">
 
-            android:padding="16dp">
-
-            <!-- Search bar with clickable icons -->
-            <include layout="@layout/top_view_search_bar" />
             <!-- Banner -->
 
             <!-- Horizontal Category (scroll được, không thấy thanh scroll) -->
@@ -155,7 +166,7 @@
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="72dp"
                 tools:text=" " />
 
         </LinearLayout>

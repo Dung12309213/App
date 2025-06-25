@@ -32,6 +32,8 @@ import com.example.applepie.UI.LoginScreen1;
 import com.example.applepie.UI.NotificationActivity;
 import com.example.applepie.UI.ProductDetail;
 import com.example.applepie.UI.ProfileActivity;
+import com.example.applepie.UI.SearchBarHelper;
+import com.example.applepie.UI.SearchResultHelper;
 import com.example.applepie.Util.UserSessionManager;
 
 import java.util.ArrayList;
@@ -58,7 +60,13 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        SearchBarHelper.setupSearchBar(this, keyword -> {
+            SearchResultHelper.searchAndShow(this, keyword, SearchResultHelper.SearchMode.PRODUCT_AND_CATEGORY);
+        });
+
         BottomNavHelper.setupBottomNav(this);
+        BottomNavHelper.highlightSelected(this, "home");
 
         // Scroll ngang danh mục
         scrollHomepage = findViewById(R.id.scrollHomepage);
@@ -82,12 +90,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Panel tìm kiếm
-        edtSearch = findViewById(R.id.edt_search);
-        filterPanel = findViewById(R.id.filter_panel);
-        btnCloseFilter = findViewById(R.id.btn_close_filter);
-
-        edtSearch.setOnClickListener(v -> filterPanel.setVisibility(View.VISIBLE));
-        btnCloseFilter.setOnClickListener(v -> filterPanel.setVisibility(View.GONE));
 
         ImageButton btnNotification = findViewById(R.id.btn_notification);
 

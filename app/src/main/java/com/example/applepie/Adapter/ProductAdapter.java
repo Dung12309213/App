@@ -1,5 +1,6 @@
 package com.example.applepie.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -91,6 +92,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             Intent intent = new Intent(context, ProductDetail.class);
             intent.putExtra("productId", documentId);
             context.startActivity(intent);
+            if (context instanceof Activity) {
+                ((Activity) context).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
         });
     }
 

@@ -41,6 +41,10 @@ public class CategoryList extends AppCompatActivity {
             return insets;
         });
 
+        SearchBarHelper.setupSearchBar(this, keyword -> {
+            SearchResultHelper.searchAndShow(this, keyword, SearchResultHelper.SearchMode.PRODUCT_AND_CATEGORY);
+        });
+
         // Thiết lập thanh điều hướng dưới (custom bằng include + ImageButton)
         BottomNavHelper.setupBottomNav(this);
 
@@ -79,6 +83,7 @@ public class CategoryList extends AppCompatActivity {
             Intent intent = new Intent(this, ProductListActivity.class);
             intent.putExtra("cateId", cateId);
             startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
 
         gridLayout.addView(itemView);

@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
-                android:text="Giá tiền: 1.035.000 đ"
+                android:text="Giỏ hàng trống"
                 android:textAlignment="textEnd"
                 android:textColor="@color/textcolor"
                 android:textSize="16sp" />
@@ -107,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
-                android:text="Giảm giá: -60.000 đ"
+                android:text="Giảm giá: -0 đ"
                 android:textAlignment="textEnd"
                 android:textColor="@color/textcolor"
                 android:textSize="16sp" />
@@ -117,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
-                android:text="Giá tiền: 975.000 đ"
+                android:text="Tổng cộng: 0 đ"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black"
                 android:textSize="24sp"

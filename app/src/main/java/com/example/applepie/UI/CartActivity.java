@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.example.applepie.MainActivity;
 import com.example.applepie.Model.Variant;
 import com.example.applepie.R;
 import com.example.applepie.Util.UserSessionManager;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.NumberFormat;
@@ -58,15 +60,15 @@ public class CartActivity extends AppCompatActivity {
         // Gọi phương thức getCartData và sử dụng listener để xử lý dữ liệu sau khi tải xong
         getCartData(cartItems -> {
             if (cartItems != null) {
-                this.cartItems = cartItems;  // Cập nhật danh sách giỏ hàng sau khi lấy dữ liệu
-                Log.d("CartData", "Giỏ hàng sau khi cập nhật: " + cartItems.toString());
+                this.cartItems = cartItems;
             } else {
                 this.cartItems = new ArrayList<>();  // Nếu không có dữ liệu, khởi tạo giỏ hàng rỗng
             }
             addViews();
-            addEvents();
+
             updatePrice();  // Cập nhật giá trị giỏ hàng
             adapter.notifyDataSetChanged();  // Làm mới RecyclerView
+            addEvents();
         });
     }
 
@@ -201,10 +203,31 @@ public class CartActivity extends AppCompatActivity {
 
         btnCancel.setOnClickListener(v -> dialog.dismiss());
         btnConfirm.setOnClickListener(v -> {
-            cartItems.remove(position);
-            adapter.notifyItemRemoved(position);
-            updatePrice();
-            dialog.dismiss();
+
+            String userId = userSessionManager.getUserId();  // Lấy userId từ UserSessionManager
+
+            // Xóa sản phẩm khỏi Firestore trong collection "Cart"
+            db.collection("User")
+                    .document(userId)
+                    .collection("Cart")
+                    .whereEqualTo("productid", item.getProductid())
+                    .whereEqualTo("id", item.getId())
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            // Nếu tìm thấy sản phẩm, xóa nó
+                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                documentSnapshot.getReference().delete()
+                                        .addOnSuccessListener(aVoid -> {
+                                            // Sản phẩm đã bị xóa thành công, cập nhật UI
+                                            cartItems.remove(position);
+                                            adapter.notifyItemRemoved(position);
+                                            updatePrice();  // Cập nhật lại tổng giá trị giỏ hàng
+                                            dialog.dismiss();
+                                        });
+                            }
+                        }
+                    });
         });
 
         dialog.show();
@@ -265,7 +288,7 @@ public class CartActivity extends AppCompatActivity {
                                     }
                                 });
                     }
-
+                    listener.onCartDataFetched(cartItems);
                 });
 
     }

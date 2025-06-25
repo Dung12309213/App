@@ -74,27 +74,41 @@
 
     </LinearLayout>
     <!-- Kết quả sản phẩm (RecyclerView) -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSearchProducts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
-        tools:listitem="@layout/item_product" />
 
     <!-- Kết quả danh mục (GridLayout) -->
-    <GridLayout
-        android:id="@+id/gridSearchCategory"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:columnCount="2"
-        android:alignmentMode="alignMargins"
-        android:layout_margin="12dp"
-        android:useDefaultMargins="false" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSearchProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/item_product" />
+
+            <GridLayout
+                android:id="@+id/gridSearchCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:alignmentMode="alignMargins"
+                android:columnCount="2"
+                android:useDefaultMargins="false"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

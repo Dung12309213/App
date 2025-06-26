@@ -27,7 +27,7 @@
         android:fontFamily="@font/vollkorn"
         android:text="@string/title_policy"
         android:textColor="@color/textcolor"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,43 +52,15 @@
 
             <!-- Cancelation Policy -->
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cancelation Policy"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/nunito_bold"
-                android:textColor="@color/textcolor"
-                android:layout_marginTop="16dp" />
-
-            <TextView
+                android:id="@+id/tvPolicyContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="sample_policy_paragraph"
+                android:text="@string/policy_full_text"
                 android:textSize="14sp"
                 android:fontFamily="@font/nunito_medium"
                 android:textColor="#666666"
                 android:layout_marginTop="8dp" />
 
-            <!-- Terms & Conditions -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Terms, Condition"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/nunito_bold"
-                android:textColor="@color/textcolor"
-                android:layout_marginTop="24dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="sample_policy_paragraph_long"
-                android:textSize="14sp"
-                android:fontFamily="@font/nunito_medium"
-                android:textColor="#666666"
-                android:layout_marginTop="8dp" />
         </LinearLayout>
     </ScrollView>
 

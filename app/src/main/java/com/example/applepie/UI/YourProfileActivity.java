@@ -46,7 +46,6 @@ public class YourProfileActivity extends AppCompatActivity {
         tvDefaultAddress = findViewById(R.id.tvDefaultAddress);
         Button btnSave = findViewById(R.id.btnSave);
         ImageButton btnBack = findViewById(R.id.btnBack);
-        ImageButton btnEditAvatar = findViewById(R.id.imageButton3);
 
         prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
 
@@ -69,10 +68,7 @@ public class YourProfileActivity extends AppCompatActivity {
                     }
                 });
 
-        btnEditAvatar.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            imagePickerLauncher.launch(intent);
-        });
+
 
         // NÚT LƯU
         btnSave.setOnClickListener(v -> saveUserInfo());

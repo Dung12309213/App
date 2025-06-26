@@ -17,15 +17,15 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
             android:fontFamily="@font/vollkorn"
             android:text="@string/title_help_center_header"
             android:textColor="@color/textcolor"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/imageButton2" />
 
         <!-- Nút quay lại -->
         <ImageButton

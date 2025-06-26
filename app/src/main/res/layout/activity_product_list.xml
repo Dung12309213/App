@@ -70,5 +70,4 @@
         <include layout="@layout/bottom_menu"></include>
     </LinearLayout>
 
-
 </RelativeLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -23,7 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:layout_marginTop="16dp">
 
                 <ImageButton
                     android:id="@+id/btnBack"
@@ -35,9 +37,8 @@
 
                 <TextView
                     android:id="@+id/txtTitle"
-                    android:layout_width="0dp"
+                    android:layout_width="292dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:fontFamily="@font/vollkorn"
                     android:gravity="center"
                     android:text="@string/title_paymentmethod"
@@ -65,7 +66,7 @@
                     android:fontFamily="@font/nunito_bold"
                     android:text="1234 5678 9101 1121"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -83,16 +84,19 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_medium"
                             android:text="Chủ thẻ"
                             android:textColor="@android:color/white"
-                            android:textSize="12sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/txtCardHolderMock"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_bold"
                             android:text="Quốc Trịnh"
                             android:textColor="@android:color/white"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -104,16 +108,19 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_medium"
                             android:text="Hết hạn"
                             android:textColor="@android:color/white"
-                            android:textSize="12sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/txtExpiryMock"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_bold"
                             android:text="8/2027"
                             android:textColor="@android:color/white"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
@@ -139,7 +146,8 @@
                 android:fontFamily="@font/nunito_medium"
                 android:hint="Chủ thẻ"
                 android:padding="12dp"
-                android:textColor="@color/textcolor" />
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/edtCardNumber"
@@ -151,7 +159,8 @@
                 android:hint="Số thẻ"
                 android:inputType="number"
                 android:padding="12dp"
-                android:textColor="@color/textcolor" />
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,7 +178,8 @@
                     android:hint="Hết hạn"
                     android:inputType="text"
                     android:padding="12dp"
-                    android:textColor="@color/textcolor" />
+                    android:textColor="@color/textcolor"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/edtCVV"
@@ -183,7 +193,8 @@
                     android:inputType="numberPassword"
                     android:maxLength="3"
                     android:padding="12dp"
-                    android:textColor="@color/textcolor" />
+                    android:textColor="@color/textcolor"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <!-- Checkbox lưu thẻ -->
@@ -195,7 +206,8 @@
                 android:buttonTint="@color/brown"
                 android:fontFamily="@font/nunito_medium"
                 android:text="Lưu thẻ"
-                android:textColor="@color/textcolor" />
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 
@@ -204,11 +216,11 @@
         android:id="@+id/btnConfirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="20dp"
         android:backgroundTint="@color/brown"
         android:fontFamily="@font/nunito_bold"
         android:text="@string/title_confirm"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 </LinearLayout>

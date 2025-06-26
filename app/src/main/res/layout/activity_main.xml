@@ -113,16 +113,19 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/vollkorn"
                     android:text="FLASH SALE"
-                    android:textSize="18sp"
+                    android:textColor="@color/textcolor"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_medium"
                     android:text="01 : 05 : 06"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textColor="@color/textcolor"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <!-- Thay HorizontalScrollView + LinearLayout bằng RecyclerView -->
@@ -138,6 +141,7 @@
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/ic_trietly_homepage" />
 
             <HorizontalScrollView
@@ -149,18 +153,21 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/home_trietly_scroll" />
             </HorizontalScrollView>
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/homepage_chungnhan" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/homepage_banner_footer" />
 
             <TextView

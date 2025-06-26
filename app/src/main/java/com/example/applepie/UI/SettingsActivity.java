@@ -42,7 +42,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void addViews() {
         btnBack = findViewById(R.id.imageButton2);
-        itemSettingNotification = findViewById(R.id.itemSettingNotification);
         itemSettingPassword = findViewById(R.id.itemSettingPassword);
         itemSettingDeleteAccount = findViewById(R.id.itemSettingDeleteAccount);
     }

@@ -45,14 +45,14 @@
                     android:id="@+id/tvForgotTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_your_profile"
-                    android:textColor="#1D1D1D"
+                    android:fontFamily="@font/vollkorn"
+                    android:text="@string/title_profile"
+                    android:textColor="@color/textcolor"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    android:fontFamily="@font/vollkorn"
                     app:layout_constraintBottom_toBottomOf="@id/btnBack"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/btnBack" />
 
                 <com.google.android.material.imageview.ShapeableImageView
@@ -83,22 +83,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/imageButton3"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/bg_circle"
-                    android:padding="8dp"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/ic_edit"
-                    android:contentDescription="Edit avatar"
-                    app:layout_constraintTop_toBottomOf="@id/textView"
-                    app:layout_constraintBottom_toTopOf="@id/textView2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintVertical_bias="0.88"
-                    app:layout_constraintHorizontal_bias="0.61" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- Form Fields -->
@@ -112,7 +96,8 @@
                 android:hint="@string/title_Login_FullName"
                 android:inputType="textPersonName"
                 android:padding="12dp"
-                android:textColor="@color/textcolor" />
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/edtPhone"
@@ -120,11 +105,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edittext_background"
+                android:fontFamily="@font/nunito_medium"
                 android:hint="@string/title_Account_Phonenumber"
                 android:inputType="phone"
                 android:padding="12dp"
-                android:fontFamily="@font/nunito_medium"
-                android:textColor="@color/textcolor" />
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/edtEmail"
@@ -132,11 +118,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edittext_background"
+                android:fontFamily="@font/nunito_medium"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:padding="12dp"
-                android:fontFamily="@font/nunito_medium"
-                android:textColor="@color/textcolor" />
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
 
             <!-- Ngày sinh -->
             <TextView
@@ -147,16 +134,18 @@
                 android:text="@string/title_birthday"
                 android:textColor="@color/textcolor"
                 android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/edtDob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="false"
                 android:background="@drawable/edittext_background"
-                android:padding="12dp"
+                android:focusable="false"
+                android:fontFamily="@font/nunito_medium"
                 android:hint="dd/mm/yyyy"
+                android:padding="12dp"
                 android:textColor="@color/textcolor"
-                android:fontFamily="@font/nunito_medium" />
+                android:textSize="16sp" />
 
             <!-- Giới tính -->
             <RadioGroup
@@ -203,7 +192,8 @@
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/nunito_medium"
                 android:text="@string/title_address"
-                android:textColor="@color/textcolor" />
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -219,7 +209,7 @@
                     android:fontFamily="@font/nunito_medium"
                     android:text="Chưa có địa chỉ"
                     android:textColor="@color/textcolor"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/btnEditAddress"
@@ -228,6 +218,7 @@
                     android:fontFamily="@font/nunito_medium"
                     android:text="@string/title_change"
                     android:textColor="@color/brown"
+                    android:textSize="16sp"
                     android:textStyle="italic" />
             </LinearLayout>
         </LinearLayout>
@@ -238,12 +229,13 @@
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="20dp"
         android:backgroundTint="@color/brown"
+        android:fontFamily="@font/nunito_bold"
         android:text="@string/title_confirm"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:fontFamily="@font/nunito_bold"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

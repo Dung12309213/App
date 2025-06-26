@@ -137,7 +137,7 @@ public class CheckoutActivity extends AppCompatActivity {
         /*if (!isDiscountApplied && edtDiscountCode.getText().toString().equalsIgnoreCase("GIAM60K")) {
             isDiscountApplied = true;
             updatePriceSummary(selectedVariants, discountAmount);*/
-            Toast.makeText(this, "Áp dụng mã giảm giá thành công!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Áp dụng mã giảm giá thành công!", Toast.LENGTH_SHORT).show();
         /*} else {
             Toast.makeText(this, "Mã không hợp lệ hoặc đã áp dụng", Toast.LENGTH_SHORT).show();
         }*/

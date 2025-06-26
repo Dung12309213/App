@@ -24,6 +24,8 @@ public class YourProfileActivity extends AppCompatActivity {
     private EditText edtFullName, edtPhone, edtEmail, edtDob;
     private RadioGroup rgGender;
     private RadioButton rbMale, rbFemale, rbOther;
+    private Button btnSave;
+    private ImageButton btnBack;
     private SharedPreferences prefs;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
 
@@ -32,26 +34,18 @@ public class YourProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_profile);
 
-        // ÁNH XẠ VIEW
-        imageView = findViewById(R.id.imgProfile);
-        textViewName = findViewById(R.id.textView2);
-        edtFullName = findViewById(R.id.edtFullName);
-        edtPhone = findViewById(R.id.edtPhone);
-        edtEmail = findViewById(R.id.edtEmail);
-        edtDob = findViewById(R.id.edtDob);
-        rgGender = findViewById(R.id.rgGender);
-        rbMale = findViewById(R.id.rbMale);
-        rbFemale = findViewById(R.id.rbFemale);
-        rbOther = findViewById(R.id.rbOther);
-        tvDefaultAddress = findViewById(R.id.tvDefaultAddress);
-        Button btnSave = findViewById(R.id.btnSave);
-        ImageButton btnBack = findViewById(R.id.btnBack);
+        addViews();
+        addEvents();
 
         prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
 
         // HIỂN THỊ DỮ LIỆU
         loadUserInfo();
 
+
+    }
+
+    private void addEvents() {
         // CHỌN NGÀY SINH
         edtDob.setOnClickListener(v -> showDatePicker());
 
@@ -80,6 +74,22 @@ public class YourProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(this, AddressActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void addViews() {
+        imageView = findViewById(R.id.imgProfile);
+        textViewName = findViewById(R.id.textView2);
+        edtFullName = findViewById(R.id.edtFullName);
+        edtPhone = findViewById(R.id.edtPhone);
+        edtEmail = findViewById(R.id.edtEmail);
+        edtDob = findViewById(R.id.edtDob);
+        rgGender = findViewById(R.id.rgGender);
+        rbMale = findViewById(R.id.rbMale);
+        rbFemale = findViewById(R.id.rbFemale);
+        rbOther = findViewById(R.id.rbOther);
+        tvDefaultAddress = findViewById(R.id.tvDefaultAddress);
+        btnSave = findViewById(R.id.btnSave);
+        btnBack = findViewById(R.id.btnBack);
     }
 
     private void loadUserInfo() {

@@ -71,36 +71,6 @@
                 android:textColor="@color/textcolor" />
 
             <EditText
-                android:id="@+id/edtDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/nunito_medium"
-                android:hint="@string/hint_street_address"
-                android:padding="12dp"
-                android:textColor="@color/textcolor" />
-            <EditText
-                android:id="@+id/edtDetailWard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/nunito_medium"
-                android:hint="@string/hint_ward"
-                android:padding="12dp"
-                android:textColor="@color/textcolor" />
-            <EditText
-                android:id="@+id/edtDetailDistrict"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/nunito_medium"
-                android:hint="@string/hint_district"
-                android:padding="12dp"
-                android:textColor="@color/textcolor" />
-            <EditText
                 android:id="@+id/edtDetailCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,6 +81,39 @@
                 android:padding="12dp"
                 android:textColor="@color/textcolor" />
 
+            <EditText
+                android:id="@+id/edtDetailDistrict"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/nunito_medium"
+                android:hint="@string/hint_district"
+                android:padding="12dp"
+                android:textColor="@color/textcolor" />
+
+            <EditText
+                android:id="@+id/edtDetailWard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/nunito_medium"
+                android:hint="@string/hint_ward"
+                android:padding="12dp"
+                android:textColor="@color/textcolor" />
+
+
+            <EditText
+                android:id="@+id/edtDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/nunito_medium"
+                android:hint="@string/hint_street_address"
+                android:padding="12dp"
+                android:textColor="@color/textcolor" />
 
             <CheckBox
                 android:id="@+id/checkDefault"

@@ -22,7 +22,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         this.addressList = addressList;
         // Nếu có sẵn địa chỉ được chọn, đặt selectedPosition ban đầu
         for (int i = 0; i < addressList.size(); i++) {
-            if (addressList.get(i).isSelected()) {
+            if (addressList.get(i).isDefaultCheck()) {
                 selectedPosition = i;
                 break;
             }
@@ -39,8 +39,13 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     @Override
     public void onBindViewHolder(@NonNull AddressViewHolder holder, int position) {
         AddressModel model = addressList.get(position);
-        holder.txtFullName.setText(model.getFullName());
-        holder.txtAddress.setText(model.getAddress());
+        holder.txtFullName.setText(model.getName());
+        holder.txtAddress.setText(
+                (model.getStreet() != null && !model.getStreet().isEmpty() ? model.getStreet() + " " : "") +
+                        (model.getWard() != null && !model.getWard().isEmpty() ? model.getWard() + " " : "") +
+                        (model.getDistrict() != null && !model.getDistrict().isEmpty() ? model.getDistrict() + " " : "") +
+                        (model.getProvince() != null && !model.getProvince().isEmpty() ? model.getProvince() : "")
+        );
         holder.txtPhone.setText(model.getPhone());
         holder.radioSelected.setChecked(position == selectedPosition);
 

@@ -12,10 +12,21 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.applepie.Model.AddressModel;
+import com.example.applepie.Model.User;
 import com.example.applepie.R;
+import com.example.applepie.Util.UserSessionManager;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class YourProfileActivity extends AppCompatActivity {
 
@@ -28,16 +39,19 @@ public class YourProfileActivity extends AppCompatActivity {
     private ImageButton btnBack;
     private SharedPreferences prefs;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
+    private UserSessionManager userSessionManager;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_profile);
 
+        userSessionManager = new UserSessionManager(this);
+        db = FirebaseFirestore.getInstance();
+
         addViews();
         addEvents();
-
-        prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
 
         // HIỂN THỊ DỮ LIỆU
         loadUserInfo();
@@ -90,55 +104,127 @@ public class YourProfileActivity extends AppCompatActivity {
         tvDefaultAddress = findViewById(R.id.tvDefaultAddress);
         btnSave = findViewById(R.id.btnSave);
         btnBack = findViewById(R.id.btnBack);
+
+        textViewName.setText(userSessionManager.getUserName());
     }
 
     private void loadUserInfo() {
-        String name = prefs.getString("user_name", "");
-        String phone = prefs.getString("user_phone", "");
-        String email = prefs.getString("user_email", "");
-        String dob = prefs.getString("user_dob", "");
-        String gender = prefs.getString("user_gender", "");
-        String avatarUri = prefs.getString("user_avatar_uri", "");
-        String address = prefs.getString("user_address", "Chưa có địa chỉ");
+        // Lấy userId từ UserSessionManager
+        String userId = userSessionManager.getUserId();
 
-        edtFullName.setText(name);
-        edtPhone.setText(phone);
-        edtEmail.setText(email);
-        edtDob.setText(dob);
-        tvDefaultAddress.setText(address);
-        textViewName.setText(name);
+        if (!userId.isEmpty()) {
+            // Truy vấn Firestore để lấy thông tin người dùng
+            DocumentReference userRef = db.collection("User").document(userId);
+            userRef.get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                User user = document.toObject(User.class);
 
-        if (gender.equals("Nam")) rbMale.setChecked(true);
-        else if (gender.equals("Nữ")) rbFemale.setChecked(true);
-        else if (gender.equals("Khác")) rbOther.setChecked(true);
+                                if (user != null) {
+                                    // Cập nhật thông tin lên UI
+                                    edtFullName.setText(user.getName());
+                                    edtPhone.setText(user.getPhone());
+                                    edtEmail.setText(user.getEmail());
+                                    if (user.getDob() != null) {
+                                        String formattedDate = formatDate(user.getDob());
+                                        edtDob.setText(formattedDate);
+                                    }
 
-        if (!avatarUri.isEmpty()) {
-            imageView.setImageURI(Uri.parse(avatarUri));
+                                    // Set Gender RadioButton
+                                    if ("male".equals(user.getGender())) rbMale.setChecked(true);
+                                    else if ("female".equals(user.getGender())) rbFemale.setChecked(true);
+                                    else if ("other".equals(user.getGender())) rbOther.setChecked(true);
+
+                                    // Lấy địa chỉ mặc định từ subcollection "Address"
+                                    getDefaultAddress(userId);
+                                }
+                            }
+                        }
+                    });
         }
+    }
+
+    // Phương thức để lấy địa chỉ mặc định từ subcollection "Address"
+    private void getDefaultAddress(String userId) {
+        // Truy vấn subcollection "Address" của người dùng
+        CollectionReference addressRef = db.collection("User").document(userId).collection("Address");
+        addressRef.whereEqualTo("defaultCheck", true)  // Tìm địa chỉ có defaultCheck = true
+                .limit(1)  // Chỉ lấy một địa chỉ
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (!querySnapshot.isEmpty()) {
+                            // Lấy địa chỉ mặc định
+                            DocumentSnapshot addressDoc = querySnapshot.getDocuments().get(0);
+                            AddressModel address = addressDoc.toObject(AddressModel.class);
+
+                            if (address != null) {
+                                // Cập nhật địa chỉ vào UI
+                                String addressString = address.toString();  // Chuyển đối tượng thành chuỗi
+                                tvDefaultAddress.setText(addressString);
+                            }
+                        } else {
+                            // Không có địa chỉ mặc định, hiển thị "Chưa có địa chỉ"
+                            tvDefaultAddress.setText("Chưa có địa chỉ mặc định");
+                        }
+                    } else {
+                        // Trường hợp truy vấn thất bại
+                        tvDefaultAddress.setText("Có lỗi khi lấy địa chỉ");
+                    }
+                });
+    }
+    private String formatDate(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        return dateFormat.format(date);
     }
 
     private void saveUserInfo() {
         String name = edtFullName.getText().toString().trim();
         String phone = edtPhone.getText().toString().trim();
         String email = edtEmail.getText().toString().trim();
-        String dob = edtDob.getText().toString().trim();
+        String dobString  = edtDob.getText().toString().trim();
         String gender = "";
         int selectedGenderId = rgGender.getCheckedRadioButtonId();
-        if (selectedGenderId != -1) {
-            RadioButton selected = findViewById(selectedGenderId);
-            gender = selected.getText().toString();
+        // Kiểm tra xem nút Radio nào được chọn
+        if (rbMale.isChecked()) {
+            gender = "male";
+        } else if (rbFemale.isChecked()) {
+            gender = "female";
+        } else if (rbOther.isChecked()) {
+            gender = "other";
         }
+        Date dob = convertStringToDate(dobString);
 
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("user_name", name);
-        editor.putString("user_phone", phone);
-        editor.putString("user_email", email);
-        editor.putString("user_dob", dob);
-        editor.putString("user_gender", gender);
-        editor.apply();
-
-        textViewName.setText(name);
-        Toast.makeText(this, "Đã lưu thay đổi", Toast.LENGTH_SHORT).show();
+        // Lưu thông tin người dùng vào Firestore
+        String userId = userSessionManager.getUserId();
+        DocumentReference userRef = db.collection("User").document(userId);
+        userRef.update(
+                "name", name,
+                "phone", phone,
+                "email", email,
+                "dob", dob,
+                "gender", gender
+        ).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(this, "Đã lưu thay đổi", Toast.LENGTH_SHORT).show();
+                textViewName.setText(name);
+                userSessionManager.saveUser(userId, name);
+            } else {
+                Toast.makeText(this, "Có lỗi xảy ra khi lưu thông tin", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private Date convertStringToDate(String dobString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try {
+            return dateFormat.parse(dobString);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void showDatePicker() {

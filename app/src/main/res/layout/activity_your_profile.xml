@@ -201,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_medium"
-                    android:text="Chưa có địa chỉ"
+                    android:text=""
                     android:textColor="@color/textcolor"
                     android:textSize="18sp" />
 

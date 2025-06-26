@@ -23,7 +23,6 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-   ImageButton btnEdit;
    ShapeableImageView profileImage;
     TextView tvLoginLogout, tvUserName;
     ImageView imgLoginLogout;
@@ -61,11 +60,6 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
 
-        // Bấm nút chỉnh sửa ảnh đại diện => mở thư viện ảnh
-        btnEdit.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            imagePickerLauncher.launch(intent);
-        });
 
         // Các sự kiện mở các mục khác
         findViewById(R.id.itemHelpcenter).setOnClickListener(v ->
@@ -94,7 +88,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void addViews() {
-        btnEdit = findViewById(R.id.imgChangeProfileImage);
         profileImage = findViewById(R.id.imgProfile);
         tvUserName = findViewById(R.id.tvUsername);
         tvLoginLogout=findViewById(R.id.tvLoginLogout);

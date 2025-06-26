@@ -56,23 +56,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgProfile" />
 
-        <!-- Nút chỉnh ảnh -->
-        <ImageButton
-            android:id="@+id/imgChangeProfileImage"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_circle"
-            android:padding="8dp"
-            android:scaleType="centerInside"
-            app:layout_constraintBottom_toTopOf="@+id/tvUsername"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.611"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.882"
-            app:srcCompat="@drawable/ic_edit" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- DANH SÁCH CHỨC NĂNG -->

@@ -15,7 +15,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:background="@android:color/transparent"
-        android:contentDescription="@string/content_description_back_button"
+        android:contentDescription="Back"
         app:srcCompat="@drawable/ic_backbutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -54,9 +54,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext_background"
                 android:fontFamily="@font/nunito_medium"
-                android:hint="@string/hint_receiver_name"
+                android:hint="@string/title_receiver_name"
                 android:padding="12dp"
-                android:textColor="@color/textcolor" />
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/edtPhone"
@@ -65,44 +66,11 @@
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edittext_background"
                 android:fontFamily="@font/nunito_medium"
-                android:hint="@string/hint_phone_number"
+                android:hint="@string/title_Account_Phonenumber"
                 android:inputType="phone"
                 android:padding="12dp"
-                android:textColor="@color/textcolor" />
-
-            <EditText
-                android:id="@+id/edtDetailCity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/nunito_medium"
-                android:hint="@string/hint_city"
-                android:padding="12dp"
-                android:textColor="@color/textcolor" />
-
-            <EditText
-                android:id="@+id/edtDetailDistrict"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/nunito_medium"
-                android:hint="@string/hint_district"
-                android:padding="12dp"
-                android:textColor="@color/textcolor" />
-
-            <EditText
-                android:id="@+id/edtDetailWard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/nunito_medium"
-                android:hint="@string/hint_ward"
-                android:padding="12dp"
-                android:textColor="@color/textcolor" />
-
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/edtDetail"
@@ -113,7 +81,8 @@
                 android:fontFamily="@font/nunito_medium"
                 android:hint="@string/hint_street_address"
                 android:padding="12dp"
-                android:textColor="@color/textcolor" />
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
 
             <CheckBox
                 android:id="@+id/checkDefault"
@@ -123,7 +92,8 @@
                 android:buttonTint="@color/brown"
                 android:fontFamily="@font/nunito_medium"
                 android:text="@string/title_default_address"
-                android:textColor="@color/textcolor" />
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 
@@ -132,12 +102,12 @@
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="20dp"
         android:backgroundTint="@color/brown"
         android:fontFamily="@font/nunito_bold"
         android:text="@string/title_confirm_button"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="16dp" />

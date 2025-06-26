@@ -28,15 +28,15 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/avatarLeafAI"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginStart="16dp"
-            android:src="@mipmap/ic_logo"
+            android:layout_marginTop="40dp"
             android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/CircleImageView"
+            android:src="@mipmap/ic_logo"
             app:layout_constraintStart_toEndOf="@id/btnBack"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImageView" />
 
 
         <TextView
@@ -44,9 +44,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:fontFamily="@font/nunito_bold"
             android:text="Leaf AI"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/avatarLeafAI"
             app:layout_constraintTop_toTopOf="@id/avatarLeafAI" />
@@ -57,7 +58,7 @@
             android:layout_height="wrap_content"
             android:text="Online"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/txtName"
             app:layout_constraintTop_toBottomOf="@id/txtName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -76,8 +77,8 @@
         android:id="@+id/messageInputContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:background="@android:color/white"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageButton
@@ -86,9 +87,9 @@
             android:layout_height="40dp"
             android:background="@drawable/bg_circle"
             android:src="@drawable/camera"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/edtMessage"
@@ -96,15 +97,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:hint="Type a message here..."
             android:background="@drawable/edittext_background"
+            android:fontFamily="@font/nunito_medium"
+            android:hint="Type a message here..."
             android:paddingHorizontal="16dp"
             android:paddingVertical="10dp"
-            android:fontFamily="@font/nunito_medium"
-            app:layout_constraintStart_toEndOf="@id/btnAdd"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnSend"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/btnAdd"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/btnSend"
@@ -112,9 +113,9 @@
             android:layout_height="40dp"
             android:background="@drawable/bg_circle"
             android:src="@drawable/send"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

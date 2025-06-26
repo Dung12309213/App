@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">ApplePie App</string>
-    <string name="title_Loginscreen_Login">Login</string>
+    <string name="title_Loginscreen_Login">LOGIN</string>
     <string name="title_LoginScreen_EmailPhoneNumber">Email/Phone number</string>
     <string name="title_LoginScreen_Password">Password</string>
     <string name="title_LoginScreen_ForgotPassword">Forgot Password?</string>
     <string name="title_login_screen_orSigninwith">Or sign in with</string>
     <string name="title_Login_Signupnow">Sign up now</string>
     <string name="title_Login_Screen_Donothaveanaccount">Haven’t got an account?</string>
-    <string name="title_CreateAccount">Create Account</string>
+    <string name="title_CreateAccount">CREATE ACCOUNT</string>
     <string name="title_Login_FullName">Full Name</string>
     <string name="title_Account_Phonenumber">Phone Number</string>
     <string name="title_login_screen_otpverification">VERIFY CODE</string>
@@ -20,11 +20,11 @@
     <!-- Login messages -->
     <string name="login_fill_info">Please fill in all the information</string>
     <string name="login_success">Login successful!</string>
-    <string name="login_failed">Incorrect Email/Phone or password</string>
+    <string name="login_failed">Incorrect username or password</string>
     <string name="title_activity_product">Product</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">NOTIFICATION</string>
     <string name="editFindProduct">Find product</string>
     <string name="titleFlashsale">FLASH SALE</string>
     <string name="title_profile">PROFILE</string>
@@ -46,7 +46,7 @@
     <string name="title_notification_settings">Notification settings</string>
     <string name="title_password_manager">Password manager</string>
     <string name="title_delete_account">Delete account</string>
-    <string name="title_help_center_header">HELP CENTER\n</string>
+    <string name="title_help_center_header">HELP CENTER</string>
     <string name="title_policy">POLICY</string>
     <string name="title_my_orders1">MY ORDERS</string>
     <string name="quantity_format">Quantity: %1$d</string>
@@ -58,13 +58,13 @@
     <string name="title_signinnow">Sign in now</string>
     <string name="title_productdetail_desc">"Sản phẩm treatment dành cho tóc, phù hợp với tình trạng tóc rụng, tóc yếu, tóc thưa mỏng. Sản phẩm có thành phần từ tinh dầu bưởi Việt Nam truyền thống absakjdfksjdfhksa;fjahdkjfskajf test "</string>
     <string name="title_notification">Notification</string>
-    <string name="title_address">Address</string>
-    <string name="title_add_address">Add more address</string>
+    <string name="title_address">ADDRESS</string>
+    <string name="title_add_address">+ Add more address</string>
     <string name="title_confirm">CONFIRM</string>
     <string name="title_change">Change</string>
-    <string name="title_forgot_password">Forgot password</string>
+    <string name="title_forgot_password">FORGOT PASSWORD</string>
     <string name="title_birthday">Date of birth</string>
-    <string name="title_add_addres">Add address</string>
+    <string name="title_add_addres">ADD ADDRESS</string>
     <string name="title_receiver_name">Receiver</string>
     <string name="title_default_address">Default address</string>
     <string-array name="payment_methods">
@@ -78,7 +78,7 @@
     <string name="content_description_payment_method_icon">Payment method icon</string>
     <string name="content_description_location_icon">Location icon</string>
 
-    <string name="order_detail_title">Order Details</string>
+    <string name="order_detail_title">ORDER DETAILS</string>
     <string name="order_status_packaging">Packaging</string>
     <string name="payment_method_cod">Cash on Delivery (COD)</string>
     <string name="delivery_name_example">Quoc Trinh</string>
@@ -104,14 +104,36 @@
     <string name="total_amount_example">495,000 VND</string>
     <string name="cancel_order_button_text">CANCEL ORDER</string>
 
-    <string name="MyCoupon">My Coupon</string>
+    <string name="MyCoupon">My vouchers</string>
     <string name="title_guest_name">Guest</string>
     <string name="internet_required">Internet Required!</string>
     <string name="register_success">Register Successfull</string>
     <string name="OTP_wrong">Wrong OTP! Please try again.</string>
     <string name="User_Delete_Successfull">User Delete Successfull</string>
-    <!-- Strings for Address Layout -->
+    <string name="review">Review</string>
+    <string name="login">Login</string>
+    <string name="new_address">New address</string>
+    <string name="policy_full_text">
+    Cocoon Vietnam có dịch vụ giao hàng tận nơi trên toàn quốc, áp dụng cho khách mua hàng trên Website, Fanpage và gọi điện thoại vào Hotline của Cocoon. Đơn hàng sẽ được chuyển phát đến địa chỉ khách hàng cung cấp thông qua đơn vị vận chuyển trung gian là GIAO HÀNG TIẾT KIỆM hoặc 247EXPRESS. Đặc biệt, thông tin hóa đơn dán bên ngoài kiện hàng luôn luôn có logo cô gái của thương hiệu để nhận biết các sản phẩm là chính hãng.\n\n
 
+    1. Chính sách giá\n
+    a. Giá sản phẩm niêm yết tại Website là giá đã bao gồm thuế theo quy định pháp luật hiện hành, phí đóng gói và các chi phí khác liên quan đến việc mua hàng trừ các chi phí phát sinh khác được xác nhận qua Hotline hoặc Email của Cocoon và được sự chấp thuận của khách hàng trong quá trình xác nhận đơn đặt hàng, giao nhận hàng hoá.\n\n
+
+    2. Phí vận chuyển:\n
+    a. Với hóa đơn từ 99.000 VNĐ: miễn phí vận chuyển toàn quốc.\n
+    b. Với hóa đơn dưới 99.000 VNĐ: phí vận chuyển mặc định là 30.000 VNĐ áp dụng toàn quốc.\n\n
+
+    3. Thời gian giao hàng:\n
+    a. Đơn hàng nội thành TP.HCM: Thời gian giao hàng là 2-3 ngày sau khi đặt hàng.\n
+    b. Đơn hàng ở ngoại thành TP.HCM và các tỉnh thành khác: Thời gian là 2-5 ngày đối với khu vực trung tâm tỉnh thành phố và 5-6 ngày đối với khu vực huyện, xã, thị trấn…\n
+    c. Tuy nhiên, vẫn có những giới hạn và sự chậm trễ do nguyên nhân khách quan như lễ, tết, địa chỉ nhận hàng khó tìm, sự chậm trễ từ dịch vụ chuyển phát,…Cocoon mong quý khách thông cảm vì những lý do ngoài sự chi phối của chúng tôi.\n
+    d. Trường hợp có sự chậm trễ khi giao hàng xảy ra, Cocoon sẽ thông báo ngay đến bạn đồng thời sẽ tiếp tục giao hàng hoặc hỗ trợ huỷ đơn hàng nếu bạn muốn. Chúng tôi sẽ không chịu trách nhiệm do việc giao hàng chậm trễ trừ trách nhiệm hoàn trả tiền nếu bạn đã thanh toán mà chưa nhận được sản phẩm.\n\n
+
+    4. Quy trình giao nhận, đổi trả, bảo hành sản phẩm:\n
+    a. Trong quá trình giao nhận hàng, nếu quý khách không có mặt trong đợt nhận hàng thì đơn vị vận chuyển sẽ liên lạc lại với quý khách để hẹn thời gian giao lại hàng (đối đa 2 lần hẹn)...\n
+    ...
+</string>
+    <string name="Login1">Login</string>
     <string name="hint_receiver_name">Receiver</string>
     <string name="hint_phone_number">Phone Number</string>
     <string name="hint_street_address">Street</string>
@@ -120,8 +142,5 @@
     <string name="hint_ward">Ward</string>
     <string name="title_confirm_button">Xác nhận</string>
 
-    <!-- Make sure to also include original strings from previous XMLs if they are used elsewhere -->
-
 </resources>
-
 

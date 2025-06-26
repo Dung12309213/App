@@ -19,7 +19,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="400dp">
+                android:layout_height="300dp">
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/productImageViewPager"
@@ -29,16 +29,17 @@
 
                 <ImageView
                     android:id="@+id/btnBack"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:layout_margin="12dp"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_back_arrow"
-                    android:layout_alignParentTop="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="12dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:backgroundTint="@color/white"
                     android:clickable="true"
-                    android:focusable="true"/>
+                    android:focusable="true"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_backbutton" />
 
                 <TextView
                     android:id="@+id/tvImagePageIndicator"
@@ -46,14 +47,14 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
                     android:background="@drawable/bg_bot_message"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
                     android:paddingTop="4dp"
+                    android:paddingEnd="8dp"
                     android:paddingBottom="4dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textcolor"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     tools:text="1/5" />
@@ -72,8 +73,9 @@
                     android:id="@+id/tvProductDetailCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_medium"
                     android:text="Chăm sóc tóc"
-                    android:textColor="#B46A00"
+                    android:textColor="@color/lightbrown"
                     android:textSize="14sp" />
 
                 <!-- Star Icon -->
@@ -90,6 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="4.9"
                     android:textColor="#000000"
                     android:textSize="14sp" />
@@ -107,10 +110,11 @@
                     android:id="@+id/tvProductDetailName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="Nước dưỡng tóc tinh dầu bưởi"
-                    android:textStyle="bold"
+                    android:textColor="@color/textcolor"
                     android:textSize="18sp"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- Price -->
@@ -127,11 +131,12 @@
                     android:id="@+id/tvDiscountedPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:gravity="start"
                     android:text="600.000 VND"
                     android:textColor="@color/brown"
                     android:textSize="20sp"
-                    android:gravity="start"
-                    android:layout_marginEnd="10dp"
                     android:textStyle="bold" />
 
                 <!-- Original price of the product (with strikethrough and smaller font) -->
@@ -139,11 +144,12 @@
                     android:id="@+id/tvOriginalPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/nunito_medium"
+                    android:gravity="start"
                     android:text="800.000 VND"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    android:gravity="start"
-                    android:layout_marginEnd="10dp"
                     android:textStyle="italic" />
 
 
@@ -163,6 +169,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:fontFamily="@font/nunito_medium"
                     android:maxLines="2"
                     android:text="@string/title_productdetail_desc"
                     android:textColor="#444444"
@@ -174,11 +181,12 @@
                     android:id="@+id/tvProductDetailSeeMore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="Xem thêm"
-                    android:textColor="#B36A38"
-                    android:textStyle="bold"
+                    android:textColor="@color/brown"
                     android:textSize="14sp"
-                    android:layout_marginTop="4dp" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <GridLayout
@@ -194,6 +202,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
+                    android:fontFamily="@font/nunito_medium"
                     android:text="❌ Không Sulfate àhakshfkashfkashk" />
 
                 <!-- Cột 2 (dịch qua phải) -->
@@ -203,6 +212,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="45dp"
+                    android:fontFamily="@font/nunito_medium"
                     android:text="✔ Tóc gãy rụng test độ dài " />
 
                 <!-- Cột 1 -->
@@ -211,6 +221,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
+                    android:fontFamily="@font/nunito_medium"
                     android:text="❌ Không Paraben test độ dài" />
 
                 <!-- Cột 2 (dịch qua phải) -->
@@ -220,6 +231,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="45dp"
+                    android:fontFamily="@font/nunito_medium"
                     android:text="✔ Tóc yếu" />
             </GridLayout>
 
@@ -246,6 +258,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_bold"
                         android:maxWidth="250dp"
                         android:paddingEnd="10dp"
                         android:text="Hướng dẫn sử dụng"
@@ -297,6 +310,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_bold"
                         android:maxWidth="250dp"
                         android:paddingEnd="10dp"
                         android:text="Thành phần sản phẩm"
@@ -331,11 +345,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Đánh giá sản phẩm (123)"
                 android:layout_marginStart="10dp"
-                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Đánh giá sản phẩm (123)"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp" />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -347,11 +362,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_medium"
                     android:text="Dung Chu ⭐⭐⭐⭐⭐" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_medium"
                     android:text="abcdef...xyz" />
 
                 <!-- Ảnh đính kèm -->
@@ -390,19 +407,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="end"
                 android:text="Xem tất cả"
-                android:textColor="#B46A00" />
+                android:textColor="@color/brown" />
 
             <!-- Related Products -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sản phẩm được xem cùng"
-                android:textStyle="bold"
-                android:textSize="16sp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginStart="10dp" />
+                android:fontFamily="@font/nunito_bold"
+                android:text="Sản phẩm được xem cùng"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -513,11 +532,12 @@
                 android:id="@+id/tvAddToCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thêm vào giỏ hàng"
-                android:textColor="#9C5221"
-                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="center"
-                android:layout_marginTop="2dp" />
+                android:text="Thêm vào giỏ hàng"
+                android:textColor="@color/brown"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <!-- Buy Now Button -->
@@ -527,10 +547,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="#9C5221"
+            android:backgroundTint="@color/brown"
+            android:fontFamily="@font/nunito_bold"
             android:text="MUA NGAY"
             android:textAlignment="center"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
     </LinearLayout>
 
 </RelativeLayout>

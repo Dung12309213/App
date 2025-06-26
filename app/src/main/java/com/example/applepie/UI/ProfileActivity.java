@@ -23,6 +23,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
+   ImageButton btnEdit;
    ShapeableImageView profileImage;
     TextView tvLoginLogout, tvUserName;
     ImageView imgLoginLogout;
@@ -46,27 +47,13 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
-        // Khởi tạo launcher chọn ảnh
-        imagePickerLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri selectedImageUri = result.getData().getData();
-                        if (selectedImageUri != null) {
-                            profileImage.setImageURI(selectedImageUri);
-                        }
-                    } else {
-                        Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
 
         // Các sự kiện mở các mục khác
         findViewById(R.id.itemHelpcenter).setOnClickListener(v ->
                 startActivity(new Intent(this, HelpCenterActivity.class)));
 
         findViewById(R.id.itemPaymentMethods).setOnClickListener(v ->
-                startActivity(new Intent(this, PaymentMethodsActivity.class)));
+                startActivity(new Intent(this, CardPaymentActivity.class)));
 
         findViewById(R.id.itemSettings).setOnClickListener(v ->
                 startActivity(new Intent(this, SettingsActivity.class)));
@@ -88,7 +75,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void addViews() {
-        profileImage = findViewById(R.id.imgProfile);
         tvUserName = findViewById(R.id.tvUsername);
         tvLoginLogout=findViewById(R.id.tvLoginLogout);
         imgLoginLogout = findViewById(R.id.imgLoginLogout);

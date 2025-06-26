@@ -56,6 +56,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgProfile" />
 
+        <!-- Nút chỉnh ảnh -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- DANH SÁCH CHỨC NĂNG -->
@@ -120,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/nunito_medium"
-                android:text="@string/title_Loginscreen_Login"
+                android:text="@string/Login1"
                 android:textColor="@color/textcolor"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"

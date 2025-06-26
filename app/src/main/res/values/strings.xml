@@ -110,5 +110,18 @@
     <string name="register_success">Register Successfull</string>
     <string name="OTP_wrong">Wrong OTP! Please try again.</string>
     <string name="User_Delete_Successfull">User Delete Successfull</string>
+    <!-- Strings for Address Layout -->
+
+    <string name="hint_receiver_name">Receiver</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="hint_street_address">Street</string>
+    <string name="hint_district">District</string>
+    <string name="hint_city">Province</string>
+    <string name="hint_ward">Ward</string>
+    <string name="title_confirm_button">Xác nhận</string>
+
+    <!-- Make sure to also include original strings from previous XMLs if they are used elsewhere -->
+
 </resources>
+
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
@@ -50,6 +51,25 @@
         app:layout_constraintEnd_toStartOf="@id/radioSelected"
         app:layout_constraintStart_toStartOf="@id/txtFullName"
         app:layout_constraintTop_toBottomOf="@id/txtAddress" />
+
+    <TextView
+
+        android:id="@+id/txtChangeAddress2"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="5dp"
+
+        android:fontFamily="@font/nunito_bold"
+
+        android:text="@string/title_change"
+
+        android:textColor="@color/brown"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/txtPhone"
+        app:layout_constraintTop_toBottomOf="@+id/txtPhone" />
 
     <RadioButton
         android:id="@+id/radioSelected"

@@ -33,6 +33,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -89,9 +90,20 @@ public class CartActivity extends AppCompatActivity {
         });
 
         btnCheckout.setOnClickListener(v -> {
-            Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
-            // Nếu cần truyền dữ liệu giỏ hàng qua (chưa serialize), bạn có thể dùng singleton tạm
-            startActivity(intent);
+            // Gọi getCartData và xử lý bất đồng bộ
+            getCartData(cartItems -> {
+                if (cartItems != null && !cartItems.isEmpty()) {
+                    this.cartItems = cartItems;
+
+                    // Tạo intent và truyền dữ liệu giỏ hàng đã có
+                    Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
+                    intent.putExtra("selectedVariants", (ArrayList<Variant>) cartItems);  // Chuyển cartItems dưới dạng ArrayList<Variant>
+                    startActivity(intent);  // Chuyển sang CheckoutActivity sau khi đã lấy dữ liệu
+                } else {
+                    // Nếu giỏ hàng trống, hiển thị thông báo
+                    Toast.makeText(this, "Giỏ hàng trống", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 
@@ -246,29 +258,36 @@ public class CartActivity extends AppCompatActivity {
     }
     // Lấy giỏ hàng từ Firestore theo userId
     private void getCartData(OnCartDataFetchedListener listener) {
-        String userId = userSessionManager.getUserId(); // Lấy userId từ UserSessionManager
+        String userId = userSessionManager.getUserId();
 
         if (userId.isEmpty()) {
-            // Người dùng chưa đăng nhập, không lấy dữ liệu từ Firestore
-            listener.onCartDataFetched(new ArrayList<>()); // Trả về giỏ hàng rỗng
+            listener.onCartDataFetched(new ArrayList<>());
             return;
         }
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("User") // Giả sử bạn đang dùng collection "users"
+        db.collection("User")
                 .document(userId)
-                .collection("Cart") // Giả sử giỏ hàng của người dùng được lưu trong subcollection "Cart"
+                .collection("Cart")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     List<Variant> cartItems = queryDocumentSnapshots.toObjects(Variant.class);
 
-                    // Duyệt qua từng item trong cartItems và cập nhật giá trị
+                    // THÊM: Nếu giỏ hàng trống, gọi listener ngay lập tức và thoát
+                    if (cartItems.isEmpty()) {
+                        listener.onCartDataFetched(cartItems);
+                        return;
+                    }
+
+                    // SỬ DỤNG AtomicInteger ĐỂ ĐẾM SỐ LƯỢNG LỜI GỌI CON ĐÃ HOÀN THÀNH
+                    // AtomicInteger được dùng vì nó an toàn khi tăng giá trị từ nhiều luồng bất đồng bộ
+                    AtomicInteger completedFetches = new AtomicInteger(0);
+
                     for (Variant item : cartItems) {
                         String productId = item.getProductid();
-                        String variantId = item.getId();  // Assuming variant has its own id
+                        String variantId = item.getId();
 
-                        // Truy vấn thông tin về price, quantity, variant từ subcollection "Variants"
                         db.collection("Product")
                                 .document(productId)
                                 .collection("Variant")
@@ -276,7 +295,6 @@ public class CartActivity extends AppCompatActivity {
                                 .get()
                                 .addOnSuccessListener(documentSnapshot -> {
                                     if (documentSnapshot.exists()) {
-                                        // Cập nhật thông tin price, quantity, và variant vào item
                                         int price = documentSnapshot.contains("price") ? documentSnapshot.getLong("price").intValue() : 0;
                                         int secondprice = documentSnapshot.contains("secondprice") ? documentSnapshot.getLong("secondprice").intValue() : 0;
                                         String variant = documentSnapshot.getString("variant");
@@ -284,13 +302,18 @@ public class CartActivity extends AppCompatActivity {
                                         item.setPrice(price);
                                         item.setSecondprice(secondprice);
                                         item.setVariant(variant);
+                                    } else {
+                                        Log.w("CartActivity", "Variant document not found for productId: " + productId + ", variantId: " + variantId);
+                                    }
+
+                                    // Tăng bộ đếm và KIỂM TRA XEM TẤT CẢ CÁC LỜI GỌI ĐÃ HOÀN THÀNH CHƯA
+                                    if (completedFetches.incrementAndGet() == cartItems.size()) {
+                                        // CHỈ GỌI LISTENER KHI TẤT CẢ CHI TIẾT BIẾN THỂ ĐÃ ĐƯỢC TẢI XONG
                                         listener.onCartDataFetched(cartItems);
                                     }
                                 });
                     }
-                    listener.onCartDataFetched(cartItems);
                 });
-
     }
     public interface OnCartDataFetchedListener {
         void onCartDataFetched(List<Variant> cartItems);

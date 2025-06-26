@@ -2,6 +2,7 @@ package com.example.applepie.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -86,8 +87,11 @@ public class LoginScreen1 extends AppCompatActivity {
             Intent intent = new Intent(LoginScreen1.this, ForgotPasswordActivity.class);
             startActivity(intent);
         });
-        btnBack.setOnClickListener(v -> {
-            finish();
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
         });
     }
 

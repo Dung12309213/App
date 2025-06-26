@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">ApplePie App</string>
-    <string name="title_Loginscreen_Login">Login</string>
+    <string name="title_Loginscreen_Login">LOGIN</string>
     <string name="title_LoginScreen_EmailPhoneNumber">Email/Phone number</string>
     <string name="title_LoginScreen_Password">Password</string>
     <string name="title_LoginScreen_ForgotPassword">Forgot Password?</string>
     <string name="title_login_screen_orSigninwith">Or sign in with</string>
     <string name="title_Login_Signupnow">Sign up now</string>
     <string name="title_Login_Screen_Donothaveanaccount">Haven’t got an account?</string>
-    <string name="title_CreateAccount">Create Account</string>
+    <string name="title_CreateAccount">CREATE ACCOUNT</string>
     <string name="title_Login_FullName">Full Name</string>
     <string name="title_Account_Phonenumber">Phone Number</string>
     <string name="title_login_screen_otpverification">VERIFY CODE</string>
@@ -20,13 +20,15 @@
     <!-- Login messages -->
     <string name="login_fill_info">Please fill in all the information</string>
     <string name="login_success">Login successful!</string>
-    <string name="login_failed">Incorrect Email/Phone or password</string>
+    <string name="login_failed">Incorrect username or password</string>
     <string name="title_activity_product">Product</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">NOTIFICATION</string>
     <string name="editFindProduct">Find product</string>
     <string name="titleFlashsale">FLASH SALE</string>
+<<<<<<< Updated upstream
+=======
     <string name="title_profile">PROFILE</string>
     <string name="title_setting">SETTING</string>
     <string name="title_paymentmethod">PAYMENT METHODS</string>
@@ -46,7 +48,7 @@
     <string name="title_notification_settings">Notification settings</string>
     <string name="title_password_manager">Password manager</string>
     <string name="title_delete_account">Delete account</string>
-    <string name="title_help_center_header">HELP CENTER\n</string>
+    <string name="title_help_center_header">HELP CENTER</string>
     <string name="title_policy">POLICY</string>
     <string name="title_my_orders1">MY ORDERS</string>
     <string name="quantity_format">Quantity: %1$d</string>
@@ -58,13 +60,13 @@
     <string name="title_signinnow">Sign in now</string>
     <string name="title_productdetail_desc">"Sản phẩm treatment dành cho tóc, phù hợp với tình trạng tóc rụng, tóc yếu, tóc thưa mỏng. Sản phẩm có thành phần từ tinh dầu bưởi Việt Nam truyền thống absakjdfksjdfhksa;fjahdkjfskajf test "</string>
     <string name="title_notification">Notification</string>
-    <string name="title_address">Address</string>
-    <string name="title_add_address">Add more address</string>
+    <string name="title_address">ADDRESS</string>
+    <string name="title_add_address">+ Add more address</string>
     <string name="title_confirm">CONFIRM</string>
     <string name="title_change">Change</string>
-    <string name="title_forgot_password">Forgot password</string>
+    <string name="title_forgot_password">FORGOT PASSWORD</string>
     <string name="title_birthday">Date of birth</string>
-    <string name="title_add_addres">Add address</string>
+    <string name="title_add_addres">ADD ADDRESS</string>
     <string name="title_receiver_name">Receiver</string>
     <string name="title_default_address">Default address</string>
     <string-array name="payment_methods">
@@ -78,7 +80,7 @@
     <string name="content_description_payment_method_icon">Payment method icon</string>
     <string name="content_description_location_icon">Location icon</string>
 
-    <string name="order_detail_title">Order Details</string>
+    <string name="order_detail_title">ORDER DETAILS</string>
     <string name="order_status_packaging">Packaging</string>
     <string name="payment_method_cod">Cash on Delivery (COD)</string>
     <string name="delivery_name_example">Quoc Trinh</string>
@@ -104,11 +106,14 @@
     <string name="total_amount_example">495,000 VND</string>
     <string name="cancel_order_button_text">CANCEL ORDER</string>
 
-    <string name="MyCoupon">My Coupon</string>
+    <string name="MyCoupon">My vouchers</string>
     <string name="title_guest_name">Guest</string>
     <string name="internet_required">Internet Required!</string>
     <string name="register_success">Register Successfull</string>
     <string name="OTP_wrong">Wrong OTP! Please try again.</string>
     <string name="User_Delete_Successfull">User Delete Successfull</string>
+    <string name="review">Review</string>
+    <string name="login">Login</string>
+    <string name="new_address">New address</string>
 </resources>
 

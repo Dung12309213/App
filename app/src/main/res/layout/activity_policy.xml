@@ -27,7 +27,7 @@
         android:fontFamily="@font/vollkorn"
         android:text="@string/title_policy"
         android:textColor="@color/textcolor"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
         app:layout_constraintEnd_toEndOf="parent"

@@ -39,14 +39,13 @@
                     android:src="@drawable/ic_backbutton" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="290dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30dp"
-                    android:layout_weight="1"
                     android:fontFamily="@font/vollkorn"
                     android:text="@string/title_checkout"
                     android:textAlignment="center"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -77,6 +76,7 @@
                         android:fontFamily="@font/nunito_bold"
                         android:text="Quốc Trịnh"
                         android:textColor="@color/textcolor"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -86,7 +86,7 @@
                         android:fontFamily="@font/nunito_medium"
                         android:text="Trường Đại học Kinh tế - Luật\n0123 456 789"
                         android:textColor="@color/textcolor"
-                        android:textSize="13sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <TextView
@@ -159,12 +159,12 @@
         android:id="@+id/checkoutBottomBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
         android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <!-- Mã giảm giá -->
         <LinearLayout
@@ -174,29 +174,33 @@
 
             <EditText
                 android:id="@+id/edtDiscountCode"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Nhập mã giảm giá"
                 android:background="@drawable/edittext_background"
-                android:padding="8dp" />
+                android:fontFamily="@font/nunito_medium"
+                android:hint="Nhập mã giảm giá"
+                android:padding="8dp"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btnApplyDiscount"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 android:backgroundTint="@color/brown"
+                android:fontFamily="@font/nunito_bold"
                 android:text="@string/title_apply"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <!-- Tính tiền -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="12dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtSubtotal"
@@ -204,7 +208,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
                 android:text="Giá tiền: 1.035.000 đ"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txtDiscount"
@@ -212,7 +217,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
                 android:text="Giảm giá: - 60.000 đ"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txtShippingFee"
@@ -220,7 +226,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
                 android:text="Vận chuyển: 15.000 đ"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txtTotal"
@@ -229,7 +236,7 @@
                 android:fontFamily="@font/nunito_bold"
                 android:text="Tổng cộng: 975.000 đ"
                 android:textAlignment="textEnd"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -243,7 +250,7 @@
             android:text="@string/title_checkout"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>
 

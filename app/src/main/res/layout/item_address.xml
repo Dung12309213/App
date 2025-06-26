@@ -22,7 +22,7 @@
         android:fontFamily="@font/nunito_bold"
         android:text="Quốc Trịnh"
         android:textColor="@color/textcolor"
-        android:textSize="15sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/radioSelected"
         app:layout_constraintStart_toEndOf="@id/imgLocation"
         app:layout_constraintTop_toTopOf="@id/imgLocation" />
@@ -34,7 +34,7 @@
         android:fontFamily="@font/nunito_medium"
         android:text="Trường Đại học Kinh tế - Luật"
         android:textColor="@color/textcolor"
-        android:textSize="13sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/radioSelected"
         app:layout_constraintStart_toStartOf="@id/txtFullName"
         app:layout_constraintTop_toBottomOf="@id/txtFullName" />
@@ -46,7 +46,7 @@
         android:fontFamily="@font/nunito_medium"
         android:text="0123 456 789"
         android:textColor="@color/textcolor"
-        android:textSize="13sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/radioSelected"
         app:layout_constraintStart_toStartOf="@id/txtFullName"
         app:layout_constraintTop_toBottomOf="@id/txtAddress" />

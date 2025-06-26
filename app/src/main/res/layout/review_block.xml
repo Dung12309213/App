@@ -25,13 +25,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
                 android:text="Turmeric Mask Hưng Yên"
-                android:textStyle="bold"
-                android:textSize="16sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_medium"
                 android:text="Volume: 100 ml"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -46,23 +48,26 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rate the product"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/nunito_medium"
+        android:text="Rate the product" />
 
     <androidx.appcompat.widget.AppCompatRatingBar
         android:id="@+id/ratingBar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:isIndicator="false"
         android:numStars="5"
         android:stepSize="1"
-        android:isIndicator="false"
-        android:layout_marginTop="8dp"
-        android:theme="@style/YellowRatingBarStyle"/>
+        android:theme="@style/YellowRatingBarStyle" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add product images"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/nunito_medium"
+        android:text="Add product images" />
 
     <FrameLayout
         android:id="@+id/frame_upload1"
@@ -83,24 +88,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:text="Image"
             android:layout_marginBottom="12dp"
+            android:fontFamily="@font/nunito_medium"
+            android:text="Image"
             android:textColor="#AAAAAA" />
     </FrameLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Write a review (min 50 characters)"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/nunito_medium"
+        android:text="Write a review (min 50 characters)" />
 
     <EditText
         android:id="@+id/edit_review1"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:hint="Share your opinion about this product"
+        android:layout_marginTop="10dp"
         android:background="#EEEEEE"
-        android:padding="12dp"
+        android:fontFamily="@font/nunito_medium"
         android:gravity="top"
-        android:inputType="textMultiLine" />
+        android:hint="Share your opinion about this product"
+        android:inputType="textMultiLine"
+        android:padding="12dp" />
 </LinearLayout>

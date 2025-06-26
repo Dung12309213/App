@@ -1,6 +1,4 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,13 +16,11 @@
         <!-- Logo -->
         <ImageButton
             android:id="@+id/btn_avatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@mipmap/ic_logo"
             android:background="@android:color/transparent"
-            android:contentDescription="User Avatar"
-            android:layout_marginEnd="8dp"
-            android:src="@mipmap/ic_logo"/>
+            android:contentDescription="Avatar" />
 
         <!-- Search Box -->
         <EditText
@@ -35,49 +31,27 @@
             android:background="@drawable/search_box"
             android:hint="@string/editFindProduct"
             android:inputType="text"
-            android:paddingStart="16dp"
-            android:paddingEnd="12dp"
+            android:paddingHorizontal="16dp"
             android:textColor="#000000"
-            android:textColorHint="#B36A38"
-            android:drawableEnd="@drawable/ic_search"
-            android:drawablePadding="8dp"/>
+            android:textColorHint="#B36A38" />
 
         <!-- Search Button -->
         <ImageButton
             android:id="@+id/btnSearch"
             android:layout_width="28dp"
             android:layout_height="28dp"
+            android:src="@drawable/ic_search"
             android:background="@android:color/transparent"
-            android:contentDescription="Search"
-            android:src="@drawable/ic_search" />
+            android:contentDescription="Search" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <!-- Nút notification -->
-            <ImageButton
-                android:id="@+id/btn_notification"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="Notifications"
-                android:src="@drawable/ic_notification" />
-
-            <!-- Badge số lượng -->
-            <TextView
-                android:id="@+id/notification_badge"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="end|top"
-                android:background="@drawable/badge_background"
-                android:text="3"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:visibility="gone" />
-        </RelativeLayout>
-
+        <!-- Notification -->
+        <ImageButton
+            android:id="@+id/btn_notification"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@mipmap/ic_notification"
+            android:background="@android:color/transparent"
+            android:contentDescription="Notifications" />
     </LinearLayout>
 
     <!-- Khu vực filter (mặc định ẩn) -->
@@ -126,18 +100,17 @@
                 android:paddingVertical="8dp" />
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btn_close_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Close Filter"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:backgroundTint="#A0522D"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
             android:layout_gravity="start"
             android:layout_marginTop="16dp"
-            android:background="@drawable/bg_user_message"
-            android:backgroundTint="@null"/>
-
+            android:background="@drawable/search_box" />
     </LinearLayout>
 </LinearLayout>

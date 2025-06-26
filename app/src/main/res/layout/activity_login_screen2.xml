@@ -18,7 +18,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            android:fontFamily="@font/vollkorn"
             android:text="@string/title_CreateAccount"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -28,18 +27,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/nunito_bold"
             android:text="@string/title_Login_FullName"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/edtRegisterName"
+            android:id="@+id/edtFullName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/edittext_background"
-            android:fontFamily="@font/nunito_bold"
             android:hint="Nhập họ và tên"
+            android:background="@drawable/edittext_background"
             android:padding="12dp" />
 
         <!-- Số điện thoại -->
@@ -47,39 +44,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/nunito_bold"
             android:text="@string/title_Account_Phonenumber"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/edtRegisterPhone"
+            android:id="@+id/edtPhone"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/edittext_background"
-            android:fontFamily="@font/nunito_medium"
             android:hint="Nhập số điện thoại"
             android:inputType="phone"
+            android:background="@drawable/edittext_background"
             android:padding="12dp" />
 
         <!-- Email -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/nunito_bold"
             android:text="Email"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
 
         <EditText
-            android:id="@+id/edtRegisterEmail"
+            android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/edittext_background"
-            android:fontFamily="@font/nunito_medium"
             android:hint="Nhập email"
             android:inputType="textEmailAddress"
+            android:background="@drawable/edittext_background"
             android:padding="12dp" />
 
         <!-- Mật khẩu -->
@@ -87,19 +80,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/nunito_bold"
             android:text="@string/title_LoginScreen_Password"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/edtRegisterPassword"
+            android:id="@+id/edtPassword"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/edittext_background"
-            android:fontFamily="@font/nunito_medium"
             android:hint="Tạo mật khẩu"
             android:inputType="textPassword"
+            android:background="@drawable/edittext_background"
             android:padding="12dp" />
 
         <!-- Xác nhận mật khẩu -->
@@ -111,33 +102,61 @@
             android:layout_height="50dp"
             android:layout_marginTop="32dp"
             android:backgroundTint="#823800"
-            android:fontFamily="@font/nunito_bold"
             android:text="@string/title_Login_Signupnow"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textColor="@android:color/white" />
 
+        <!-- Dòng phân cách -->
+        <TextView
+            android:id="@+id/txtOrLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/title_login_screen_orSigninwith"
+            android:textColor="#888"
+            android:layout_gravity="center" />
+
+        <!-- Đăng ký bằng Google/Facebook -->
+        <LinearLayout
+            android:id="@+id/socialLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:id="@+id/btnGoogle"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_google" />
+
+            <ImageView
+                android:id="@+id/btnFacebook"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_facebook" />
+        </LinearLayout>
 
         <!-- Dòng chuyển hướng -->
         <TextView
             android:id="@+id/txtNoAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="32dp"
-            android:fontFamily="@font/nunito_medium"
-            android:text="@string/title_have_account" />
+            android:text="@string/title_Login_Screen_Donothaveanaccount"
+            android:layout_gravity="center" />
 
         <TextView
-            android:id="@+id/tvToLogin"
+            android:id="@+id/txtRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="4dp"
-            android:clickable="true"
-            android:fontFamily="@font/nunito_medium"
-            android:text="@string/title_signinnow"
+            android:text="@string/title_Login_Signupnow"
             android:textColor="#B38A44"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="center"
+            android:clickable="true" />
 
     </LinearLayout>
 </ScrollView>

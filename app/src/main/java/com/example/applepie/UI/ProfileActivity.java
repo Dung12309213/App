@@ -72,7 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HelpCenterActivity.class)));
 
         findViewById(R.id.itemPaymentMethods).setOnClickListener(v ->
-                startActivity(new Intent(this, PaymentMethodsActivity.class)));
+                startActivity(new Intent(this, CardPaymentActivity.class)));
 
         findViewById(R.id.itemSettings).setOnClickListener(v ->
                 startActivity(new Intent(this, SettingsActivity.class)));

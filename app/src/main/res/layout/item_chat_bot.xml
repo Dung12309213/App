@@ -31,15 +31,15 @@
             android:background="@drawable/bg_bot_message"
             android:padding="12dp"
             android:textColor="@color/textcolor"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txtBotTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="08:04 pm"
-            android:textColor="#888888"
-            android:textSize="10sp"
-            android:layout_marginTop="4dp"/>
+            android:textColor="@color/textcolor"
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>

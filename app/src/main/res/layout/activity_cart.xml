@@ -27,7 +27,7 @@
         android:fontFamily="@font/vollkorn"
         android:text="@string/title_my_cart"
         android:textColor="@color/textcolor"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,19 +50,19 @@
         android:id="@+id/cartSummaryLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@android:color/white"
-        android:padding="16dp"
+        android:orientation="vertical"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <!-- Nhập mã giảm giá -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/editDiscountCode"
@@ -72,7 +72,8 @@
                 android:background="@drawable/edittext_background"
                 android:fontFamily="@font/nunito_medium"
                 android:hint="Empty"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btnApplyDiscount"
@@ -82,15 +83,16 @@
                 android:backgroundTint="@color/brown"
                 android:fontFamily="@font/nunito_medium"
                 android:text="@string/title_apply"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <!-- Hiển thị tổng giá tiền -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="12dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtOriginalPrice"

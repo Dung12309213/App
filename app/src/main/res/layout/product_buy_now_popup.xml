@@ -11,13 +11,13 @@
     <!-- Dung tích -->
     <TextView
         android:id="@+id/tvVolumeTitle"
-        android:text="Biến thể"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="6dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:fontFamily="@font/nunito_medium"
+        android:text="Biến thể"
+        android:textColor="@color/textcolor"
+        android:textSize="16sp" />
 
     <GridLayout
         android:id="@+id/gridVariant"
@@ -32,12 +32,12 @@
     <!-- Số lượng -->
     <TextView
         android:id="@+id/tvQuantityTitle"
-        android:text="Số lượng"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:textStyle="bold"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_medium"
+        android:text="Số lượng"
+        android:textColor="@color/textcolor"
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,70 +48,47 @@
 
         <ImageButton
             android:id="@+id/btnMinus"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:backgroundTint="#D7CCC8"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/button_minus"
+            android:backgroundTint="#D7CCC8"
             android:contentDescription="Trừ"
-            />
+            android:foregroundTint="@color/brown"
+            android:src="@drawable/button_minus" />
 
         <TextView
             android:id="@+id/tvQuantity"
-            android:text="1"
-            android:textSize="16sp"
-            android:layout_marginHorizontal="12dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:fontFamily="@font/nunito_medium"
+            android:text="1"
+            android:textSize="34sp" />
 
         <ImageButton
             android:id="@+id/btnPlus"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:backgroundTint="#D7CCC8"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/button_plus"
+            android:backgroundTint="#D7CCC8"
             android:contentDescription="Cộng"
-           />
+            android:foregroundTint="@color/brown"
+            android:src="@drawable/button_plus" />
     </LinearLayout>
 
     <!-- Giá -->
 
     <!-- Nút MUA NGAY -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvVariantPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvVariantSecondPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="12dp"
-            android:textColor="#000000"
-            android:textSize="18sp"
-
-            />
-    </LinearLayout>
 
     <Button
         android:id="@+id/btnProductBuyConfirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#9C5221"
+        android:backgroundTint="@color/brown"
+        android:fontFamily="@font/nunito_bold"
+        android:paddingVertical="12dp"
         android:text="MUA NGAY"
         android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:paddingVertical="12dp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 </LinearLayout>

@@ -32,10 +32,10 @@
             android:maxLines="2"
             android:text="Mặt nạ nghệ Hưng Yên"
             android:textColor="@color/textcolor"
-            android:textSize="20sp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgProduct"
-            app:layout_constraintTop_toTopOf="@id/imgProduct"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/imgProduct" />
 
         <!-- Dung tích -->
         <TextView
@@ -61,9 +61,9 @@
             android:fontFamily="@font/nunito_bold"
             android:text="345.000 đ"
             android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintTop_toBottomOf="@id/txtSize"
-            app:layout_constraintStart_toStartOf="@id/txtSize" />
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/txtSize"
+            app:layout_constraintTop_toBottomOf="@id/txtSize" />
 
         <!-- Nút giảm -->
         <ImageButton

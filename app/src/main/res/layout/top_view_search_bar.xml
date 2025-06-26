@@ -1,4 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,11 +19,13 @@
         <!-- Logo -->
         <ImageButton
             android:id="@+id/btn_avatar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@mipmap/ic_logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
             android:background="@android:color/transparent"
-            android:contentDescription="Avatar" />
+            android:contentDescription="User Avatar"
+            android:layout_marginEnd="8dp"
+            android:src="@mipmap/ic_logo"/>
 
         <!-- Search Box -->
         <EditText
@@ -31,86 +36,79 @@
             android:background="@drawable/search_box"
             android:hint="@string/editFindProduct"
             android:inputType="text"
-            android:paddingHorizontal="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="12dp"
             android:textColor="#000000"
-            android:textColorHint="#B36A38" />
+            android:textColorHint="#B36A38"
+            android:drawableEnd="@drawable/ic_search"
+            android:drawablePadding="8dp"/>
 
         <!-- Search Button -->
-        <ImageButton
-            android:id="@+id/btnSearch"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:src="@drawable/ic_search"
-            android:background="@android:color/transparent"
-            android:contentDescription="Search" />
 
-        <!-- Notification -->
-        <ImageButton
-            android:id="@+id/btn_notification"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@mipmap/ic_notification"
-            android:background="@android:color/transparent"
-            android:contentDescription="Notifications" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- Nút notification -->
+            <ImageButton
+                android:id="@+id/btn_notification"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Notifications"
+                android:src="@drawable/ic_notification" />
+
+            <!-- Badge số lượng -->
+            <TextView
+                android:id="@+id/notification_badge"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end|top"
+                android:background="@drawable/badge_background"
+                android:text="3"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:visibility="gone" />
+        </RelativeLayout>
+
     </LinearLayout>
+    <!-- Kết quả sản phẩm (RecyclerView) -->
 
-    <!-- Khu vực filter (mặc định ẩn) -->
-    <LinearLayout
-        android:id="@+id/filter_panel"
+    <!-- Kết quả danh mục (GridLayout) -->
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:visibility="gone"
-        android:background="@drawable/search_box"
-        android:elevation="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Filter by Category"
-            android:textColor="#4A4A4A"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingBottom="12dp" />
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical" >
 
-            <CheckBox
-                android:id="@+id/check_filter_1"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSearchProducts"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Category 1"
-                android:textColor="#555555"
-                android:buttonTint="#6A4F4F"
-                android:paddingVertical="8dp"
-                android:layout_marginEnd="16dp" />
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/item_product" />
 
-            <CheckBox
-                android:id="@+id/check_filter_2"
-                android:layout_width="wrap_content"
+            <GridLayout
+                android:id="@+id/gridSearchCategory"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Category 2"
-                android:textColor="#555555"
-                android:buttonTint="#6A4F4F"
-                android:paddingVertical="8dp" />
+                android:layout_margin="12dp"
+                android:alignmentMode="alignMargins"
+                android:columnCount="2"
+                android:useDefaultMargins="false"
+                android:visibility="gone" />
         </LinearLayout>
+    </ScrollView>
 
-        <Button
-            android:id="@+id/btn_close_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Close Filter"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#A0522D"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="12dp"
-            android:layout_gravity="start"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/search_box" />
-    </LinearLayout>
 </LinearLayout>

@@ -98,8 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Panel tìm kiếm
         edtSearch = findViewById(R.id.edt_search);
-        filterPanel = findViewById(R.id.filter_panel);
-        btnCloseFilter = findViewById(R.id.btn_close_filter);
 
         edtSearch.setOnClickListener(v -> filterPanel.setVisibility(View.VISIBLE));
         btnCloseFilter.setOnClickListener(v -> filterPanel.setVisibility(View.GONE));

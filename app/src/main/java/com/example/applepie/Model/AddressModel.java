@@ -2,7 +2,9 @@ package com.example.applepie.Model;
 
 import androidx.annotation.NonNull;
 
-public class AddressModel {
+import java.io.Serializable;
+
+public class AddressModel implements Serializable {
     private String addressid;
     private String name;
     private String phone;

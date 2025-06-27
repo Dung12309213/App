@@ -10,6 +10,7 @@ import android.widget.*;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.applepie.Model.AddressModel;
@@ -41,6 +42,11 @@ public class YourProfileActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private UserSessionManager userSessionManager;
     private FirebaseFirestore db;
+    private static final int ADDRESS_ACTIVITY_REQUEST_CODE = 200;
+
+    public static final String MODE_SELECTION_KEY = "address_selection_mode";
+    public static final String MODE_SET_DEFAULT = "set_default"; // Mode: đặt làm mặc định
+    public static final String MODE_SELECT_ADDRESS = "select_address"; // Mode: chọn địa chỉ
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +61,11 @@ public class YourProfileActivity extends AppCompatActivity {
 
         // HIỂN THỊ DỮ LIỆU
         loadUserInfo();
-
-
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadUserInfo();
     }
 
     private void addEvents() {
@@ -85,8 +94,10 @@ public class YourProfileActivity extends AppCompatActivity {
 
         // CHUYỂN ĐẾN MÀN ĐỊA CHỈ
         findViewById(R.id.btnEditAddress).setOnClickListener(v -> {
-            Intent intent = new Intent(this, AddressActivity.class);
-            startActivity(intent);
+            Intent intent = new Intent(YourProfileActivity.this, AddressActivity.class);
+            // Thêm mode vào Intent
+            intent.putExtra(MODE_SELECTION_KEY, MODE_SET_DEFAULT); // Báo là mở để đặt địa chỉ mặc định
+            startActivityForResult(intent, ADDRESS_ACTIVITY_REQUEST_CODE);
         });
     }
 
@@ -239,5 +250,19 @@ public class YourProfileActivity extends AppCompatActivity {
                 y, m, d
         );
         dialog.show();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADDRESS_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                String userId = userSessionManager.getUserId();
+                if (userId != null && !userId.isEmpty()) {
+                    getDefaultAddress(userId);
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.applepie.Adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.applepie.Model.AddressModel;
 import com.example.applepie.R;
+import com.example.applepie.UI.AddAddressActivity;
 
 import java.util.List;
 
@@ -47,11 +49,20 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
                         (model.getProvince() != null && !model.getProvince().isEmpty() ? model.getProvince() : "")
         );
         holder.txtPhone.setText(model.getPhone());
+
         holder.radioSelected.setChecked(position == selectedPosition);
 
         holder.itemView.setOnClickListener(v -> {
             selectedPosition = holder.getAdapterPosition();
             notifyDataSetChanged();
+        });
+        holder.txtChangeAddressDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AddAddressActivity.class);
+                intent.putExtra("CHANGE_ADDRESS", model);
+                v.getContext().startActivity(intent);
+            }
         });
     }
 
@@ -65,7 +76,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     }
 
     static class AddressViewHolder extends RecyclerView.ViewHolder {
-        TextView txtFullName, txtAddress, txtPhone;
+        TextView txtFullName, txtAddress, txtPhone, txtChangeAddressDetail;
         RadioButton radioSelected;
 
         public AddressViewHolder(@NonNull View itemView) {
@@ -74,6 +85,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
             txtAddress = itemView.findViewById(R.id.txtAddress);
             txtPhone = itemView.findViewById(R.id.txtPhone);
             radioSelected = itemView.findViewById(R.id.radioSelected);
+            txtChangeAddressDetail = itemView.findViewById(R.id.txtChangeAddressDetail);
         }
     }
 }

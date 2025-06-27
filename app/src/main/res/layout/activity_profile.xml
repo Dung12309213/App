@@ -74,7 +74,9 @@
 
         <include
             android:id="@+id/itemPaymentMethods"
-            layout="@layout/item_profile_option_payment_methods" />
+            layout="@layout/item_profile_option_payment_methods"
+            android:visibility="gone" />
+
         <include
             android:id="@+id/itemCoupon"
             layout="@layout/item_profile_option_coupon" />

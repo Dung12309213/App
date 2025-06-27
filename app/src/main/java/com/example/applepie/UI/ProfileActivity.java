@@ -94,7 +94,6 @@ public class ProfileActivity extends AppCompatActivity {
             tvUserName.setText(userName);
             imgLoginLogout.setImageResource(R.drawable.ic_logout);
             itemYourProfile.setVisibility(View.VISIBLE);
-            itemPaymentMethods.setVisibility(View.VISIBLE);
             itemMyorders.setVisibility(View.VISIBLE);
             findViewById(R.id.itemLogin).setOnClickListener(v -> logout());
         } else {
@@ -102,7 +101,6 @@ public class ProfileActivity extends AppCompatActivity {
             tvUserName.setText("Guest");
             imgLoginLogout.setImageResource(R.drawable.ic_login);
             itemYourProfile.setVisibility(View.GONE);
-            itemPaymentMethods.setVisibility(View.GONE);
             itemMyorders.setVisibility(View.GONE);
             itemCoupon.setVisibility(View.GONE);
             findViewById(R.id.itemLogin).setOnClickListener(v -> login());
@@ -127,7 +125,6 @@ public class ProfileActivity extends AppCompatActivity {
                     imgLoginLogout.setImageResource(R.drawable.ic_login);
                     tvUserName.setText("Guest");
                     itemYourProfile.setVisibility(View.GONE);
-                    itemPaymentMethods.setVisibility(View.GONE);
                     itemMyorders.setVisibility(View.GONE);
                     findViewById(R.id.itemLogin).setOnClickListener(v -> login());
                 })

@@ -38,6 +38,8 @@ public class AddressActivity extends AppCompatActivity {
     private static final int ADD_EDIT_ADDRESS_REQUEST = 1; // Mã yêu cầu
     private String currentSelectionMode; // Biến để lưu trữ mode hiện tại
 
+    private AddressModel addressFromCallingActivity;
+
     public static final String MODE_SELECTION_KEY = "address_selection_mode";
     public static final String MODE_SET_DEFAULT = "set_default";
     public static final String MODE_SELECT_ADDRESS = "select_address";
@@ -52,28 +54,56 @@ public class AddressActivity extends AppCompatActivity {
 
         addressList = new ArrayList<>();
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(MODE_SELECTION_KEY)) {
-            currentSelectionMode = intent.getStringExtra(MODE_SELECTION_KEY);
+        if (intent != null) {
+            if (intent.hasExtra(MODE_SELECTION_KEY)) {
+                currentSelectionMode = intent.getStringExtra(MODE_SELECTION_KEY);
+            } else {
+                currentSelectionMode = MODE_SET_DEFAULT;
+            }
+
+            // Đọc địa chỉ được truyền từ Activity gọi nó (CheckoutActivity)
+            if (intent.hasExtra("currently_selected_address")) {
+                addressFromCallingActivity = (AddressModel) intent.getSerializableExtra("currently_selected_address");
+            }
         } else {
-            // Nếu không có mode được truyền, đặt một mode mặc định (ví dụ: chỉ để hiển thị hoặc set default)
             currentSelectionMode = MODE_SET_DEFAULT;
         }
 
-        loadAddresses();
+        addViews(); // Khởi tạo UI trước khi tải dữ liệu
 
-        addViews();
+        // --- ĐIỀU CHỈNH QUAN TRỌNG Ở ĐÂY ---
+        // Chỉ tải địa chỉ từ Firestore nếu người dùng đã đăng nhập
+        if (userSessionManager.isLoggedIn()) {
+            loadAddresses(); // Tải địa chỉ từ Firestore
+        } else {
+            // Nếu chưa đăng nhập, và có địa chỉ tạm thời từ CheckoutActivity, thêm vào danh sách
+            if (addressFromCallingActivity != null) {
+                addressList.add(addressFromCallingActivity);
+                Toast.makeText(this, "Bạn đang sử dụng địa chỉ tạm thời.", Toast.LENGTH_LONG).show();
+            }
+            // Khởi tạo adapter ngay cả khi danh sách rỗng (hoặc chỉ có địa chỉ tạm thời)
+            adapter = new AddressAdapter(addressList, addressFromCallingActivity);
+            recyclerView.setAdapter(adapter);
+        }
+
         addEvents();
 
     }
     @Override
     protected void onResume() {
         super.onResume();
-        // Clear the existing list to avoid duplicates before reloading
-        addressList.clear();
-        if (adapter != null) {
-            adapter.notifyDataSetChanged(); // Cập nhật adapter để hiển thị rỗng hoặc làm mới trạng thái
+        // Cần tải lại địa chỉ chỉ khi người dùng đã đăng nhập
+        // và không phải là trường hợp sau khi quay lại từ AddAddressActivity với địa chỉ khách.
+        if (userSessionManager.isLoggedIn()) {
+            addressList.clear(); // Xóa list cũ để tránh trùng lặp
+            loadAddresses(); // Tải lại địa chỉ từ Firestore
+        } else {
+            // Nếu chưa đăng nhập, không tải lại từ Firestore.
+            // Danh sách địa chỉ đã được setup trong onCreate hoặc onActivityResult.
+            if (adapter != null) {
+                adapter.notifyDataSetChanged(); // Chỉ cập nhật adapter nếu danh sách đã thay đổi thủ công
+            }
         }
-        loadAddresses(); // Tải lại địa chỉ mỗi khi Activity được resume
     }
 
     private void addEvents() {
@@ -88,12 +118,14 @@ public class AddressActivity extends AppCompatActivity {
                 return;
             }
 
-            // --- Logic phân biệt 2 dạng của nút Change ---
             if (MODE_SET_DEFAULT.equals(currentSelectionMode)) {
-                // Dạng 1: Đặt địa chỉ được chọn làm mặc định (khi mở từ YourProfileActivity)
-                updateDefaultAddress(selected);
+                // Chỉ cho phép đặt mặc định nếu đã đăng nhập và địa chỉ có ID thật sự
+                if (userSessionManager.isLoggedIn() && selected.getAddressid() != null && !selected.getAddressid().isEmpty()) {
+                    updateDefaultAddress(selected);
+                } else {
+                    Toast.makeText(this, "Không thể đặt địa chỉ mặc định khi chưa đăng nhập hoặc địa chỉ chưa được lưu.", Toast.LENGTH_SHORT).show();
+                }
             } else if (MODE_SELECT_ADDRESS.equals(currentSelectionMode)) {
-                // Dạng 2: Chọn địa chỉ và quay về Activity gọi nó (khi mở từ CheckoutActivity)
                 returnSelectedAddress(selected);
             } else {
                 Toast.makeText(AddressActivity.this, "Chế độ không xác định cho nút Change", Toast.LENGTH_SHORT).show();
@@ -102,6 +134,8 @@ public class AddressActivity extends AppCompatActivity {
 
         btnAdd.setOnClickListener(v -> {
             Intent intent = new Intent(AddressActivity.this, AddAddressActivity.class);
+            // Không truyền userId hay thông tin đăng nhập ở đây.
+            // AddAddressActivity sẽ tự kiểm tra trạng thái đăng nhập.
             startActivityForResult(intent, ADD_EDIT_ADDRESS_REQUEST);
         });
     }
@@ -112,48 +146,56 @@ public class AddressActivity extends AppCompatActivity {
         btnAdd = findViewById(R.id.btnAddAddress);
         recyclerView = findViewById(R.id.recyclerAddresses);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new AddressAdapter(addressList);
-        recyclerView.setAdapter(adapter);
     }
 
     private void loadAddresses() {
         String userId = userSessionManager.getUserId();
 
         if (userId != null && !userId.isEmpty()) {
-            // Truy vấn Firestore để lấy địa chỉ từ subcollection "Address"
             db.collection("User").document(userId).collection("Address")
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            addressList.clear();
-                            // Lấy danh sách địa chỉ từ query snapshot
+                            addressList.clear(); // Xóa danh sách cũ
+                            // Thêm địa chỉ đang được chọn nếu nó không có trong Firestore (trường hợp khách thêm mới)
+                            if (addressFromCallingActivity != null &&
+                                    (addressFromCallingActivity.getAddressid() == null || addressFromCallingActivity.getAddressid().isEmpty())) {
+                                addressList.add(addressFromCallingActivity);
+                            }
+
                             for (DocumentSnapshot document : task.getResult()) {
-                                // Chuyển DocumentSnapshot thành AddressModel
                                 AddressModel address = document.toObject(AddressModel.class);
                                 if (address != null) {
                                     address.setAddressid(document.getId());
-                                    addressList.add(address);
+                                    // Tránh thêm trùng lặp nếu địa chỉ khách đã được lưu sau khi đăng nhập
+                                    boolean alreadyExists = false;
+                                    for(AddressModel existingAddress : addressList) {
+                                        if (existingAddress.getAddressid() != null && existingAddress.getAddressid().equals(address.getAddressid())) {
+                                            alreadyExists = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!alreadyExists) {
+                                        addressList.add(address);
+                                    }
                                 }
                             }
-                            adapter.notifyDataSetChanged();
-
-                            adapter = new AddressAdapter(addressList); // Tạo lại adapter để cập nhật selectedPosition
+                            adapter = new AddressAdapter(addressList, addressFromCallingActivity);
                             recyclerView.setAdapter(adapter);
                         } else {
-                            // Nếu có lỗi khi lấy dữ liệu, bạn có thể thông báo cho người dùng
                             Toast.makeText(AddressActivity.this, "Có lỗi khi lấy địa chỉ", Toast.LENGTH_SHORT).show();
                         }
                     });
         } else {
-            // Nếu không có userId, thông báo lỗi hoặc xử lý phù hợp
-            Toast.makeText(AddressActivity.this, "Không tìm thấy thông tin người dùng", Toast.LENGTH_SHORT).show();
+            // Không làm gì nếu chưa đăng nhập, danh sách sẽ được khởi tạo rỗng
+            // hoặc chứa địa chỉ tạm thời từ CheckoutActivity (đã xử lý trong onCreate)
         }
     }
 
     private void updateDefaultAddress(AddressModel selectedAddress) {
         String userId = userSessionManager.getUserId();
-        if (userId == null || userId.isEmpty()) {
-            Toast.makeText(this, "Không tìm thấy thông tin người dùng", Toast.LENGTH_SHORT).show();
+        if (userId == null || userId.isEmpty() || selectedAddress.getAddressid() == null || selectedAddress.getAddressid().isEmpty()) {
+            Toast.makeText(this, "Không tìm thấy thông tin người dùng hoặc địa chỉ không hợp lệ.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -163,7 +205,6 @@ public class AddressActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<Task<Void>> updateTasks = new ArrayList<>();
-                        // 1. Bỏ mặc định các địa chỉ cũ
                         for (DocumentSnapshot document : task.getResult()) {
                             if (!document.getId().equals(selectedAddress.getAddressid())) {
                                 updateTasks.add(db.collection("User").document(userId)
@@ -175,15 +216,13 @@ public class AddressActivity extends AppCompatActivity {
                         Tasks.whenAllComplete(updateTasks)
                                 .addOnCompleteListener(allUpdatesTask -> {
                                     if (allUpdatesTask.isSuccessful()) {
-                                        // 2. Đặt địa chỉ được chọn làm mặc định mới
                                         db.collection("User").document(userId).collection("Address")
                                                 .document(selectedAddress.getAddressid())
                                                 .update("defaultCheck", true)
                                                 .addOnSuccessListener(aVoid -> {
                                                     Toast.makeText(AddressActivity.this, "Đã đặt địa chỉ mặc định thành công", Toast.LENGTH_SHORT).show();
-                                                    // Báo hiệu cho YourProfileActivity rằng có thay đổi
                                                     setResult(RESULT_OK);
-                                                    finish(); // Quay lại YourProfileActivity
+                                                    finish();
                                                 })
                                                 .addOnFailureListener(e -> {
                                                     Toast.makeText(AddressActivity.this, "Lỗi khi đặt địa chỉ mặc định: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -198,12 +237,11 @@ public class AddressActivity extends AppCompatActivity {
                 });
     }
 
-    // --- Phương thức xử lý Dạng 2: Trả về địa chỉ đã chọn ---
     private void returnSelectedAddress(AddressModel selectedAddress) {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("selected_address_object", selectedAddress); // Đặt khóa là "selected_address_object"
-        setResult(RESULT_OK, resultIntent); // Báo hiệu thành công và gửi dữ liệu
-        finish(); // Quay lại CheckoutActivity
+        resultIntent.putExtra("selected_address_object", selectedAddress);
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 
     @Override
@@ -211,16 +249,36 @@ public class AddressActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_EDIT_ADDRESS_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                // AddAddressActivity đã lưu/cập nhật thành công, tải lại AddressActivity
+            if (resultCode == RESULT_OK && data != null) {
+                AddressModel newGuestAddress = (AddressModel) data.getSerializableExtra("new_guest_address");
+                if (newGuestAddress != null) {
+                    // Nếu người dùng CHƯA đăng nhập và thêm địa chỉ mới,
+                    // thêm địa chỉ này vào danh sách tạm thời
+                    if (!userSessionManager.isLoggedIn()) {
+                        addressList.clear(); // Xóa các địa chỉ cũ (nếu có địa chỉ tạm thời khác)
+                        addressList.add(newGuestAddress);
+                        // Cập nhật addressFromCallingActivity để nó được chọn trong adapter
+                        addressFromCallingActivity = newGuestAddress;
+                        adapter = new AddressAdapter(addressList, addressFromCallingActivity);
+                        recyclerView.setAdapter(adapter);
+                        Toast.makeText(this, "Địa chỉ mới đã được thêm tạm thời.", Toast.LENGTH_SHORT).show();
+                    }
+                    // Nếu đã đăng nhập, AddAddressActivity đã tự lưu vào Firestore và refresh rồi.
+                    // Không cần làm gì thêm ở đây ngoài việc gọi loadAddresses() ở onResume
+                    // (hoặc nếu muốn hiển thị ngay, gọi loadAddresses() luôn).
+                } else {
+                    // Nếu không phải địa chỉ khách mới, có thể là đã có thay đổi ở Firestore (khi đã đăng nhập)
+                    // Hoặc là một chỉnh sửa địa chỉ khách mà không thay đổi trạng thái
+                    // Sẽ được refresh ở onResume nếu user đã đăng nhập.
+                }
+
                 Toast.makeText(this, "Địa chỉ đã được cập nhật từ AddAddressActivity!", Toast.LENGTH_SHORT).show();
-                addressList.clear();
-                loadAddresses();
-                // Báo hiệu cho Activity gọi nó (YourProfileActivity hoặc CheckoutActivity) rằng có thay đổi
-                setResult(RESULT_OK); // Để YourProfileActivity/CheckoutActivity cũng refresh
+                // Báo hiệu cho Activity gọi nó (CheckoutActivity) rằng có thay đổi
+                setResult(RESULT_OK);
+                //finish(); // Không finish ở đây để người dùng có thể chọn địa chỉ vừa thêm
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Thao tác thêm/sửa địa chỉ bị hủy.", Toast.LENGTH_SHORT).show();
-                setResult(RESULT_CANCELED); // Báo hiệu cho Activity gọi nó
+                setResult(RESULT_CANCELED);
             }
         }
     }

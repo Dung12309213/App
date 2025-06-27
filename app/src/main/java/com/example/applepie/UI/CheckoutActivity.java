@@ -2,12 +2,10 @@ package com.example.applepie.UI;
 
 import android.content.Intent;
 import android.graphics.Paint;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,18 +23,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.applepie.Model.AddressModel;
 import com.example.applepie.Model.Variant;
+import com.example.applepie.Model.Voucher;
 import com.example.applepie.R;
 import com.example.applepie.Util.UserSessionManager;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class CheckoutActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_ADDRESS = 100;
+    // Mã yêu cầu cho Activity đăng nhập/đăng ký
+    private static final int REQUEST_CODE_LOGIN_REGISTER = 101;
+
 
     private TextView txtUserName, txtUserAddress, txtChangeAddress;
     private Spinner spinnerPaymentMethod;
@@ -52,31 +59,37 @@ public class CheckoutActivity extends AppCompatActivity {
     private int shippingFee = 15000;
 
     public static final String MODE_SELECTION_KEY = "address_selection_mode";
-    public static final String MODE_SELECT_ADDRESS = "select_address"; // Mode: chọn địa chỉ
+    public static final String MODE_SELECT_ADDRESS = "select_address";
 
     private ActivityResultLauncher<Intent> paymentLauncher;
     private AddressModel selectedCheckoutAddress;
     private UserSessionManager userSessionManager;
+    private ArrayList<Variant> currentSelectedVariants;
+
+    private FirebaseFirestore db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
-        ArrayList<Variant> selectedVariants = (ArrayList<Variant>) getIntent().getSerializableExtra("selectedVariants");
+        currentSelectedVariants = (ArrayList<Variant>) getIntent().getSerializableExtra("selectedVariants");
 
         userSessionManager = new UserSessionManager(this);
+        db = FirebaseFirestore.getInstance();
         addViews();
-        txtUserName.setText("Tên người nhận (Số điện thoại)");
-        txtUserAddress.setText("Địa chỉ giao hàng");
+
+        // Ban đầu, hiển thị thông báo để chọn/nhập địa chỉ
+        txtUserName.setText("Bạn chưa chọn địa chỉ");
+        txtUserAddress.setText("Vui lòng chọn hoặc thêm địa chỉ giao hàng.");
+
         addEvents();
 
         // Load sản phẩm & cập nhật giá
-        displayCartItems(selectedVariants);
-        updatePriceSummary(selectedVariants, discountAmount);
-        if (selectedCheckoutAddress == null) {
-            loadDefaultAddressForCheckout();
-        }
+        displayCartItems(currentSelectedVariants);
+        updatePriceSummary(currentSelectedVariants, discountAmount);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -85,15 +98,16 @@ public class CheckoutActivity extends AppCompatActivity {
             userSessionManager = new UserSessionManager(this);
         }
 
-        // QUAN TRỌNG: Gọi loadDefaultAddressForCheckout() chỉ khi CHƯA có địa chỉ nào được chọn.
-        // Nếu đã có địa chỉ được chọn (từ onActivityResult), ta chỉ cập nhật hiển thị.
-        if (selectedCheckoutAddress == null) {
+        // Tải địa chỉ mặc định chỉ khi người dùng đã đăng nhập VÀ CHƯA CÓ địa chỉ nào được chọn trong phiên này
+        if (selectedCheckoutAddress == null && userSessionManager.isLoggedIn()) {
             loadDefaultAddressForCheckout();
-        } else {
-            // Nếu đã có địa chỉ được chọn (ví dụ: từ lần trước hoặc vừa quay lại từ AddressActivity),
+        } else if (selectedCheckoutAddress != null) {
+            // Nếu đã có địa chỉ được chọn (từ lần trước hoặc vừa quay lại từ AddressActivity),
             // chỉ cần cập nhật lại hiển thị để đảm bảo nó vẫn đúng
             updateAddressDisplay(selectedCheckoutAddress);
         }
+        // Nếu người dùng chưa đăng nhập và cũng chưa có địa chỉ nào được chọn (selectedCheckoutAddress == null),
+        // thì không làm gì cả, giữ nguyên text "Bạn chưa chọn địa chỉ"
     }
 
     private void addEvents() {
@@ -114,42 +128,49 @@ public class CheckoutActivity extends AppCompatActivity {
                             Toast.makeText(this, "Đã chọn thẻ: " + cardHolder + " •••• " + last4, Toast.LENGTH_LONG).show();
 
                             // Sau khi chọn thẻ → chuyển sang màn thành công
-                            Intent successIntent = new Intent(this, PaymentSuccessActivity.class);
-                            startActivity(successIntent);
-                            finish();
+                            // HOÀN TẤT ĐƠN HÀNG Ở ĐÂY
+                            finalizeOrder();
                         }
                     }
                 }
         );
 
-
         // Sự kiện "Thay đổi địa chỉ"
         txtChangeAddress.setOnClickListener(v -> {
             Intent intent = new Intent(CheckoutActivity.this, AddressActivity.class);
             intent.putExtra(MODE_SELECTION_KEY, MODE_SELECT_ADDRESS);
+
+            // Truyền địa chỉ hiện tại (nếu có) để AddressActivity biết được địa chỉ nào đang được chọn
+            if (selectedCheckoutAddress != null) {
+                intent.putExtra("currently_selected_address", selectedCheckoutAddress);
+            }
             startActivityForResult(intent, REQUEST_CODE_ADDRESS);
         });
 
         // Sự kiện áp dụng mã giảm
         btnApplyDiscount.setOnClickListener(v -> applyDiscount());
 
-        // Sự kiện CHECK OUT: kiểm tra phương thức thanh toán
+        // Sự kiện CHECK OUT: kiểm tra phương thức thanh toán VÀ ĐĂNG NHẬP/ĐĂNG KÝ
         btnCheckout.setOnClickListener(v -> {
             if (selectedCheckoutAddress == null) {
                 Toast.makeText(this, "Vui lòng chọn địa chỉ giao hàng!", Toast.LENGTH_SHORT).show();
-                return; // Ngăn không cho tiếp tục nếu chưa có địa chỉ
+                return;
             }
-            String selectedMethod = spinnerPaymentMethod.getSelectedItem().toString().trim();
 
-            if (selectedMethod.equalsIgnoreCase("Thẻ tín dụng")) {
-                Intent intent = new Intent(CheckoutActivity.this, CardPaymentActivity.class);
-                paymentLauncher.launch(intent);
-            } else {
-                // Chuyển đến màn hình thanh toán thành công luôn
-                Intent intent = new Intent(CheckoutActivity.this, PaymentSuccessActivity.class);
-                startActivity(intent);
-                finish(); // không quay lại Checkout nữa
+            // --- BƯỚC QUAN TRỌNG: KIỂM TRA ĐĂNG NHẬP ---
+            if (!userSessionManager.isLoggedIn()) {
+                // Nếu chưa đăng nhập, chuyển sang màn hình đăng nhập/đăng ký
+                Toast.makeText(this, "Vui lòng đăng nhập hoặc đăng ký để hoàn tất đơn hàng.", Toast.LENGTH_LONG).show();
+                Intent loginRegisterIntent = new Intent(CheckoutActivity.this, LoginScreen1.class); // Hoặc RegisterActivity
+                // Bạn có thể thêm cờ để LoginActivity biết đây là từ Checkout
+                loginRegisterIntent.putExtra("from_checkout", true);
+                startActivityForResult(loginRegisterIntent, REQUEST_CODE_LOGIN_REGISTER);
+                return; // Dừng lại, chờ kết quả đăng nhập
             }
+
+            // Nếu đã đăng nhập, tiến hành xử lý thanh toán
+            String selectedMethod = spinnerPaymentMethod.getSelectedItem().toString().trim();
+            finalizeOrder();
         });
     }
 
@@ -167,21 +188,56 @@ public class CheckoutActivity extends AppCompatActivity {
         txtTotal = findViewById(R.id.txtTotal);
         btnApplyDiscount = findViewById(R.id.btnApplyDiscount);
         btnCheckout = findViewById(R.id.btnCheckout);
-
     }
 
     private void applyDiscount() {
-        /*if (!isDiscountApplied && edtDiscountCode.getText().toString().equalsIgnoreCase("GIAM60K")) {
-            isDiscountApplied = true;
-            updatePriceSummary(selectedVariants, discountAmount);*/
-        Toast.makeText(this, "Áp dụng mã giảm giá thành công!", Toast.LENGTH_SHORT).show();
-        /*} else {
-            Toast.makeText(this, "Mã không hợp lệ hoặc đã áp dụng", Toast.LENGTH_SHORT).show();
-        }*/
+        String voucherCode = edtDiscountCode.getText().toString().trim();
+
+        if (voucherCode.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập mã giảm giá.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Truy vấn collection "discount"
+        db.collection("Discount")
+                .whereEqualTo("code", voucherCode) // Tìm voucher theo mã
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        // Tìm thấy voucher
+                        DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                        Voucher voucher = document.toObject(Voucher.class);
+
+                        if (voucher != null && voucher.getAmount() > 0) {
+                            discountAmount = (int) voucher.getAmount(); // Áp dụng số tiền giảm giá
+                            updatePriceSummary(currentSelectedVariants, discountAmount);
+                            Toast.makeText(CheckoutActivity.this, "Áp dụng mã giảm giá thành công: -" +
+                                    NumberFormat.getInstance(new Locale("vi", "VN")).format(discountAmount) + " đ", Toast.LENGTH_LONG).show();
+                        } else {
+                            // Voucher không hợp lệ (ví dụ: số tiền giảm giá <= 0)
+                            Toast.makeText(CheckoutActivity.this, "Mã giảm giá không hợp lệ.", Toast.LENGTH_SHORT).show();
+                            discountAmount = 0; // Đặt lại giảm giá
+                            updatePriceSummary(currentSelectedVariants, discountAmount);
+                        }
+                    } else {
+                        // Không tìm thấy voucher
+                        Toast.makeText(CheckoutActivity.this, "Mã giảm giá không tồn tại.", Toast.LENGTH_SHORT).show();
+                        discountAmount = 0; // Đặt lại giảm giá
+                        updatePriceSummary(currentSelectedVariants, discountAmount);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Lỗi khi truy vấn Firestore
+                    Log.e("CheckoutActivity", "Lỗi khi truy vấn mã giảm giá: " + e.getMessage());
+                    Toast.makeText(CheckoutActivity.this, "Lỗi khi áp dụng mã giảm giá. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+                    discountAmount = 0; // Đặt lại giảm giá khi có lỗi
+                    updatePriceSummary(currentSelectedVariants, discountAmount);
+                });
     }
 
     private void updatePriceSummary(ArrayList<Variant> selectedVariants, int currentDiscountAmount) {
-        subtotal = 0; // SỬA: Reset subtotal về 0 để tính toán lại chính xác
+        subtotal = 0;
+        discountAmount = currentDiscountAmount;
 
         if (selectedVariants != null) {
             for (Variant variant : selectedVariants) {
@@ -195,9 +251,8 @@ public class CheckoutActivity extends AppCompatActivity {
         }
 
         int total = subtotal - currentDiscountAmount + shippingFee;
-        discountAmount = currentDiscountAmount; // SỬA: Cập nhật biến discountAmount của lớp
+        discountAmount = currentDiscountAmount;
 
-        // SỬA: Định dạng tiền tệ theo Locale Việt Nam
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
 
         txtSubtotal.setText("Giá tiền: " + numberFormat.format(subtotal) + " đ");
@@ -206,7 +261,6 @@ public class CheckoutActivity extends AppCompatActivity {
         txtTotal.setText("Tổng cộng: " + numberFormat.format(total) + " đ");
     }
 
-
     private void displayCartItems(ArrayList<Variant> selectedVariants) {
         if (selectedVariants == null || selectedVariants.isEmpty()) {
             Toast.makeText(this, "Không có sản phẩm nào để hiển thị trong giỏ hàng.", Toast.LENGTH_SHORT).show();
@@ -214,7 +268,7 @@ public class CheckoutActivity extends AppCompatActivity {
         }
 
         LayoutInflater inflater = LayoutInflater.from(this);
-        cartItemContainer.removeAllViews(); // SỬA: Xóa các view cũ trước khi thêm view mới
+        cartItemContainer.removeAllViews();
 
         for (Variant variant : selectedVariants) {
             View itemView = inflater.inflate(R.layout.item_checkout_summary, cartItemContainer, false);
@@ -224,7 +278,6 @@ public class CheckoutActivity extends AppCompatActivity {
             TextView txtSummaryPrice = itemView.findViewById(R.id.txtSummaryPrice);
             TextView txtSummarySecondPrice = itemView.findViewById(R.id.txtSummarySecondPrice);
             TextView txtQuantity = itemView.findViewById(R.id.txtQuantity);
-            // SỬA: Ánh xạ ImageView riêng cho TỪNG ITEM
             ImageView imgProduct = itemView.findViewById(R.id.imgCheckOutSummaryProduct);
 
             FirebaseFirestore.getInstance().collection("Product")
@@ -238,7 +291,7 @@ public class CheckoutActivity extends AppCompatActivity {
                         if (imageUrls != null && !imageUrls.isEmpty()) {
                             Glide.with(this)
                                     .load(imageUrls.get(0))
-                                    .into(imgProduct); // SỬA: Tải ảnh vào ImageView CỦA ITEM hiện tại
+                                    .into(imgProduct);
                         }
                     })
                     .addOnFailureListener(e -> {
@@ -246,18 +299,15 @@ public class CheckoutActivity extends AppCompatActivity {
                     });
 
             txtSize.setText("Biến thể: " + variant.getVariant());
-            // SỬA: Sử dụng NumberFormat cho giá
             NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
             txtSummaryPrice.setText(numberFormat.format(variant.getPrice()) + " đ");
 
             if (variant.getSecondprice() > 0) {
                 txtSummarySecondPrice.setText(numberFormat.format(variant.getSecondprice()) + " đ");
                 txtSummarySecondPrice.setVisibility(View.VISIBLE);
-                // SỬA: Gạch ngang giá gốc
                 txtSummaryPrice.setPaintFlags(txtSummaryPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
                 txtSummarySecondPrice.setVisibility(View.GONE);
-                // SỬA: Bỏ gạch ngang nếu không có giá giảm
                 txtSummaryPrice.setPaintFlags(txtSummaryPrice.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             }
 
@@ -268,12 +318,12 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void loadDefaultAddressForCheckout() {
-        // SỬA: Lấy userId từ UserSessionManager đã khởi tạo
         String userId = userSessionManager.getUserId();
 
         if (userId == null || userId.isEmpty()) {
-            txtUserName.setText("Bạn chưa đăng nhập.");
-            txtUserAddress.setText("Vui lòng đăng nhập để xem hoặc thêm địa chỉ.");
+            // Không làm gì nếu chưa đăng nhập, để người dùng tự chọn/thêm
+            txtUserName.setText("Bạn chưa chọn địa chỉ");
+            txtUserAddress.setText("Vui lòng chọn hoặc thêm địa chỉ giao hàng.");
             return;
         }
 
@@ -285,8 +335,8 @@ public class CheckoutActivity extends AppCompatActivity {
                     if (!querySnapshot.isEmpty()) {
                         AddressModel defaultAddress = querySnapshot.getDocuments().get(0).toObject(AddressModel.class);
                         if (defaultAddress != null) {
-                            selectedCheckoutAddress = defaultAddress; // Lưu địa chỉ mặc định
-                            updateAddressDisplay(defaultAddress); // Cập nhật hiển thị UI
+                            selectedCheckoutAddress = defaultAddress;
+                            updateAddressDisplay(defaultAddress);
                         }
                     } else {
                         txtUserName.setText("Chưa có địa chỉ mặc định");
@@ -300,17 +350,14 @@ public class CheckoutActivity extends AppCompatActivity {
                 });
     }
 
-    // --- Hàm mới để cập nhật hiển thị địa chỉ trên UI ---
     private void updateAddressDisplay(AddressModel address) {
         if (address != null) {
             String userNameText = address.getName();
-            // THÊM: Chỉ hiển thị số điện thoại nếu có và không rỗng
             if (address.getPhone() != null && !address.getPhone().isEmpty()) {
                 userNameText += " (" + address.getPhone() + ")";
             }
             txtUserName.setText(userNameText);
 
-            // THÊM: Xây dựng chuỗi địa chỉ đầy đủ một cách cẩn thận
             StringBuilder addressDetailBuilder = new StringBuilder();
             if (address.getStreet() != null && !address.getStreet().isEmpty()) {
                 addressDetailBuilder.append(address.getStreet());
@@ -334,18 +381,58 @@ public class CheckoutActivity extends AppCompatActivity {
         }
     }
 
+    // Phương thức chung để hoàn tất đơn hàng
+    private void finalizeOrder() {
+
+        String userId = userSessionManager.getUserId();
+        if (userId == null || userId.isEmpty()) {
+            // Trường hợp này không xảy ra nếu đã kiểm tra ở nút checkout, nhưng vẫn nên có
+            Toast.makeText(this, "Lỗi: Người dùng chưa đăng nhập để lưu đơn hàng.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        // Tạo một Map để lưu thông tin đơn hàng
+        // Đây chỉ là ví dụ, bạn cần xây dựng cấu trúc OrderModel hoặc Map phù hợp với Firestore của mình
+        Map<String, Object> orderData = new HashMap<>();
+        orderData.put("userId", userId);
+        orderData.put("deliveryAddress", selectedCheckoutAddress); // Lưu cả đối tượng địa chỉ
+        orderData.put("products", currentSelectedVariants); // Lưu danh sách sản phẩm
+        orderData.put("subtotal", subtotal);
+        orderData.put("discount", discountAmount);
+        orderData.put("shippingFee", shippingFee);
+        orderData.put("totalAmount", subtotal - discountAmount + shippingFee);
+        orderData.put("paymentMethod", spinnerPaymentMethod.getSelectedItem().toString());
+        orderData.put("orderStatus", "Chờ xác nhận"); // Trạng thái ban đầu
+        orderData.put("orderDate", FieldValue.serverTimestamp()); // Thời gian đặt hàng
+
+        db.collection("Orders").add(orderData)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("CheckoutActivity", "Đơn hàng đã được tạo thành công với ID: " + documentReference.getId());
+                    Toast.makeText(CheckoutActivity.this, "Đơn hàng của bạn đã được đặt thành công!", Toast.LENGTH_LONG).show();
+
+                    // Chuyển sang màn hình thành công
+                    Intent successIntent = new Intent(CheckoutActivity.this, PaymentSuccessActivity.class);
+                    // Bạn có thể truyền thêm thông tin đơn hàng nếu cần hiển thị ở màn hình thành công
+                    startActivity(successIntent);
+                    finish(); // Kết thúc CheckoutActivity
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("CheckoutActivity", "Lỗi khi tạo đơn hàng: " + e.getMessage());
+                    Toast.makeText(CheckoutActivity.this, "Có lỗi xảy ra khi đặt hàng: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_ADDRESS) {
             if (resultCode == RESULT_OK && data != null) {
-                // SỬA: Nhận đối tượng AddressModel đã chọn từ AddressActivity
                 AddressModel selectedAddress = (AddressModel) data.getSerializableExtra("selected_address_object");
                 if (selectedAddress != null) {
-                    // QUAN TRỌNG: Gán địa chỉ MỚI ĐƯỢC CHỌN vào biến của lớp
                     selectedCheckoutAddress = selectedAddress;
-                    // Cập nhật hiển thị UI với địa chỉ MỚI NÀY
                     updateAddressDisplay(selectedAddress);
                     Toast.makeText(this, "Địa chỉ giao hàng đã được cập nhật!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -353,6 +440,17 @@ public class CheckoutActivity extends AppCompatActivity {
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Bạn đã hủy chọn địa chỉ.", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == REQUEST_CODE_LOGIN_REGISTER) {
+            if (resultCode == RESULT_OK) {
+
+                Toast.makeText(this, "Đăng nhập thành công! Vui lòng nhấn Checkout để hoàn tất đơn hàng.", Toast.LENGTH_LONG).show();
+                if (userSessionManager.isLoggedIn() && selectedCheckoutAddress == null) {
+                    loadDefaultAddressForCheckout();
+                }
+
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "Bạn đã hủy đăng nhập/đăng ký.", Toast.LENGTH_SHORT).show();
             }
         }
     }

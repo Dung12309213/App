@@ -51,10 +51,10 @@ public class Coupon extends AppCompatActivity { // Tên Activity
 
         // Chuẩn bị dữ liệu mẫu cho danh sách voucher
         voucherList = new ArrayList<>();
-        voucherList.add(new Voucher("GIAM60", "Đơn hàng tối thiểu 600.000 đ", "Giảm 60.000 đ"));
+/*        voucherList.add(new Voucher("GIAM60", "Đơn hàng tối thiểu 600.000 đ", "Giảm 60.000 đ"));
         voucherList.add(new Voucher("FREESHIP", "Đơn hàng tối thiểu 150.000 đ", "Miễn phí vận chuyển"));
         voucherList.add(new Voucher("FLASH50", "Áp dụng cho đơn hàng từ 200.000 đ", "Giảm 50.000 đ"));
-        voucherList.add(new Voucher("NEWUSER100", "Dành cho khách hàng mới", "Giảm 100.000 đ"));
+        voucherList.add(new Voucher("NEWUSER100", "Dành cho khách hàng mới", "Giảm 100.000 đ"));*/
         // Thêm các voucher khác nếu cần
 
         // Khởi tạo Adapter và gán cho RecyclerView

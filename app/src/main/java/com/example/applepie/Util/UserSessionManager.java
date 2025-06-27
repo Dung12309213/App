@@ -36,5 +36,9 @@ public class UserSessionManager {
         editor.clear();
         editor.apply();
     }
+    public boolean isLoggedIn() {
+        // Người dùng được coi là đã đăng nhập nếu có userId được lưu
+        return !preferences.getString("id", "").isEmpty();
+    }
 
 }

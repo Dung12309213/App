@@ -17,6 +17,17 @@ public class AddressModel implements Serializable {
     public AddressModel() {
     }
 
+    public AddressModel(String addressid, String name, String phone, String province, String district, String ward, String street, boolean defaultCheck) {
+        this.addressid = addressid;
+        this.name = name;
+        this.phone = phone;
+        this.province = province;
+        this.district = district;
+        this.ward = ward;
+        this.street = street;
+        this.defaultCheck = defaultCheck;
+    }
+
     public String getAddressid() {
         return addressid;
     }

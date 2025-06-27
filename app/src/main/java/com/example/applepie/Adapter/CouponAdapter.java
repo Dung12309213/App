@@ -41,8 +41,8 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
         Voucher voucher = voucherList.get(position);
 
         holder.tvVoucherCode.setText(voucher.getCode());
-        holder.tvVoucherCondition.setText(voucher.getCondition());
-        holder.tvVoucherDiscount.setText(voucher.getDiscount());
+        holder.tvVoucherCondition.setText(voucher.getDescription());
+        holder.tvVoucherDiscount.setText(voucher.getAmount()+"");
 
         // Xử lý sự kiện click cho nút "Sao chép mã" (TextView)
         holder.btnCopyCode.setOnClickListener(v -> {

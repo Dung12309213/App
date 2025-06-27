@@ -62,7 +62,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/editDiscountCode"
@@ -102,7 +103,8 @@
                 android:text="Giỏ hàng trống"
                 android:textAlignment="textEnd"
                 android:textColor="@color/textcolor"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/txtDiscountAmount"
@@ -112,7 +114,8 @@
                 android:text="Giảm giá: -0 đ"
                 android:textAlignment="textEnd"
                 android:textColor="@color/textcolor"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/txtFinalPrice"

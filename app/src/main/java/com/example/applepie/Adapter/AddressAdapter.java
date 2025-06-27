@@ -20,13 +20,29 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     private final List<AddressModel> addressList;
     private int selectedPosition = -1;
 
-    public AddressAdapter(List<AddressModel> addressList) {
+    private AddressModel initialSelectedAddress; // THÊM: Biến để lưu địa chỉ được truyền từ Activity gọi
+
+    // SỬA: Thêm tham số initialSelectedAddress vào constructor
+    public AddressAdapter(List<AddressModel> addressList, AddressModel initialSelectedAddress) {
         this.addressList = addressList;
-        // Nếu có sẵn địa chỉ được chọn, đặt selectedPosition ban đầu
-        for (int i = 0; i < addressList.size(); i++) {
-            if (addressList.get(i).isDefaultCheck()) {
-                selectedPosition = i;
-                break;
+        this.initialSelectedAddress = initialSelectedAddress; // Gán địa chỉ được truyền
+
+        // THÊM: Logic để xác định selectedPosition ban đầu
+        if (initialSelectedAddress != null) {
+            // Nếu có địa chỉ được truyền, tìm vị trí của nó trong danh sách
+            for (int i = 0; i < addressList.size(); i++) {
+                if (addressList.get(i).getAddressid().equals(initialSelectedAddress.getAddressid())) {
+                    selectedPosition = i;
+                    break;
+                }
+            }
+        } else {
+            // Nếu không có địa chỉ nào được truyền, tìm địa chỉ mặc định
+            for (int i = 0; i < addressList.size(); i++) {
+                if (addressList.get(i).isDefaultCheck()) {
+                    selectedPosition = i;
+                    break;
+                }
             }
         }
     }
@@ -53,8 +69,14 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         holder.radioSelected.setChecked(position == selectedPosition);
 
         holder.itemView.setOnClickListener(v -> {
-            selectedPosition = holder.getAdapterPosition();
-            notifyDataSetChanged();
+            int oldSelectedPosition = selectedPosition; // Lưu vị trí cũ
+            selectedPosition = holder.getAdapterPosition(); // Cập nhật vị trí mới
+
+            // Chỉ gọi notifyDataSetChanged() cho các vị trí bị ảnh hưởng để tối ưu hiệu suất
+            if (oldSelectedPosition != RecyclerView.NO_POSITION) {
+                notifyItemChanged(oldSelectedPosition);
+            }
+            notifyItemChanged(selectedPosition);
         });
         holder.txtChangeAddressDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +94,10 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     }
 
     public AddressModel getSelectedAddress() {
-        return selectedPosition != -1 ? addressList.get(selectedPosition) : null;
+        if (selectedPosition != -1 && selectedPosition < addressList.size()) {
+            return addressList.get(selectedPosition);
+        }
+        return null;
     }
 
     static class AddressViewHolder extends RecyclerView.ViewHolder {

@@ -19,8 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
->
+            android:orientation="vertical">
 
             <!-- Header -->
             <LinearLayout
@@ -74,7 +73,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
-                        android:text="Quốc Trịnh"
+                        android:text="@string/delivery_name_example"
                         android:textColor="@color/textcolor"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -84,7 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_medium"
-                        android:text="Trường Đại học Kinh tế - Luật\n0123 456 789"
+                        android:text="@string/delivery_address_detail_example"
                         android:textColor="@color/textcolor"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -106,7 +105,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/nunito_medium"
-                android:text="Hình thức thanh toán"
+                android:text="@string/label_payment_method"
                 android:textStyle="bold" />
 
             <Spinner
@@ -114,7 +113,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/payment_methods"/>
+                android:entries="@array/payment_methods" />
 
             <!-- Thời gian giao hàng -->
             <LinearLayout
@@ -128,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_medium"
-                    android:text="Thời gian giao hàng" />
+                    android:text="@string/delivery_time_label" />
 
                 <TextView
                     android:id="@+id/txtDeliveryDate"
@@ -136,11 +135,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_bold"
-                    android:text="11 – 12/5/2025"
+                    android:text="@string/delivery_time_example"
                     android:textAlignment="textEnd"
                     android:textColor="@color/brown"
                     android:textStyle="bold" />
-
             </LinearLayout>
 
             <!-- Danh sách sản phẩm -->
@@ -150,7 +148,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="16dp" />
-
         </LinearLayout>
     </ScrollView>
 
@@ -179,7 +176,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/edittext_background"
                 android:fontFamily="@font/nunito_medium"
-                android:hint="Nhập mã giảm giá"
+                android:hint="@string/hint_discount_code"
                 android:padding="8dp"
                 android:textSize="16sp" />
 
@@ -207,7 +204,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
-                android:text="Giá tiền: 1.035.000 đ"
+                android:text="@string/subtotal_format"
                 android:textAlignment="textEnd"
                 android:textSize="16sp" />
 
@@ -216,7 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
-                android:text="Giảm giá: - 60.000 đ"
+                android:text="@string/discount_format"
                 android:textAlignment="textEnd"
                 android:textSize="16sp" />
 
@@ -225,7 +222,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
-                android:text="Vận chuyển: 15.000 đ"
+                android:text="@string/shipping_format"
                 android:textAlignment="textEnd"
                 android:textSize="16sp" />
 
@@ -234,7 +231,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_bold"
-                android:text="Tổng cộng: 975.000 đ"
+                android:text="@string/total_format"
                 android:textAlignment="textEnd"
                 android:textSize="20sp"
                 android:textStyle="bold" />

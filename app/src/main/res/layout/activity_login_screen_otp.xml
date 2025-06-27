@@ -9,9 +9,7 @@
     <!-- Header: Back button + Title -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
->
+        android:layout_height="wrap_content">
 
         <!-- Nút Back -->
         <ImageButton
@@ -64,7 +62,7 @@
                 android:gravity="center"
                 android:text="@string/title_login_screen_verifytophone"
                 android:textAlignment="center"
-                android:textColor="#888888"
+                android:textColor="@color/textcolor"
                 android:textSize="16sp" />
 
             <!-- 4 ô OTP -->
@@ -84,7 +82,7 @@
                     android:inputType="numberPassword"
                     android:maxLength="1"
                     android:textSize="18sp"
-                    android:textColor="#000"
+                    android:textColor="@android:color/black"
                     android:layout_marginEnd="8dp" />
 
                 <EditText
@@ -96,7 +94,7 @@
                     android:inputType="numberPassword"
                     android:maxLength="1"
                     android:textSize="18sp"
-                    android:textColor="#000"
+                    android:textColor="@android:color/black"
                     android:layout_marginEnd="8dp" />
 
                 <EditText
@@ -108,7 +106,7 @@
                     android:inputType="numberPassword"
                     android:maxLength="1"
                     android:textSize="18sp"
-                    android:textColor="#000"
+                    android:textColor="@android:color/black"
                     android:layout_marginEnd="8dp" />
 
                 <EditText
@@ -120,7 +118,7 @@
                     android:inputType="numberPassword"
                     android:maxLength="1"
                     android:textSize="18sp"
-                    android:textColor="#000" />
+                    android:textColor="@android:color/black" />
             </LinearLayout>
 
             <!-- Gửi lại mã -->
@@ -143,7 +141,6 @@
                 android:textColor="@color/lightbrown"
                 android:textSize="16sp"
                 android:textStyle="italic" />
-
         </LinearLayout>
     </ScrollView>
 

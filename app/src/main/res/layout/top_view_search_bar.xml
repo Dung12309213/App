@@ -34,14 +34,14 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:background="@drawable/search_box"
+            android:drawableEnd="@drawable/ic_search"
+            android:drawablePadding="8dp"
             android:hint="@string/editFindProduct"
             android:inputType="text"
             android:paddingStart="16dp"
             android:paddingEnd="12dp"
             android:textColor="#000000"
-            android:textColorHint="#B36A38"
-            android:drawableEnd="@drawable/ic_search"
-            android:drawablePadding="8dp"/>
+            android:textColorHint="@color/brown" />
 
         <!-- Search Button -->
 

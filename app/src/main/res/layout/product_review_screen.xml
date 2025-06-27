@@ -41,7 +41,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/vollkorn"
-                    android:text="Product Review"
+                    android:text="@string/title_product_review"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -65,7 +65,7 @@
         android:layout_marginBottom="20dp"
         android:backgroundTint="@color/brown"
         android:fontFamily="@font/nunito_bold"
-        android:text="SUBMIT"
+        android:text="@string/button_submit"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="16sp"

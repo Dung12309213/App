@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_bold"
-                android:text="Turmeric Mask Hưng Yên"
+                android:text="@string/product_name_sample"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
-                android:text="Volume: 100 ml"
+                android:text="@string/product_volume_sample"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/nunito_medium"
-        android:text="Rate the product" />
+        android:text="@string/rate_the_product" />
 
     <androidx.appcompat.widget.AppCompatRatingBar
         android:id="@+id/ratingBar1"
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/nunito_medium"
-        android:text="Add product images" />
+        android:text="@string/add_product_images" />
 
     <FrameLayout
         android:id="@+id/frame_upload1"
@@ -90,7 +90,7 @@
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="12dp"
             android:fontFamily="@font/nunito_medium"
-            android:text="Image"
+            android:text="@string/image_label"
             android:textColor="#AAAAAA" />
     </FrameLayout>
 
@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/nunito_medium"
-        android:text="Write a review (min 50 characters)" />
+        android:text="@string/write_review_hint" />
 
     <EditText
         android:id="@+id/edit_review1"
@@ -109,7 +109,7 @@
         android:background="#EEEEEE"
         android:fontFamily="@font/nunito_medium"
         android:gravity="top"
-        android:hint="Share your opinion about this product"
+        android:hint="@string/write_review_placeholder"
         android:inputType="textMultiLine"
         android:padding="12dp" />
 </LinearLayout>

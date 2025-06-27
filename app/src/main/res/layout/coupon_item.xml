@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="16dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="2dp"
@@ -22,49 +22,50 @@
             android:contentDescription="Discount icon"
             android:foregroundTint="@color/brown"
             android:src="@drawable/ic_coupon"
-            app:tint="#8a8a8a" /> <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginStart="16dp">
+            app:tint="#8a8a8a" />
 
-        <TextView
-            android:id="@+id/tvVoucherCode"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_bold"
-            android:text="GIAM60"
-            android:textColor="@color/textcolor"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:text="GIAM60" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
 
-        <TextView
-            android:id="@+id/tvVoucherCondition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/nunito_medium"
-            android:text="Đơn hàng tối thiểu 600.000 đ"
-            android:textColor="@color/brown"
-            android:textSize="14sp"
-            tools:text="Đơn hàng tối thiểu 600.000 đ" />
+            <TextView
+                android:id="@+id/tvVoucherCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@string/voucher_code_sample"
+                android:textColor="@color/textcolor"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="GIAM60" />
 
-        <TextView
-            android:id="@+id/tvVoucherDiscount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:drawablePadding="4dp"
-            android:fontFamily="@font/nunito_bold"
-            android:gravity="center_vertical"
-            android:text="Giảm 60.000 đ"
-            android:textColor="@color/brown"
-            android:textSize="14sp"
-            tools:text="Giảm 60.000 đ" />
+            <TextView
+                android:id="@+id/tvVoucherCondition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/nunito_medium"
+                android:text="@string/voucher_condition"
+                android:textColor="@color/brown"
+                android:textSize="14sp"
+                tools:text="Đơn hàng tối thiểu 600.000 đ" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvVoucherDiscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:drawablePadding="4dp"
+                android:fontFamily="@font/nunito_bold"
+                android:gravity="center_vertical"
+                android:text="@string/voucher_discount"
+                android:textColor="@color/brown"
+                android:textSize="14sp"
+                tools:text="Giảm 60.000 đ" />
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btnCopyCode"
@@ -77,7 +78,7 @@
             android:includeFontPadding="false"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            android:text="Sao chép mã"
+            android:text="@string/copy_code"
             android:textColor="@color/brown"
             android:textSize="14sp"
             app:fontFamily="@font/nunito_bold" />

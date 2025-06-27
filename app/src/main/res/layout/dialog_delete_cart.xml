@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_bold"
         android:paddingBottom="16dp"
-        android:text="Xoá khỏi giỏ hàng?"
+        android:text="@string/dialog_remove_cart_title"
         android:textColor="@color/textcolor"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:padding="12dp">
 
-        <!-- Ảnh sản phẩm -->
         <ImageView
             android:id="@+id/imgProductDialog"
             android:layout_width="90dp"
@@ -34,10 +33,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Tên sản phẩm -->
-
-        <!-- Dung tích -->
-
         <TextView
             android:id="@+id/txtNameDialog"
             android:layout_width="0dp"
@@ -45,23 +40,20 @@
             android:layout_marginStart="10dp"
             android:fontFamily="@font/nunito_bold"
             android:maxLines="2"
-            android:text="Mặt nạ nghệ Hưng Yên"
+            android:text="@string/product_name_sample"
             android:textColor="@color/textcolor"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgProductDialog"
             app:layout_constraintTop_toTopOf="@id/imgProductDialog" />
 
-        <!-- Giá tiền -->
-
-        <!-- Nút giảm -->
         <TextView
             android:id="@+id/txtSizeDialog"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/nunito_medium"
-            android:text="Dung tích: 100ml"
+            android:text="@string/product_volume_sample"
             android:textColor="@color/textcolor"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,15 +65,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_bold"
-            android:text="345.000 đ"
+            android:text="@string/product_price_sample"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/txtSizeDialog"
             app:layout_constraintTop_toBottomOf="@id/txtSizeDialog" />
-
-        <!-- Số lượng -->
-
-        <!-- Nút tăng -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -97,9 +85,8 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:background="@drawable/button_with_stroke"
-
             android:fontFamily="@font/nunito_bold"
-            android:text="Trở lại"
+            android:text="@string/button_cancel"
             android:textColor="@color/brown" />
 
         <Space
@@ -113,7 +100,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/brown"
             android:fontFamily="@font/nunito_bold"
-            android:text="Đồng ý" />
+            android:text="@string/button_confirm" />
     </LinearLayout>
 
 </LinearLayout>

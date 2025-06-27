@@ -7,7 +7,6 @@
     android:orientation="vertical"
     android:background="@android:color/white">
 
-    <!-- Nội dung cuộn được -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -85,7 +84,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_medium"
-                            android:text="Chủ thẻ"
+                            android:text="@string/label_card_holder"
                             android:textColor="@android:color/white"
                             android:textSize="16sp" />
 
@@ -94,7 +93,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_bold"
-                            android:text="Quốc Trịnh"
+                            android:text="@string/mock_card_holder_name"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -109,7 +108,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_medium"
-                            android:text="Hết hạn"
+                            android:text="@string/label_expiry_date"
                             android:textColor="@android:color/white"
                             android:textSize="16sp" />
 
@@ -118,7 +117,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_bold"
-                            android:text="8/2027"
+                            android:text="@string/mock_expiry_date"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -131,7 +130,7 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/nunito_bold"
-                    android:text="VISA"
+                    android:text="@string/mock_card_type"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -144,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext_background"
                 android:fontFamily="@font/nunito_medium"
-                android:hint="Chủ thẻ"
+                android:hint="@string/hint_card_holder"
                 android:padding="12dp"
                 android:textColor="@color/textcolor"
                 android:textSize="16sp" />
@@ -156,7 +155,7 @@
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edittext_background"
                 android:fontFamily="@font/nunito_medium"
-                android:hint="Số thẻ"
+                android:hint="@string/hint_card_number"
                 android:inputType="number"
                 android:padding="12dp"
                 android:textColor="@color/textcolor"
@@ -175,7 +174,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/edittext_background"
                     android:fontFamily="@font/nunito_medium"
-                    android:hint="Hết hạn"
+                    android:hint="@string/hint_expiry_date"
                     android:inputType="text"
                     android:padding="12dp"
                     android:textColor="@color/textcolor"
@@ -197,7 +196,6 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <!-- Checkbox lưu thẻ -->
             <CheckBox
                 android:id="@+id/checkSaveCard"
                 android:layout_width="wrap_content"
@@ -205,13 +203,12 @@
                 android:layout_marginTop="16dp"
                 android:buttonTint="@color/brown"
                 android:fontFamily="@font/nunito_medium"
-                android:text="Lưu thẻ"
+                android:text="@string/save_card_checkbox"
                 android:textColor="@color/textcolor"
                 android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 
-    <!-- Nút xác nhận nằm cố định dưới cùng -->
     <Button
         android:id="@+id/btnConfirm"
         android:layout_width="match_parent"

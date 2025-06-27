@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageButton2" />
 
-    <!-- Danh sách sản phẩm trong giỏ hàng -->
+    <!-- Danh sách sản phẩm -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerCartItems"
         android:layout_width="0dp"
@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Nhập mã giảm giá -->
+        <!-- Mã giảm giá -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/edittext_background"
                 android:fontFamily="@font/nunito_medium"
-                android:hint="Empty"
+                android:hint="@string/hint_discount_code"
                 android:padding="8dp"
                 android:textSize="16sp" />
 
@@ -88,7 +88,7 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <!-- Hiển thị tổng giá tiền -->
+        <!-- Hiển thị tổng -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,29 +100,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
-                android:text="Giỏ hàng trống"
+                android:text="@string/cart_empty_message"
                 android:textAlignment="textEnd"
                 android:textColor="@color/textcolor"
                 android:textSize="16sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/txtDiscountAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
-                android:text="Giảm giá: -0 đ"
+                android:text='@string/discount_format'
                 android:textAlignment="textEnd"
                 android:textColor="@color/textcolor"
                 android:textSize="16sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/txtFinalPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
-                android:text="Tổng cộng: 0 đ"
+                android:text='@string/total_format'
                 android:textAlignment="textEnd"
                 android:textColor="@color/black"
                 android:textSize="24sp"

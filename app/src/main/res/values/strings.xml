@@ -12,15 +12,17 @@
     <string name="title_Account_Phonenumber">Phone Number</string>
     <string name="title_login_screen_otpverification">VERIFY CODE</string>
     <string name="title_login_screen_verifytophone">Enter the code sent to the phone number\n</string>
-    <string name="title_login_didntreceive">Didn\'t receive the OTP?</string>
+    <string name="title_login_didntreceive">Didn't receive the OTP?</string>
     <string name="title_login_resend">Resend</string>
     <string name="msg_enter_full_otp">Please enter the full OTP code</string>
     <string name="msg_resend_sent">Verification code resent</string>
     <string name="msg_otp_result">Verification code: %1$s</string>
+
     <!-- Login messages -->
     <string name="login_fill_info">Please fill in all the information</string>
     <string name="login_success">Login successful!</string>
     <string name="login_failed">Incorrect username or password</string>
+
     <string name="title_activity_product">Product</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -56,7 +58,7 @@
     <string name="title_checkout">CHECK OUT</string>
     <string name="title_have_account">Have account already?</string>
     <string name="title_signinnow">Sign in now</string>
-    <string name="title_productdetail_desc">"Sản phẩm treatment dành cho tóc, phù hợp với tình trạng tóc rụng, tóc yếu, tóc thưa mỏng. Sản phẩm có thành phần từ tinh dầu bưởi Việt Nam truyền thống absakjdfksjdfhksa;fjahdkjfskajf test "</string>
+    <string name="title_productdetail_desc">"Treatment product for hair, suitable for hair loss, weak hair, and thin hair. The product contains traditional Vietnamese grapefruit essential oil absakjdfksjdfhksa;fjahdkjfskajf test "</string>
     <string name="title_notification">Notification</string>
     <string name="title_address">ADDRESS</string>
     <string name="title_add_address">Add Address</string>
@@ -67,12 +69,12 @@
     <string name="title_add_addres">ADD ADDRESS</string>
     <string name="title_receiver_name">Receiver</string>
     <string name="title_default_address">Default address</string>
-    <string-array name="payment_methods">
-        <item>Thanh toán khi nhận hàng</item>
-        <item>Ví Momo</item>
-        <item>Thẻ tín dụng</item>
-    </string-array>
 
+    <string-array name="payment_methods">
+        <item>Cash on delivery</item>
+        <item>Momo e-wallet</item>
+        <item>Credit card</item>
+    </string-array>
 
     <string name="content_description_back_button">Back button</string>
     <string name="content_description_payment_method_icon">Payment method icon</string>
@@ -113,26 +115,28 @@
     <string name="review">Review</string>
     <string name="login">Login</string>
     <string name="new_address">New address</string>
+
     <string name="policy_full_text">
-    Cocoon Vietnam có dịch vụ giao hàng tận nơi trên toàn quốc, áp dụng cho khách mua hàng trên Website, Fanpage và gọi điện thoại vào Hotline của Cocoon. Đơn hàng sẽ được chuyển phát đến địa chỉ khách hàng cung cấp thông qua đơn vị vận chuyển trung gian là GIAO HÀNG TIẾT KIỆM hoặc 247EXPRESS. Đặc biệt, thông tin hóa đơn dán bên ngoài kiện hàng luôn luôn có logo cô gái của thương hiệu để nhận biết các sản phẩm là chính hãng.\n\n
+Cocoon Vietnam offers nationwide delivery service for customers purchasing via Website, Fanpage, or calling Cocoon’s Hotline. Orders will be shipped to the customer’s provided address via third-party delivery services such as GIAO HÀNG TIẾT KIỆM or 247EXPRESS. Notably, the invoice label outside the package always includes the brand’s girl logo to identify the authenticity of products.\n\n
 
-    1. Chính sách giá\n
-    a. Giá sản phẩm niêm yết tại Website là giá đã bao gồm thuế theo quy định pháp luật hiện hành, phí đóng gói và các chi phí khác liên quan đến việc mua hàng trừ các chi phí phát sinh khác được xác nhận qua Hotline hoặc Email của Cocoon và được sự chấp thuận của khách hàng trong quá trình xác nhận đơn đặt hàng, giao nhận hàng hoá.\n\n
+1. Pricing Policy\n
+a. Product prices listed on the Website include taxes as per current legal regulations, packaging fees, and other costs related to purchasing, excluding additional costs confirmed via Cocoon’s Hotline or Email and agreed by the customer during the order confirmation and delivery process.\n\n
 
-    2. Phí vận chuyển:\n
-    a. Với hóa đơn từ 99.000 VNĐ: miễn phí vận chuyển toàn quốc.\n
-    b. Với hóa đơn dưới 99.000 VNĐ: phí vận chuyển mặc định là 30.000 VNĐ áp dụng toàn quốc.\n\n
+2. Shipping Fees:\n
+a. For orders from 99,000 VND: free nationwide shipping.\n
+b. For orders under 99,000 VND: a default shipping fee of 30,000 VND applies nationwide.\n\n
 
-    3. Thời gian giao hàng:\n
-    a. Đơn hàng nội thành TP.HCM: Thời gian giao hàng là 2-3 ngày sau khi đặt hàng.\n
-    b. Đơn hàng ở ngoại thành TP.HCM và các tỉnh thành khác: Thời gian là 2-5 ngày đối với khu vực trung tâm tỉnh thành phố và 5-6 ngày đối với khu vực huyện, xã, thị trấn…\n
-    c. Tuy nhiên, vẫn có những giới hạn và sự chậm trễ do nguyên nhân khách quan như lễ, tết, địa chỉ nhận hàng khó tìm, sự chậm trễ từ dịch vụ chuyển phát,…Cocoon mong quý khách thông cảm vì những lý do ngoài sự chi phối của chúng tôi.\n
-    d. Trường hợp có sự chậm trễ khi giao hàng xảy ra, Cocoon sẽ thông báo ngay đến bạn đồng thời sẽ tiếp tục giao hàng hoặc hỗ trợ huỷ đơn hàng nếu bạn muốn. Chúng tôi sẽ không chịu trách nhiệm do việc giao hàng chậm trễ trừ trách nhiệm hoàn trả tiền nếu bạn đã thanh toán mà chưa nhận được sản phẩm.\n\n
+3. Delivery Time:\n
+a. Inner Ho Chi Minh City orders: Delivery time is 2–3 days after placing the order.\n
+b. Suburban HCMC and other provinces: 2–5 days for central urban areas, and 5–6 days for districts, communes, and towns.\n
+c. However, delays may occur due to objective reasons such as holidays, difficult-to-find delivery addresses, or shipping service delays. Cocoon hopes for your understanding.\n
+d. In case of delivery delay, Cocoon will notify you immediately and continue delivery or assist with order cancellation if requested. We are not liable for late delivery, except for refunding if payment was made but the product not received.\n\n
 
-    4. Quy trình giao nhận, đổi trả, bảo hành sản phẩm:\n
-    a. Trong quá trình giao nhận hàng, nếu quý khách không có mặt trong đợt nhận hàng thì đơn vị vận chuyển sẽ liên lạc lại với quý khách để hẹn thời gian giao lại hàng (đối đa 2 lần hẹn)...\n
-    ...
+4. Delivery, Return, and Warranty Process:\n
+a. If the customer is unavailable during delivery, the shipping provider will contact to reschedule (maximum of 2 attempts)...\n
+...
 </string>
+
     <string name="Login1">Login</string>
     <string name="hint_receiver_name">Receiver</string>
     <string name="hint_phone_number">Phone Number</string>
@@ -140,7 +144,78 @@
     <string name="hint_district">District</string>
     <string name="hint_city">Province</string>
     <string name="hint_ward">Ward</string>
-    <string name="title_confirm_button">Xác nhận</string>
+    <string name="title_confirm_button">Confirm</string>
+    <string name="mock_card_holder_name">Quoc Trinh</string>
+    <string name="hint_card_holder">Card holder</string>
+    <string name="hint_card_number">Card number</string>
+    <string name="hint_expiry_date">Expiry date</string>
+    <string name="mock_expiry_date">8/2027</string>
+    <string name="label_card_holder">Card holder</string>
+    <string name="label_expiry_date">Expiry date</string>
+    <string name="mock_card_type">VISA</string>
+    <string name="save_card_checkbox">Save card</string>
+    <string name="cart_empty_message">Cart is empty</string>
+    <string name="discount_format">Discount: -%1$s</string>
+    <string name="total_format">Total: %1$s</string>
+    <string name="hint_discount_code">Discount code</string>
+    <string name="chatbot_display_name">Leaf AI</string>
+    <string name="chatbot_online_status">Online</string>
+    <string name="hint_chat_input">Type a message here...</string>
+    <string name="label_payment_method">Payment method</string>
+    <string name="subtotal_format">Subtotal: %1$s</string>
+    <string name="shipping_format">Shipping: %1$s</string>
+    <string name="forgot_password_instruction">Please enter your email or phone number to receive the verification code.</string>
+    <string name="hint_email_or_phone">Email or Phone number</string>
+    <string name="button_send_otp">Send OTP</string>
+    <string name="hint_search">Search</string>
+    <string name="tag_customer_service">Customer Service</string>
+    <string name="tag_website">Website</string>
+    <string name="tag_facebook">Facebook</string>
+    <string name="tag_instagram">Instagram</string>
+    <string name="hint_FullName">Nhập họ và tên</string>
+    <string name="hint_PhoneNumber">Nhập số điện thoại</string>
+    <string name="title_Account_Email">Email</string>
+    <string name="hint_Email">Nhập email</string>
+    <string name="hint_CreatePassword">Tạo mật khẩu</string>
+    <string name="checkout_success_title">Payment Successful</string>
+    <string name="checkout_success_message">Thank you for your purchase.</string>
+    <string name="button_track_order">Track Order</string>
+    <string name="button_continue_shopping">Continue Shopping</string>
+    <string name="see_more">See more</string>
+    <string name="instruction_title">How to use</string>
+    <string name="instruction_content">Usage instructions here, a,b,c,d,e,f..</string>
+    <string name="ingredient_title">Product ingredients</string>
+    <string name="ingredient_content">Details of product ingredients here...</string>
+    <string name="product_review">Product reviews (123)</string>
+    <string name="review_name">Dung Chu ⭐⭐⭐⭐⭐</string>
+    <string name="review_content">abcdef...xyz</string>
+    <string name="view_all">View all</string>
+    <string name="related_product">Frequently viewed together</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="buy_now">BUY NOW</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_dob">dd/mm/yyyy</string>
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_other">Other</string>
+    <string name="voucher_code_sample">GIAM60</string>
+    <string name="voucher_condition">Minimum order 600,000 VND</string>
+    <string name="voucher_discount">Discount 60,000 VND</string>
+    <string name="copy_code">Copy code</string>
+    <string name="dialog_remove_cart_title">Remove from cart?</string>
+    <string name="product_price_sample">345,000 VND</string>
+    <string name="button_cancel">Go back</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="title_product_review">PRODUCT REVIEW</string>
+    <string name="button_submit">SUBMIT</string>
+    <string name="product_name_sample">Turmeric Mask Hung Yen</string>
+    <string name="product_volume_sample">Volume: 100 ml</string>
+    <string name="rate_the_product">Rate the product</string>
+    <string name="add_product_images">Add product images</string>
+    <string name="image_label">Image</string>
+    <string name="write_review_hint">Write a review (min 50 characters)</string>
+    <string name="write_review_placeholder">Share your opinion about this product</string>
+
+
 
 </resources>
-

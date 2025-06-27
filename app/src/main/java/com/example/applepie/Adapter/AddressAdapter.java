@@ -69,8 +69,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         holder.radioSelected.setChecked(position == selectedPosition);
 
         holder.itemView.setOnClickListener(v -> {
-            int oldSelectedPosition = selectedPosition; // Lưu vị trí cũ
-            selectedPosition = holder.getAdapterPosition(); // Cập nhật vị trí mới
+            int oldSelectedPosition = selectedPosition;
+            selectedPosition = holder.getAdapterPosition();
 
             // Chỉ gọi notifyDataSetChanged() cho các vị trí bị ảnh hưởng để tối ưu hiệu suất
             if (oldSelectedPosition != RecyclerView.NO_POSITION) {

@@ -48,7 +48,7 @@ public class Variant implements Serializable {
     }
 
     public void setSecondprice(Integer secondprice) {
-        this.secondprice = (secondprice != null) ? secondprice : 0;
+        this.secondprice = (secondprice != null) ? secondprice : 0;//acp null
     }
 
     public int getQuantity() {

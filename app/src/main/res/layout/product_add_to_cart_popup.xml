@@ -11,7 +11,7 @@
     <!-- Dung tích -->
     <TextView
         android:id="@+id/tvVolumeTitle"
-        android:text="Biến thể"
+        android:text="Variant"
         android:textColor="#000000"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -32,7 +32,7 @@
     <!-- Số lượng -->
     <TextView
         android:id="@+id/tvQuantityTitle"
-        android:text="Số lượng"
+        android:text="Quantity"
         android:textColor="#000000"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -109,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#9C5221"
-        android:text="Thêm Vào Giỏ Hàng"
+        android:text="Add to Cart"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:textSize="16sp"

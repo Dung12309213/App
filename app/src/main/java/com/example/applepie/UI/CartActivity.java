@@ -155,13 +155,13 @@ public class CartActivity extends BaseActivity {
             // Tính tổng giá của item
             original += itemPrice * item.getQuantity();
         }
-        txtOriginalPrice.setText("Giá tiền: " + formatCurrency(original));
+        txtOriginalPrice.setText("Price: " + formatCurrency(original));
 
         int discount = isDiscountApplied ? DISCOUNT_AMOUNT : 0;
-        txtDiscountAmount.setText("Giảm giá: -" + formatCurrency(discount));
+        txtDiscountAmount.setText("Discount: -" + formatCurrency(discount));
 
         int finalPrice = original - discount;
-        txtFinalPrice.setText("Giá tiền: " + formatCurrency(finalPrice));
+        txtFinalPrice.setText("Price: " + formatCurrency(finalPrice));
     }
 
     private void showCustomDeleteDialog(int position) {

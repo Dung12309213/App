@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    tools:context=".UI.DeleteAccountActivity">
+
+    <!-- Header: Back + Title -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/content_description_back_button"
+            app:srcCompat="@drawable/ic_backbutton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvForgotTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/vollkorn"
+            android:text="@string/title_delete_account"
+            android:textColor="#1D1D1D"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnBack" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Hướng dẫn -->
+    <TextView
+        android:id="@+id/tvGuide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="@font/nunito_medium"
+        android:text="@string/delete_account_instruction"
+        android:textColor="@color/textcolor"
+        android:textSize="16sp" />
+
+    <!-- Email or Phone -->
+    <EditText
+        android:id="@+id/edtDeleteAccountPassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edittext_background"
+        android:fontFamily="@font/nunito_medium"
+        android:hint="@string/hint_your_password"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:textColor="@color/textcolor"
+        android:textSize="16sp" />
+
+    <!-- Nút gửi mã -->
+    <Button
+        android:id="@+id/btnStartDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/brown"
+        android:fontFamily="@font/nunito_bold"
+        android:text="@string/title_delete_account"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+</LinearLayout>

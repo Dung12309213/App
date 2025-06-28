@@ -219,6 +219,8 @@ a. If the customer is unavailable during delivery, the shipping provider will co
     <string name="order_status_canceled">Canceled</string>
     <string name="order_status_shipped">Shipped</string>
     <string name="order_status_unknown">Error</string>
+    <string name="delete_account_instruction">Please Enter Your Password To Verify Delete Your Account</string>
+    <string name="hint_your_password">Your Password</string>
 
 
 </resources>

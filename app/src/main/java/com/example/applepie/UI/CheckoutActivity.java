@@ -457,6 +457,17 @@ public class CheckoutActivity extends BaseActivity {
                                 .addOnSuccessListener(deliveryRef -> Log.d("CheckoutActivity", "Delivery thêm thành công: " + deliveryRef.getId()))
                                 .addOnFailureListener(e -> Log.e("CheckoutActivity", "Lỗi thêm Delivery: " + e.getMessage()));
                     }
+                    // XÓA GIỎ HÀNG CỦA NGƯỜI DÙNG
+                    db.collection("User")
+                            .document(userId)
+                            .collection("Cart")
+                            .get()
+                            .addOnSuccessListener(queryDocumentSnapshots -> {
+                                for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                                    doc.getReference().delete();
+                                }
+                            })
+                            .addOnFailureListener(e -> Log.e("CheckoutActivity", "Lỗi xóa giỏ hàng: " + e.getMessage()));
 
                     Toast.makeText(CheckoutActivity.this, "Đơn hàng của bạn đã được đặt thành công!", Toast.LENGTH_LONG).show();
                     Intent successIntent = new Intent(CheckoutActivity.this, PaymentSuccessActivity.class);

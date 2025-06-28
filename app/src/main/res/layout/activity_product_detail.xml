@@ -384,10 +384,27 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <!-- Các sản phẩm liên quan giữ nguyên -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
+                    android:id="@+id/sameCateProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp">
+
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
 
         </LinearLayout>
+
     </ScrollView>
+
 
     <LinearLayout
         android:id="@+id/bottomBar"

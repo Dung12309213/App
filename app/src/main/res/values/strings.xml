@@ -12,7 +12,7 @@
     <string name="title_Account_Phonenumber">Phone Number</string>
     <string name="title_login_screen_otpverification">VERIFY CODE</string>
     <string name="title_login_screen_verifytophone">Enter the code sent to the phone number\n</string>
-    <string name="title_login_didntreceive">Didn't receive the OTP?</string>
+    <string name="title_login_didntreceive">Did not receive the OTP?</string>
     <string name="title_login_resend">Resend</string>
     <string name="msg_enter_full_otp">Please enter the full OTP code</string>
     <string name="msg_resend_sent">Verification code resent</string>

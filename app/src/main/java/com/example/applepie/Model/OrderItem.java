@@ -1,6 +1,7 @@
 package com.example.applepie.Model;
 
 public class OrderItem {
+    private String id;
     private String orderId;
     private String productid;
     private String variantid;
@@ -9,6 +10,13 @@ public class OrderItem {
     private int secondPrice;
 
     public OrderItem() {
+    }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getOrderId() {

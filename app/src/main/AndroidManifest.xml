@@ -23,9 +23,6 @@
             android:name=".UI.DeleteAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".UI.DeleteOtpActivity"
-            android:exported="false" />
-        <activity
             android:name=".UI.Order_Detail"
             android:exported="false" />
         <activity
@@ -57,6 +54,9 @@
             android:exported="false" />
         <activity
             android:name=".UI.LoginScreen2"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ProductReviewActivity"
             android:exported="false" />
         <activity android:name=".UI.HelpCenterActivity" />
         <activity android:name=".UI.PaymentMethodsActivity" />

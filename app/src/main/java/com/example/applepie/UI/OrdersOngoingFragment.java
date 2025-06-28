@@ -50,7 +50,7 @@ public class OrdersOngoingFragment extends Fragment implements OrderAdapter.OnRe
         orderAdapter = new OrderAdapter(orderList, this); // 'this' vì fragment này implement OnReorderClickListener
         recyclerView.setAdapter(orderAdapter);
 
-        loadOrders("Đang xử lý"); // Tải đơn hàng với trạng thái "Đang xử lý"
+        loadOrders("processing"); // Tải đơn hàng với trạng thái "Đang xử lý"
         return view;
     }
 

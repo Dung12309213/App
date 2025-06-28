@@ -65,10 +65,12 @@ public class FlashSaleAdapter extends RecyclerView.Adapter<FlashSaleAdapter.View
                         // Lấy ảnh
                         List<String> imageUrls = (List<String>) productDoc.get("imageUrl");
                         if (imageUrls != null && !imageUrls.isEmpty()) {
-                            Glide.with(context)
-                                    .load(imageUrls.get(0))
-                                    .placeholder(R.drawable.ic_homepage_mau2)
-                                    .into(holder.imgProduct);
+                            if (context instanceof Activity && !((Activity) context).isDestroyed()) {
+                                Glide.with(context)
+                                        .load(imageUrls.get(0))
+                                        .placeholder(R.drawable.ic_homepage_mau2)
+                                        .into(holder.imgProduct);
+                            }
                         } else {
                             holder.imgProduct.setImageResource(R.drawable.ic_homepage_mau2);
                         }

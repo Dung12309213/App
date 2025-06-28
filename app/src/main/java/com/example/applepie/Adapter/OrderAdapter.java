@@ -19,6 +19,7 @@ import com.example.applepie.Model.OrderItem;
 import com.example.applepie.Model.OrderModel;
 import com.example.applepie.R;
 import com.example.applepie.UI.Order_Detail;
+import com.example.applepie.UI.ProductReviewActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -107,6 +108,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                     context.startActivity(detailIntent);
                 }
             }
+        });
+        holder.btnReview.setOnClickListener(v -> {
+            Intent reviewIntent = new Intent(context, ProductReviewActivity.class);
+            reviewIntent.putExtra("orderId", order.getId());
+            context.startActivity(reviewIntent);
         });
     }
     private void fetchOrderDetailsForDisplay(OrderModel order, ImageView imgProduct, TextView txtQuantity, Context context) {

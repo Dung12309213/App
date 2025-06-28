@@ -26,11 +26,11 @@
         <!-- Order ID -->
         <TextView
             android:id="@+id/txtOrderId"
-            android:layout_width="wrap_content"
+            android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:fontFamily="@font/nunito_medium"
-            android:text="CC12345DH123"
+            android:text="CC12345DH123ẻtyujhgfdsdfghjkljhgf"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"

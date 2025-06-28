@@ -401,7 +401,7 @@ public class CheckoutActivity extends BaseActivity {
         order.setUserid(userId);
         order.setPurchasedate(new Date());
         order.setDiscountid(edtDiscountCode.getText().toString());
-        order.setStatus("Đang xử lý");
+        order.setStatus("processing");
         order.setPaymentMethod(spinnerPaymentMethod.getSelectedItem().toString());
         order.setTotal(subtotal - discountAmount + shippingFee);
 

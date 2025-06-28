@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.applepie.Adapter.ProductAdapter;
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.Connector.FirebaseConnector;
 import com.example.applepie.MainActivity;
 import com.example.applepie.Model.Product;
@@ -32,7 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductListActivity extends AppCompatActivity {
+public class ProductListActivity extends BaseActivity {
 
     FirebaseFirestore db;
     RecyclerView recyclerView; // Đã thay đổi thành RecyclerView

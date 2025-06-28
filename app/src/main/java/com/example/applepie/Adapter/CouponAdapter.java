@@ -1,13 +1,12 @@
 package com.example.applepie.Adapter;
 
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView; // Quan trọng: Sử dụng TextView
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,7 @@ import com.example.applepie.R;
 
 import java.util.List;
 
-public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponViewHolder> { // Đổi tên class
+public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponViewHolder> {
 
     private List<Voucher> voucherList;
     private Context context;
@@ -31,7 +30,6 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
     @NonNull
     @Override
     public CouponViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate layout coupon_item.xml
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.coupon_item, parent, false);
         return new CouponViewHolder(view);
     }
@@ -42,9 +40,15 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
 
         holder.tvVoucherCode.setText(voucher.getCode());
         holder.tvVoucherCondition.setText(voucher.getDescription());
-        holder.tvVoucherDiscount.setText(voucher.getAmount()+"");
 
-        // Xử lý sự kiện click cho nút "Sao chép mã" (TextView)
+        // Format amount: nếu là số nguyên, hiển thị không có thập phân
+        String formattedAmount = (voucher.getAmount() % 1 == 0)
+                ? String.format("%.0f", voucher.getAmount())
+                : String.format("%.2f", voucher.getAmount());
+
+        holder.tvVoucherDiscount.setText(formattedAmount + "đ");
+
+        // Xử lý nút sao chép
         holder.btnCopyCode.setOnClickListener(v -> {
             ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("Voucher Code", voucher.getCode());
@@ -60,12 +64,8 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
         return voucherList.size();
     }
 
-    // ViewHolder class
-    public static class CouponViewHolder extends RecyclerView.ViewHolder { // Đổi tên ViewHolder
-        TextView tvVoucherCode;
-        TextView tvVoucherCondition;
-        TextView tvVoucherDiscount;
-        TextView btnCopyCode; // Quan trọng: Khai báo là TextView
+    public static class CouponViewHolder extends RecyclerView.ViewHolder {
+        TextView tvVoucherCode, tvVoucherCondition, tvVoucherDiscount, btnCopyCode;
 
         public CouponViewHolder(@NonNull View itemView) {
             super(itemView);

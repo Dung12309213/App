@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.R;
 import com.example.applepie.Service.EmailSender;
 import com.example.applepie.Util.UserSessionManager;
@@ -22,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Random;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
     private UserSessionManager sessionManager;
     private FirebaseAuth mAuth; // KHAI BÁO FIREBASE AUTH

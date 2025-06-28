@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.applepie.Base.BaseActivity;
 import  com.example.applepie.MainActivity;
 import  com.example.applepie.R;
 import  com.example.applepie.Adapter.ChatAdapter;
@@ -21,7 +22,7 @@ import  com.example.applepie.Model.ChatModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatBotActivity extends AppCompatActivity {
+public class ChatBotActivity extends BaseActivity {
 
     private RecyclerView recyclerChat;
     private EditText edtMessage;

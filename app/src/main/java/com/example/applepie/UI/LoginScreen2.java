@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
+import com.example.applepie.Base.BaseActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -28,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Random;
 
-public class LoginScreen2 extends AppCompatActivity {
+public class LoginScreen2 extends BaseActivity {
     EditText edtRegisterName, edtRegisterPhone, edtRegisterEmail, edtRegisterPassword;
     Button btnCompleteRegister;
     TextView tvToLogin;

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.R;
 import com.example.applepie.Util.UserSessionManager;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -24,7 +25,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 // THÊM IMPORT FIREBASE AUTH
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseActivity {
 
     ImageButton btnEdit;
     ShapeableImageView profileImage;
@@ -49,8 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
         addViews();
         addEvents();
 
-        // BottomNavHelper.setupBottomNav(this); // Giữ nguyên nếu bạn dùng BottomNavHelper
-        // checkLoggedIn(); // Sẽ gọi trong onResume
+        BottomNavHelper.setupBottomNav(this);
     }
 
     @Override
@@ -108,7 +108,6 @@ public class ProfileActivity extends AppCompatActivity {
             imgLoginLogout.setImageResource(R.drawable.ic_logout);
             itemYourProfile.setVisibility(View.VISIBLE);
             itemMyorders.setVisibility(View.VISIBLE);
-            itemCoupon.setVisibility(View.VISIBLE); // Hiển thị coupon khi đã đăng nhập
             findViewById(R.id.itemLogin).setOnClickListener(v -> logout()); // Đổi chức năng thành Logout
         } else {
             // Chưa đăng nhập
@@ -117,7 +116,6 @@ public class ProfileActivity extends AppCompatActivity {
             imgLoginLogout.setImageResource(R.drawable.ic_login);
             itemYourProfile.setVisibility(View.GONE);
             itemMyorders.setVisibility(View.GONE);
-            itemCoupon.setVisibility(View.GONE);
             findViewById(R.id.itemLogin).setOnClickListener(v -> login()); // Đổi chức năng thành Login
         }
     }

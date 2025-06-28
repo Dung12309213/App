@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.applepie.Adapter.AddressAdapter;
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.Model.AddressModel;
 import com.example.applepie.R;
 import com.example.applepie.Util.UserSessionManager;
@@ -24,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddressActivity extends AppCompatActivity {
+public class AddressActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private AddressAdapter adapter;

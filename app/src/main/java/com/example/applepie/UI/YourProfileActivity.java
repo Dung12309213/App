@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.Model.AddressModel;
 import com.example.applepie.Model.User;
 import com.example.applepie.R;
@@ -29,7 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class YourProfileActivity extends AppCompatActivity {
+public class YourProfileActivity extends BaseActivity {
 
     private ShapeableImageView imageView;
     private TextView textViewName, tvDefaultAddress;

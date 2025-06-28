@@ -16,13 +16,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.Connector.FirebaseConnector;
 import com.example.applepie.Model.Category;
 import com.example.applepie.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class CategoryList extends AppCompatActivity {
+public class CategoryList extends BaseActivity {
 
     GridLayout gridLayout;
     LayoutInflater inflater;

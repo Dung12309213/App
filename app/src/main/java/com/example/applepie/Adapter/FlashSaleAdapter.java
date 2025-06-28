@@ -1,6 +1,9 @@
 package com.example.applepie.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +13,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.applepie.Model.Variant;
+import com.example.applepie.R;
+import com.example.applepie.UI.ProductDetail;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-import com.example.applepie.Model.Product;
-import com.example.applepie.R;
-
 public class FlashSaleAdapter extends RecyclerView.Adapter<FlashSaleAdapter.ViewHolder> {
 
-    private List<Product> productList;
     private Context context;
+    private List<Variant> variantList;
 
-    public FlashSaleAdapter(Context context, List<Product> products) {
+    public FlashSaleAdapter(Context context, List<Variant> variantList) {
         this.context = context;
-        this.productList = products;
+        this.variantList = variantList;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,23 +54,56 @@ public class FlashSaleAdapter extends RecyclerView.Adapter<FlashSaleAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        /*Product product = productList.get(position);
+        Variant variant = variantList.get(position);
 
-        holder.tvName.setText(product.getName());
-        holder.tvPrice.setText(String.valueOf(product.getPrice()));
-        holder.tvSecond.setText(String.valueOf(product.getSecondprice()));
-        holder.tvSecond.setPaintFlags(holder.tvSecond.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tvDiscount.setText(product.getDiscountPercent() + "%");
+        FirebaseFirestore.getInstance()
+                .collection("Product")
+                .document(variant.getProductid())
+                .get()
+                .addOnSuccessListener(productDoc -> {
+                    if (productDoc.exists()) {
+                        // Lấy ảnh
+                        List<String> imageUrls = (List<String>) productDoc.get("imageUrl");
+                        if (imageUrls != null && !imageUrls.isEmpty()) {
+                            Glide.with(context)
+                                    .load(imageUrls.get(0))
+                                    .placeholder(R.drawable.ic_homepage_mau2)
+                                    .into(holder.imgProduct);
+                        } else {
+                            holder.imgProduct.setImageResource(R.drawable.ic_homepage_mau2);
+                        }
 
-        // Nếu ảnh là url, bạn có thể dùng thư viện Glide/Picasso để load ảnh:
-        // Glide.with(context).load(product.getImageUrl()).into(holder.imgProduct);
+                        // Gộp tên sản phẩm + biến thể
+                        String productName = productDoc.getString("name");
+                        String variantName = variant.getVariant();
+                        String fullName = (productName != null ? productName : "Sản phẩm") +
+                                (variantName != null ? " " + variantName : "");
 
-        // Tạm thời dùng ảnh mẫu trong drawable
-        holder.imgProduct.setImageResource(com.example.applepie.R.drawable.ic_homepage_mau2);*/
+                        holder.tvName.setText(fullName);
+                    }
+                });
+
+        holder.tvPrice.setText(String.format("%,d đ", variant.getPrice()));
+        holder.tvSecond.setText(String.format("%,d đ", variant.getSecondprice()));
+        holder.tvSecond.setVisibility(View.VISIBLE);
+        holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        int discount = (variant.getPrice() - variant.getSecondprice()) * 100 / variant.getPrice();
+        holder.tvDiscount.setText(discount + "%");
+        holder.tvDiscount.setVisibility(View.VISIBLE);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ProductDetail.class);
+            intent.putExtra("productId", variant.getProductid()); // Mở đúng sản phẩm
+            context.startActivity(intent);
+            if (context instanceof Activity) {
+                ((Activity) context).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return variantList.size();
     }
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.Model.AddressModel;
 import com.example.applepie.R;
 import com.example.applepie.Util.UserSessionManager;
@@ -23,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AddAddressActivity extends AppCompatActivity {
+public class AddAddressActivity extends BaseActivity {
 
     private EditText edtReceiverName, edtPhone, edtDetail;
     Spinner spnCity, spnDistrict, spnWard;

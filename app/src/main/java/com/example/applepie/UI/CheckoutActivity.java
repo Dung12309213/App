@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.Model.AddressModel;
 import com.example.applepie.Model.Delivery;
 import com.example.applepie.Model.OrderItem;
@@ -42,7 +43,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class CheckoutActivity extends AppCompatActivity {
+public class CheckoutActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_ADDRESS = 100;
     // Mã yêu cầu cho Activity đăng nhập/đăng ký

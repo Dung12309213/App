@@ -11,13 +11,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.R;
 
 // THÊM IMPORTS FIREBASE AUTH
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore; // Chỉ cần nếu bạn cần tra cứu email từ SĐT
 
-public class ForgotPasswordActivity extends AppCompatActivity {
+public class ForgotPasswordActivity extends BaseActivity {
 
     private EditText editEmailOrPhone; // Đổi tên thành editEmail nếu bạn chỉ hỗ trợ email
     private Button btnSendOtp;

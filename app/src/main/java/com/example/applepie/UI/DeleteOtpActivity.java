@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.MainActivity;
 import com.example.applepie.R;
 import com.example.applepie.Service.EmailSender;
@@ -28,7 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class DeleteOtpActivity extends AppCompatActivity {
+public class DeleteOtpActivity extends BaseActivity {
 
     EditText Dotp1, Dotp2, Dotp3, Dotp4;
     Button btnVerify;

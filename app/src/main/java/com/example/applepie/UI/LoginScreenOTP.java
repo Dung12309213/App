@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 // THÊM IMPORTS CẦN THIẾT
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.MainActivity;
 import com.example.applepie.Model.User; // Để tạo đối tượng User cho Firestore
 import com.example.applepie.Connector.FirebaseConnector;
@@ -27,7 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap; // Vẫn có thể cần nếu bạn tạo Map thủ công
 import java.util.Map; // Vẫn có thể cần
 
-public class LoginScreenOTP extends AppCompatActivity {
+public class LoginScreenOTP extends BaseActivity {
 
     EditText otp1, otp2, otp3, otp4;
     Button btnVerify;

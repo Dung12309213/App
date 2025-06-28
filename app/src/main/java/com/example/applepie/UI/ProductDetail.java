@@ -27,6 +27,7 @@ import androidx.viewpager2.widget.ViewPager2; // Quan trọng cho ViewPager2
 
 import com.bumptech.glide.Glide;
 import com.example.applepie.Adapter.ProductImageAdapter;
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.Connector.FirebaseConnector;
 import com.example.applepie.Model.Product;
 import com.example.applepie.Model.Variant;
@@ -46,7 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProductDetail extends AppCompatActivity {
+public class ProductDetail extends BaseActivity {
 
     // Khai báo các Views
     FirebaseFirestore db;

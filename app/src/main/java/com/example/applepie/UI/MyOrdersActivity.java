@@ -8,11 +8,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.applepie.Adapter.OrdersPagerAdapter;
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class MyOrdersActivity extends AppCompatActivity {
+public class MyOrdersActivity extends BaseActivity {
 
     private TabLayout tabLayout;
     private ViewPager2 viewPager;

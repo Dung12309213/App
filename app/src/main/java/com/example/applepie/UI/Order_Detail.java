@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.Model.Delivery;
 import com.example.applepie.Model.OrderItem;
 import com.example.applepie.Model.OrderModel;
@@ -30,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class Order_Detail extends AppCompatActivity {
+public class Order_Detail extends BaseActivity {
 
     // Header and main info
     private ImageView backButton;

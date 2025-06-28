@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.applepie.Adapter.CartItemAdapter;
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.MainActivity;
 import com.example.applepie.Model.Variant;
 import com.example.applepie.R;
@@ -35,7 +36,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private CartItemAdapter adapter;

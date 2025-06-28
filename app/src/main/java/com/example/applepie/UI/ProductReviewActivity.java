@@ -9,9 +9,10 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.R;
 
-public class ProductReviewActivity extends AppCompatActivity {
+public class ProductReviewActivity extends BaseActivity {
 
     private RatingBar ratingBar1;
     private EditText editReview1;

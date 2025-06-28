@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HelpCenterActivity extends AppCompatActivity {
+public class HelpCenterActivity extends BaseActivity {
 
     // Views
     private ImageButton btnBack;

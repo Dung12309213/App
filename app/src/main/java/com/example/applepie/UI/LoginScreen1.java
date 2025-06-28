@@ -15,6 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.Connector.FirebaseConnector;
 import  com.example.applepie.MainActivity;
 import com.example.applepie.Model.User;
@@ -30,7 +31,7 @@ import android.util.Log;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginScreen1 extends AppCompatActivity {
+public class LoginScreen1 extends BaseActivity {
 
     EditText editEmail, editPassword;
     Button btnLogin;

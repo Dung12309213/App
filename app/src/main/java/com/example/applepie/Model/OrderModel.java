@@ -1,26 +1,89 @@
 package com.example.applepie.Model;
 
-public class OrderModel {
-    private String orderCode;
-    private int itemCount;
-    private String totalPrice;
-    private int imageResId;
-    private String actionText;
-    private String orderType;
+import java.io.Serializable;
+import java.util.Date;
 
-    public OrderModel(String orderCode, int itemCount, String totalPrice, int imageResId, String actionText, String orderType) {
-        this.orderCode = orderCode;
-        this.itemCount = itemCount;
-        this.totalPrice = totalPrice;
-        this.imageResId = imageResId;
-        this.actionText = actionText;
-        this.orderType = orderType;
+public class OrderModel implements Serializable {
+    private String id;
+    private String userid;
+    private Date purchasedate;
+    private String discountid;
+    private String status;
+    private String paymentMethod;
+    private double total;
+    private String firstProductImageUrl; // URL ảnh sản phẩm đầu tiên
+    private int totalItemCount;
+    public OrderModel() {
     }
 
-    public String getOrderCode() { return orderCode; }
-    public int getItemCount() { return itemCount; }
-    public String getTotalPrice() { return totalPrice; }
-    public int getImageResId() { return imageResId; }
-    public String getActionText() { return actionText; }
-    public String getOrderType() { return orderType; }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public Date getPurchasedate() {
+        return purchasedate;
+    }
+
+    public void setPurchasedate(Date purchasedate) {
+        this.purchasedate = purchasedate;
+    }
+
+    public String getDiscountid() {
+        return discountid;
+    }
+
+    public void setDiscountid(String discountid) {
+        this.discountid = discountid;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+    public String getFirstProductImageUrl() {
+        return firstProductImageUrl;
+    }
+
+    public void setFirstProductImageUrl(String firstProductImageUrl) {
+        this.firstProductImageUrl = firstProductImageUrl;
+    }
+
+    public int getTotalItemCount() {
+        return totalItemCount;
+    }
+
+    public void setTotalItemCount(int totalItemCount) {
+        this.totalItemCount = totalItemCount;
+    }
 }

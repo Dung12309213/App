@@ -13,7 +13,6 @@ import com.example.applepie.R;
 
 public class PaymentSuccessActivity extends AppCompatActivity {
 
-    private ImageButton btnBack;
     private TextView txtTitle;
     private Button btnTrackOrder;
     private TextView btnContinueShopping;
@@ -24,7 +23,6 @@ public class PaymentSuccessActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment_success);
 
         // Ánh xạ view
-        btnBack = findViewById(R.id.btnBack);
         txtTitle = findViewById(R.id.txtTitle);
         btnTrackOrder = findViewById(R.id.btnTrackOrder);
         btnContinueShopping = findViewById(R.id.btnContinueShopping);

@@ -15,12 +15,16 @@ public class UserSessionManager {
     }
 
     // Lưu thông tin người dùng
-    public void saveUser(String userId, String userName) {
+    public void saveUser(String userId, String userName, String userEmail) {
         editor.putString("id", userId);
         editor.putString("name", userName);
-        editor.apply();  // Dùng apply để lưu bất đồng bộ
+        editor.putString("email", userEmail);
+        editor.apply();
     }
 
+    public String getUserEmail() {
+        return preferences.getString("email", "");
+    }
     // Lấy tên người dùng
     public String getUserName() {
         return preferences.getString("name", "Guest");  // Nếu chưa đăng nhập, trả về "Guest"

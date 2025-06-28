@@ -222,7 +222,7 @@ public class YourProfileActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 Toast.makeText(this, "Đã lưu thay đổi", Toast.LENGTH_SHORT).show();
                 textViewName.setText(name);
-                userSessionManager.saveUser(userId, name);
+                userSessionManager.saveUser(userId, name, "");
             } else {
                 Toast.makeText(this, "Có lỗi xảy ra khi lưu thông tin", Toast.LENGTH_SHORT).show();
             }

@@ -141,6 +141,10 @@
     <string name="hint_city">Province</string>
     <string name="hint_ward">Ward</string>
     <string name="title_confirm_button">Xác nhận</string>
+    <string name="order_status_completed">Completed</string>
+    <string name="order_status_canceled">Canceled</string>
+    <string name="order_status_shipped">Shipped</string>
+    <string name="order_status_unknown">Error</string>
 
 </resources>
 

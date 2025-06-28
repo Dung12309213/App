@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <ImageView
+        android:id="@+id/productImageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_logo" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/productNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_bold"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Tên sản phẩm ví dụ" />
+
+        <TextView
+            android:id="@+id/productVolumeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/nunito_medium"
+            android:textColor="#8a8a8a"
+            android:textSize="14sp"
+            tools:text="Khối lượng: 500ml" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:id="@+id/productPriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_medium"
+                android:textColor="#5a5a5a"
+                android:textSize="14sp"
+                tools:text=""
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/productSecondPriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nunito_medium"
+                android:textColor="#5a5a5a"
+                android:textSize="14sp"
+                android:visibility="gone"
+                tools:text="" />
+
+            <TextView
+                android:id="@+id/productQuantityTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nunito_medium"
+                android:textColor="#5a5a5a"
+                android:textSize="14sp"
+                android:gravity="end"
+                tools:text="x3" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

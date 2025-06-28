@@ -22,6 +22,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.applepie.Model.AddressModel;
+import com.example.applepie.Model.Delivery;
+import com.example.applepie.Model.OrderItem;
+import com.example.applepie.Model.OrderModel;
 import com.example.applepie.Model.Variant;
 import com.example.applepie.Model.Voucher;
 import com.example.applepie.R;
@@ -33,6 +36,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -87,6 +91,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         // Load sản phẩm & cập nhật giá
         displayCartItems(currentSelectedVariants);
+        updateDeliveryDateDisplay();
         updatePriceSummary(currentSelectedVariants, discountAmount);
     }
 
@@ -157,7 +162,6 @@ public class CheckoutActivity extends AppCompatActivity {
                 return;
             }
 
-            // --- BƯỚC QUAN TRỌNG: KIỂM TRA ĐĂNG NHẬP ---
             if (!userSessionManager.isLoggedIn()) {
                 // Nếu chưa đăng nhập, chuyển sang màn hình đăng nhập/đăng ký
                 Toast.makeText(this, "Vui lòng đăng nhập hoặc đăng ký để hoàn tất đơn hàng.", Toast.LENGTH_LONG).show();
@@ -392,30 +396,71 @@ public class CheckoutActivity extends AppCompatActivity {
         }
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        // Tạo một Map để lưu thông tin đơn hàng
-        // Đây chỉ là ví dụ, bạn cần xây dựng cấu trúc OrderModel hoặc Map phù hợp với Firestore của mình
-        Map<String, Object> orderData = new HashMap<>();
-        orderData.put("userId", userId);
-        orderData.put("deliveryAddress", selectedCheckoutAddress); // Lưu cả đối tượng địa chỉ
-        orderData.put("products", currentSelectedVariants); // Lưu danh sách sản phẩm
-        orderData.put("subtotal", subtotal);
-        orderData.put("discount", discountAmount);
-        orderData.put("shippingFee", shippingFee);
-        orderData.put("totalAmount", subtotal - discountAmount + shippingFee);
-        orderData.put("paymentMethod", spinnerPaymentMethod.getSelectedItem().toString());
-        orderData.put("orderStatus", "Chờ xác nhận"); // Trạng thái ban đầu
-        orderData.put("orderDate", FieldValue.serverTimestamp()); // Thời gian đặt hàng
+        OrderModel order = new OrderModel();
+        order.setUserid(userId);
+        order.setPurchasedate(new Date());
+        order.setDiscountid(edtDiscountCode.getText().toString());
+        order.setStatus("Đang xử lý");
+        order.setPaymentMethod(spinnerPaymentMethod.getSelectedItem().toString());
+        order.setTotal(subtotal - discountAmount + shippingFee);
 
-        db.collection("Orders").add(orderData)
+        db.collection("Order")
+                .add(order)
                 .addOnSuccessListener(documentReference -> {
-                    Log.d("CheckoutActivity", "Đơn hàng đã được tạo thành công với ID: " + documentReference.getId());
-                    Toast.makeText(CheckoutActivity.this, "Đơn hàng của bạn đã được đặt thành công!", Toast.LENGTH_LONG).show();
+                    String orderId = documentReference.getId(); // Lấy ID của Order vừa tạo
+                    Log.d("CheckoutActivity", "Đơn hàng đã được tạo thành công với ID: " + orderId);
 
-                    // Chuyển sang màn hình thành công
+                    // 2. Tạo subcollection "Items" và thêm OrderItem vào
+                    if (currentSelectedVariants != null && !currentSelectedVariants.isEmpty()) {
+                        for (Variant variant : currentSelectedVariants) {
+                            OrderItem orderItem = new OrderItem();
+                            orderItem.setOrderId(orderId); // Liên kết OrderItem với Order chính
+                            orderItem.setProductid(variant.getProductid());
+                            orderItem.setVariantid(variant.getId());
+                            orderItem.setQuantity(variant.getQuantity());
+                            orderItem.setPrice(variant.getPrice());
+                            orderItem.setSecondPrice(variant.getSecondprice());
+
+                            // Thêm OrderItem vào subcollection "Item"
+                            documentReference.collection("Item")
+                                    .add(orderItem)
+                                    .addOnSuccessListener(itemRef -> Log.d("CheckoutActivity", "OrderItem thêm thành công: " + itemRef.getId()))
+                                    .addOnFailureListener(e -> Log.e("CheckoutActivity", "Lỗi thêm OrderItem: " + e.getMessage()));
+                        }
+                    }
+
+                    // 3. Tạo subcollection "Delivery" và thêm Delivery Model vào
+                    if (selectedCheckoutAddress != null) {
+                        Delivery delivery = new Delivery();
+                        delivery.setOrderId(orderId);
+                        delivery.setDeliveryStatus("Đang xử lý");
+                        delivery.setShippingProvider("Giao hàng nhanh");
+                        // Gán các trường địa chỉ từ selectedCheckoutAddress
+                        delivery.setAddressStreet(selectedCheckoutAddress.getStreet());
+                        delivery.setAddressWard(selectedCheckoutAddress.getWard());
+                        delivery.setAddressDistrict(selectedCheckoutAddress.getDistrict());
+                        delivery.setAddressProvince(selectedCheckoutAddress.getProvince());
+                        delivery.setDeliveryName(selectedCheckoutAddress.getName());
+                        delivery.setDeliveryPhone(selectedCheckoutAddress.getPhone());
+
+                        java.util.Calendar calendar = java.util.Calendar.getInstance();
+                        calendar.setTime(order.getPurchasedate()); // Sử dụng ngày mua hàng của đơn hàng
+                        calendar.add(java.util.Calendar.DAY_OF_YEAR, 5); // Thêm 5 ngày
+                        delivery.setDelivery_date_estimated(calendar.getTime());
+
+                        delivery.setDelivery_date_actual(null);
+
+                        // Thêm Delivery vào subcollection "Delivery"
+                        documentReference.collection("Delivery")
+                                .add(delivery)
+                                .addOnSuccessListener(deliveryRef -> Log.d("CheckoutActivity", "Delivery thêm thành công: " + deliveryRef.getId()))
+                                .addOnFailureListener(e -> Log.e("CheckoutActivity", "Lỗi thêm Delivery: " + e.getMessage()));
+                    }
+
+                    Toast.makeText(CheckoutActivity.this, "Đơn hàng của bạn đã được đặt thành công!", Toast.LENGTH_LONG).show();
                     Intent successIntent = new Intent(CheckoutActivity.this, PaymentSuccessActivity.class);
-                    // Bạn có thể truyền thêm thông tin đơn hàng nếu cần hiển thị ở màn hình thành công
                     startActivity(successIntent);
-                    finish(); // Kết thúc CheckoutActivity
+                    finish();
                 })
                 .addOnFailureListener(e -> {
                     Log.e("CheckoutActivity", "Lỗi khi tạo đơn hàng: " + e.getMessage());
@@ -448,10 +493,23 @@ public class CheckoutActivity extends AppCompatActivity {
                 if (userSessionManager.isLoggedIn() && selectedCheckoutAddress == null) {
                     loadDefaultAddressForCheckout();
                 }
-
+                updateDeliveryDateDisplay();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Bạn đã hủy đăng nhập/đăng ký.", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    private void updateDeliveryDateDisplay() {
+        // Lấy ngày hiện tại
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        // Thêm 5 ngày vào ngày hiện tại để có ngày giao hàng ước tính
+        calendar.add(java.util.Calendar.DAY_OF_YEAR, 5);
+        java.util.Date estimatedDeliveryDate = calendar.getTime();
+
+        // Định dạng ngày để hiển thị
+        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String formattedDate = dateFormat.format(estimatedDeliveryDate);
+
+        txtDeliveryDate.setText("Ngày giao hàng dự kiến: " + formattedDate);
     }
 }

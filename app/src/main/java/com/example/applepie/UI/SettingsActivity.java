@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast; // Thêm import Toast
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.applepie.R;
 import com.example.applepie.Service.EmailSender;
 import com.example.applepie.Util.UserSessionManager;
+import com.google.firebase.auth.FirebaseAuth; // THÊM IMPORT NÀY
+import com.google.firebase.auth.FirebaseUser; // THÊM IMPORT NÀY
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -21,8 +24,8 @@ import java.util.Random;
 
 public class SettingsActivity extends AppCompatActivity {
 
-
     private UserSessionManager sessionManager;
+    private FirebaseAuth mAuth; // KHAI BÁO FIREBASE AUTH
 
     private ImageButton btnBack;
     private ConstraintLayout itemSettingNotification, itemSettingPassword, itemSettingDeleteAccount;
@@ -33,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         sessionManager = new UserSessionManager(this);
+        mAuth = FirebaseAuth.getInstance(); // KHỞI TẠO FIREBASE AUTH
 
         addViews();
         addEvents();
@@ -44,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.imageButton2);
         itemSettingPassword = findViewById(R.id.itemSettingPassword);
         itemSettingDeleteAccount = findViewById(R.id.itemSettingDeleteAccount);
+        // itemSettingNotification = findViewById(R.id.itemSettingNotification); // Nếu bạn có item này
     }
 
     private void addEvents() {
@@ -52,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Password Manager
         itemSettingPassword.setOnClickListener(v -> {
-                startActivity(new Intent(this, ChangePasswordActivity.class));
+            startActivity(new Intent(this, ChangePasswordActivity.class));
         });
 
         // Delete Account (hiện dialog xác nhận)
@@ -61,75 +66,58 @@ public class SettingsActivity extends AppCompatActivity {
                     .setTitle("Xoá tài khoản")
                     .setMessage("Bạn có chắc muốn xoá tài khoản này không?")
                     .setPositiveButton("Có", (dialog, which) -> {
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser(); // LẤY NGƯỜI DÙNG HIỆN TẠI TỪ FIREBASE AUTH
 
-                        String userId = sessionManager.getUserId();
-                        if (userId != null && !userId.isEmpty()) {
-                            Log.d("SettingsActivity", "UserId: " + userId);
+                        if (firebaseUser != null) {
+                            String userId = firebaseUser.getUid(); // LẤY UID TỪ FIREBASE AUTH
+                            String userEmail = firebaseUser.getEmail(); // LẤY EMAIL TỪ FIREBASE AUTH
 
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            db.collection("User").document(userId).get()
-                                    .addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            DocumentSnapshot document = task.getResult();
-                                            String email = document.getString("email");
+                            Log.d("SettingsActivity", "Firebase Auth User ID: " + userId + ", Email: " + userEmail);
 
-                                            Log.d("SettingsActivity", "UserId: " + userId);
+                            if (userId != null && !userId.isEmpty() && userEmail != null && !userEmail.isEmpty()) {
+                                // Tạo mã OTP
+                                String otpCode = generateOtp();
 
-                                            // Kiểm tra nếu email là null hoặc rỗng
-                                            if (email == null || email.isEmpty()) {
-                                                Log.e("SettingsActivity", "Email is null or empty");
-                                                // Có thể xử lý thêm ở đây, ví dụ hiển thị thông báo lỗi
-                                                return;  // Nếu email không hợp lệ, dừng lại
-                                            }
+                                // Gửi email với mã OTP
+                                EmailSender.sendDeleteOTP(userEmail, otpCode); // Dùng email từ FirebaseUser
 
-                                            // Tạo mã OTP
-                                            String otpCode = generateOtp();
+                                // Tạo Intent để chuyển đến DeleteOtpActivity
+                                Intent intent = new Intent(this, DeleteOtpActivity.class);
+                                intent.putExtra("userId", userId); // Truyền UID của Firebase Auth
+                                intent.putExtra("otpCode", otpCode);
+                                intent.putExtra("email", userEmail); // Truyền email từ FirebaseUser
+                                startActivity(intent);
 
-                                            // Gửi email với mã OTP
-                                            EmailSender.sendDeleteOTP(email, otpCode);
-
-                                            // Tạo Intent để chuyển đến DeleteOtpActivity và truyền userId và otpCode
-                                            Intent intent = new Intent(this, DeleteOtpActivity.class);
-                                            intent.putExtra("userId", userId);
-                                            intent.putExtra("otpCode", otpCode);
-                                            intent.putExtra("email", email);  // Truyền email từ mảng
-
-                                            startActivity(intent);
-
-                                        } else {
-                                            Log.d("Firestore", "Get failed with ", task.getException());
-                                        }
-                                    });
+                            } else {
+                                Toast.makeText(this, "Không thể lấy thông tin tài khoản. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
+                                Log.e("SettingsActivity", "Firebase User UID or Email is null/empty.");
+                            }
                         } else {
-                            Log.e("SettingsActivity", "UserId is null or empty");
+                            Toast.makeText(this, "Bạn chưa đăng nhập. Vui lòng đăng nhập để xoá tài khoản.", Toast.LENGTH_SHORT).show();
+                            Log.e("SettingsActivity", "No Firebase User is currently logged in.");
                         }
-
                     })
                     .setNegativeButton("Không", (dialog, which) -> dialog.dismiss())
                     .show();
         });
     }
 
-
     @SuppressLint("Range")
     private void checkLoggedIn() {
-        // Lấy dữ liệu người dùng từ UserSessionManager
+        // Lấy dữ liệu người dùng từ UserSessionManager (đây chỉ là kiểm tra nhanh để ẩn/hiện nút)
+        // Việc quan trọng là kiểm tra FirebaseUser trực tiếp khi người dùng nhấn nút.
         String userName = sessionManager.getUserName();
 
-        // Kiểm tra nếu người dùng đã đăng nhập
         if (!userName.equals("Guest")) {
-            // Nếu đã đăng nhập
             itemSettingPassword.setVisibility(View.VISIBLE);
             itemSettingDeleteAccount.setVisibility(View.VISIBLE);
         } else {
-            // Nếu chưa đăng nhập
             itemSettingPassword.setVisibility(View.GONE);
             itemSettingDeleteAccount.setVisibility(View.GONE);
         }
     }
 
     private String generateOtp() {
-        // Tạo mã OTP ngẫu nhiên 4 chữ số
         int otp = 1000 + new Random().nextInt(9000);
         return String.valueOf(otp);
     }

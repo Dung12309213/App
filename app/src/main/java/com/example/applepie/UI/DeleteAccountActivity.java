@@ -21,6 +21,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DeleteAccountActivity extends BaseActivity {
 
@@ -30,6 +31,7 @@ public class DeleteAccountActivity extends BaseActivity {
     private ImageButton btnBack;
     private EditText edtDeleteAccountPassword; // Đổi tên để phản ánh mục đích nhập mật khẩu
     private Button btnStartDelete; // Đổi tên để phản ánh mục đích bắt đầu xóa
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class DeleteAccountActivity extends BaseActivity {
 
         mAuth = FirebaseAuth.getInstance();
         sessionManager = new UserSessionManager(this);
+        db = FirebaseFirestore.getInstance();
 
         addViews();
         addEvents();
@@ -108,6 +111,8 @@ public class DeleteAccountActivity extends BaseActivity {
                     if (task.isSuccessful()) {
                         Log.d("ReauthenticateActivity", "User account deleted successfully.");
                         Toast.makeText(DeleteAccountActivity.this, "Tài khoản của bạn đã được xóa thành công.", Toast.LENGTH_LONG).show();
+
+                        db.collection("User").document(user.getUid()).delete();
 
                         // Đăng xuất khỏi Firebase và xóa phiên cục bộ
                         mAuth.signOut();

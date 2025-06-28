@@ -297,7 +297,8 @@ public class CartActivity extends BaseActivity {
                                 .addOnSuccessListener(documentSnapshot -> {
                                     if (documentSnapshot.exists()) {
                                         int price = documentSnapshot.contains("price") ? documentSnapshot.getLong("price").intValue() : 0;
-                                        int secondprice = documentSnapshot.contains("secondprice") ? documentSnapshot.getLong("secondprice").intValue() : 0;
+                                        Long secondPriceLong = documentSnapshot.getLong("secondprice");
+                                        int secondprice = (secondPriceLong != null) ? secondPriceLong.intValue() : 0;
                                         String variant = documentSnapshot.getString("variant");
 
                                         item.setPrice(price);

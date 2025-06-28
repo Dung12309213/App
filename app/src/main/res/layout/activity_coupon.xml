@@ -20,7 +20,7 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="Back"
+            android:contentDescription="@string/content_description_back_button"
             android:src="@drawable/ic_backbutton" />
 
         <TextView
@@ -28,11 +28,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/vollkorn"
             android:gravity="center"
-            android:text="VOUCHER"
+            android:text="@string/MyCoupon"
             android:textColor="@color/textcolor"
             android:textSize="24sp"
             android:textStyle="bold" />
-
     </LinearLayout>
 
     <View
@@ -49,5 +48,4 @@
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
         android:scrollbars="vertical" />
-
 </LinearLayout>

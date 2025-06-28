@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/white"
->
+    android:background="@android:color/white">
 
     <!-- Nút Back và Tiêu đề -->
     <LinearLayout
@@ -15,7 +14,6 @@
         android:layout_marginRight="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
-
 
         <TextView
             android:id="@+id/txtTitle"
@@ -52,7 +50,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/nunito_bold"
         android:gravity="center"
-        android:text="Thanh toán thành công"
+        android:text="@string/checkout_success_title"
         android:textColor="@color/brown"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -65,7 +63,7 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/nunito_medium"
         android:gravity="center"
-        android:text="Cảm ơn bạn đã mua hàng."
+        android:text="@string/checkout_success_message"
         android:textColor="@color/textcolor"
         android:textSize="16sp" />
 
@@ -85,7 +83,7 @@
         android:layout_marginBottom="12dp"
         android:backgroundTint="@color/brown"
         android:fontFamily="@font/nunito_bold"
-        android:text="Theo dõi đơn hàng"
+        android:text="@string/button_track_order"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -101,7 +99,7 @@
         android:background="@drawable/button_with_stroke"
         android:fontFamily="@font/nunito_medium"
         android:gravity="center"
-        android:text="Tiếp tục mua sắm"
+        android:text="@string/button_continue_shopping"
         android:textColor="@color/brown"
         android:textSize="16sp" />
 </LinearLayout>

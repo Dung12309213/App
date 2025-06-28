@@ -13,6 +13,7 @@
         android:orientation="vertical"
         android:padding="24dp">
 
+        <!-- Tiêu đề -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +42,7 @@
             android:layout_height="50dp"
             android:background="@drawable/edittext_background"
             android:fontFamily="@font/nunito_bold"
-            android:hint="Nhập họ và tên"
+            android:hint="@string/hint_FullName"
             android:padding="12dp"
             android:textSize="16sp" />
 
@@ -61,7 +62,7 @@
             android:layout_height="50dp"
             android:background="@drawable/edittext_background"
             android:fontFamily="@font/nunito_medium"
-            android:hint="Nhập số điện thoại"
+            android:hint="@string/hint_PhoneNumber"
             android:inputType="phone"
             android:padding="12dp"
             android:textSize="16sp" />
@@ -72,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/nunito_bold"
-            android:text="Email"
+            android:text="@string/title_Account_Email"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -82,7 +83,7 @@
             android:layout_height="50dp"
             android:background="@drawable/edittext_background"
             android:fontFamily="@font/nunito_medium"
-            android:hint="Nhập email"
+            android:hint="@string/hint_Email"
             android:inputType="textEmailAddress"
             android:padding="12dp"
             android:textSize="16sp" />
@@ -103,12 +104,10 @@
             android:layout_height="50dp"
             android:background="@drawable/edittext_background"
             android:fontFamily="@font/nunito_medium"
-            android:hint="Tạo mật khẩu"
+            android:hint="@string/hint_CreatePassword"
             android:inputType="textPassword"
             android:padding="12dp"
             android:textSize="16sp" />
-
-        <!-- Xác nhận mật khẩu -->
 
         <!-- Nút đăng ký -->
         <Button
@@ -121,7 +120,6 @@
             android:text="@string/title_Login_Signupnow"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
-
 
         <!-- Dòng chuyển hướng -->
         <TextView

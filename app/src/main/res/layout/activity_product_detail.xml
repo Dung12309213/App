@@ -309,6 +309,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvTotalReviewCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -319,50 +320,12 @@
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/reviewListContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_medium"
-                    android:text="@string/review_name" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_medium"
-                    android:text="@string/review_content" />
-
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginEnd="8dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_homepage_mau2" />
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginEnd="8dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/tinhchathoahong_4" />
-                    </LinearLayout>
-                </HorizontalScrollView>
-            </LinearLayout>
+                android:layout_marginTop="8dp" />
 
             <TextView
                 android:layout_width="match_parent"

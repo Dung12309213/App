@@ -15,17 +15,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.applepie.Model.CartItem;
 import com.example.applepie.Model.OrderItem;
 import com.example.applepie.Model.OrderModel;
 import com.example.applepie.R;
+import com.example.applepie.UI.CartActivity;
 import com.example.applepie.UI.Order_Detail;
 import com.example.applepie.UI.ProductReviewActivity;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
 
@@ -97,7 +104,81 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             if (reorderListener != null) {
                 // Logic cho nút "Mua lại"
                 if (holder.btnReorder.getText().toString().equalsIgnoreCase("Mua lại")) {
-                    reorderListener.onReorder(order); // Kích hoạt sự kiện mua lại
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    String userId = order.getUserid(); // Đảm bảo OrderModel có trường userid
+                    Context appContext = context; // nếu dùng trong lambda
+
+                    db.collection("Order")
+                            .document(order.getId())
+                            .collection("Item")
+                            .get()
+                            .addOnSuccessListener(itemSnapshots -> {
+                                int totalItems = itemSnapshots.size();
+                                AtomicInteger successCount = new AtomicInteger(0); // Đếm khi add xong
+
+                                for (QueryDocumentSnapshot itemDoc : itemSnapshots) {
+                                    String productId = itemDoc.getString("productid");
+                                    String variantId = itemDoc.getString("variantid");
+
+                                    if (variantId != null && productId != null) {
+                                        CollectionReference cartRef = db.collection("User")
+                                                .document(userId)
+                                                .collection("Cart");
+
+                                        cartRef
+                                                .whereEqualTo("id", variantId)
+                                                .whereEqualTo("productid", productId)
+                                                .get()
+                                                .addOnSuccessListener(querySnapshot -> {
+                                                    if (!querySnapshot.isEmpty()) {
+                                                        // Nếu đã tồn tại thì update quantity = 1
+                                                        DocumentSnapshot existingDoc = querySnapshot.getDocuments().get(0);
+                                                        existingDoc.getReference().update("quantity", 1)
+                                                                .addOnSuccessListener(aVoid -> {
+                                                                    int done = successCount.incrementAndGet();
+                                                                    if (done == totalItems) {
+                                                                        Toast.makeText(appContext, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                                                                        appContext.startActivity(new Intent(appContext, CartActivity.class));
+                                                                    }
+                                                                })
+                                                                .addOnFailureListener(e -> {
+                                                                    Log.e("Reorder", "Lỗi khi cập nhật giỏ hàng", e);
+                                                                    Toast.makeText(appContext, "Cập nhật sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                                                                });
+
+                                                    } else {
+                                                        // Nếu chưa có, thêm mới
+                                                        Map<String, Object> cartData = new HashMap<>();
+                                                        cartData.put("id", variantId);
+                                                        cartData.put("productid", productId);
+                                                        cartData.put("quantity", 1);
+
+                                                        cartRef.add(cartData)
+                                                                .addOnSuccessListener(docRef -> {
+                                                                    int done = successCount.incrementAndGet();
+                                                                    if (done == totalItems) {
+                                                                        Toast.makeText(appContext, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                                                                        appContext.startActivity(new Intent(appContext, CartActivity.class));
+                                                                    }
+                                                                })
+                                                                .addOnFailureListener(e -> {
+                                                                    Log.e("Reorder", "Lỗi khi thêm sản phẩm vào giỏ", e);
+                                                                    Toast.makeText(appContext, "Thêm một số sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                                                                });
+                                                    }
+                                                });
+                                    }
+                                }
+
+                                // Nếu đơn không có item
+                                if (totalItems == 0) {
+                                    Toast.makeText(appContext, "Đơn hàng không có sản phẩm nào", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e("Reorder", "Lỗi khi truy vấn Item", e);
+                                Toast.makeText(context, "Không thể thêm vào giỏ", Toast.LENGTH_SHORT).show();
+                            });
                 }
                 // Logic cho nút "Theo dõi" hoặc "Xem chi tiết"
                 else if (holder.btnReorder.getText().toString().equalsIgnoreCase("Theo dõi") ||

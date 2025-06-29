@@ -30,6 +30,7 @@ import com.example.applepie.Adapter.ProductImageAdapter;
 import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.Connector.FirebaseConnector;
 import com.example.applepie.Model.Product;
+import com.example.applepie.Model.Review;
 import com.example.applepie.Model.Variant;
 import com.example.applepie.R;
 import com.example.applepie.Util.UserSessionManager;
@@ -66,6 +67,7 @@ public class ProductDetail extends BaseActivity {
     private TextView tvDiscountedPrice, tvOriginalPrice;
     private TextView txtUses1, txtUses2, txtUses3, txtUses4;
     private TextView tvVariantPrice, tvVariantSecondPrice, tvQuantity;
+    TextView tvTotalReviewCount;
     LayoutInflater inflate; // Biến này nên được khởi tạo trong onCreate hoặc constructor
 
     // Biến cho ViewPager2
@@ -109,6 +111,7 @@ public class ProductDetail extends BaseActivity {
         // Load chi tiết sản phẩm nếu có productId
         if (productId != null) {
             loadProductDetails(productId);
+            loadReviewsByProductId(productId);
         }
 
         // Thêm các sự kiện cho Views
@@ -142,6 +145,8 @@ public class ProductDetail extends BaseActivity {
         tvVariantPrice=findViewById(R.id.tvVariantPrice);
         tvVariantSecondPrice=findViewById(R.id.tvVariantSecondPrice);
         tvQuantity=findViewById(R.id.tvQuantity);
+
+        tvTotalReviewCount = findViewById(R.id.tvTotalReviewCount);
 
     }
 
@@ -613,5 +618,86 @@ public class ProductDetail extends BaseActivity {
 
             sameCateProductLayout.addView(itemView);
         }
+    }
+    private void loadReviewsByProductId(String productId) {
+        LinearLayout reviewContainer = findViewById(R.id.reviewListContainer);
+        reviewContainer.removeAllViews();
+        TextView tvTotalReviewCount = findViewById(R.id.tvTotalReviewCount);
+
+        final int[] totalReviewCount = {0};
+
+        db.collection("Order")
+                .get()
+                .addOnSuccessListener(orderSnapshots -> {
+                    for (DocumentSnapshot orderDoc : orderSnapshots) {
+                        String orderId = orderDoc.getId();
+                        String userId = orderDoc.getString("userid");
+
+                        db.collection("Order").document(orderId).collection("Item")
+                                .get()
+                                .addOnSuccessListener(itemSnapshots -> {
+                                    for (DocumentSnapshot itemDoc : itemSnapshots) {
+                                        String itemProductId = itemDoc.getString("productid");
+                                        String itemId = itemDoc.getId();
+
+                                        if (itemProductId != null && itemProductId.equals(productId)) {
+                                            // Truy user để lấy tên
+                                            db.collection("User").document(userId)
+                                                    .get()
+                                                    .addOnSuccessListener(userSnapshot -> {
+                                                        String name = userSnapshot.exists() ? userSnapshot.getString("name") : "Người dùng";
+
+                                                        // Truy review
+                                                        db.collection("Order").document(orderId)
+                                                                .collection("Item").document(itemId)
+                                                                .collection("Review")
+                                                                .get()
+                                                                .addOnSuccessListener(reviewSnapshots -> {
+                                                                    for (DocumentSnapshot reviewDoc : reviewSnapshots) {
+                                                                        Review review = reviewDoc.toObject(Review.class);
+                                                                        if (review != null) {
+                                                                            View reviewItem = LayoutInflater.from(this).inflate(R.layout.item_review_card, reviewContainer, false);
+
+                                                                            TextView txtReviewer = reviewItem.findViewById(R.id.txtReviewerName);
+                                                                            TextView txtComment = reviewItem.findViewById(R.id.txtReviewComment);
+                                                                            TextView txtRating = reviewItem.findViewById(R.id.txtReviewRating);
+                                                                            LinearLayout imageLayout = reviewItem.findViewById(R.id.imageContainer);
+
+                                                                            txtReviewer.setText(name);
+
+                                                                            txtComment.setText(review.getComment());
+
+                                                                            // Hiển thị sao
+                                                                            int score = review.getScore();
+                                                                            StringBuilder stars = new StringBuilder();
+                                                                            for (int i = 0; i < score; i++) {
+                                                                                stars.append("★");
+                                                                            }
+                                                                            txtRating.setText(stars.toString());
+
+                                                                            if (review.getImageUrl() != null) {
+                                                                                for (String url : review.getImageUrl()) {
+                                                                                    ImageView img = new ImageView(this);
+                                                                                    int size = getResources().getDimensionPixelSize(R.dimen.image_height);
+                                                                                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
+                                                                                    params.setMargins(8, 8, 8, 8);
+                                                                                    img.setLayoutParams(params);
+                                                                                    img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                                                                    Glide.with(this).load(url).into(img);
+                                                                                    imageLayout.addView(img);
+                                                                                }
+                                                                            }
+                                                                            totalReviewCount[0]++;
+                                                                            tvTotalReviewCount.setText(totalReviewCount[0] + " đánh giá");
+                                                                            reviewContainer.addView(reviewItem);
+                                                                        }
+                                                                    }
+                                                                });
+                                                    });
+                                        }
+                                    }
+                                });
+                    }
+                });
     }
 }

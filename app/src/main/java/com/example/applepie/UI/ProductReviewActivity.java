@@ -22,6 +22,7 @@ import com.example.applepie.Base.BaseActivity;
 import com.example.applepie.Model.OrderItem;
 import com.example.applepie.Model.Review;
 import com.example.applepie.R;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.android.gms.tasks.Task;
@@ -172,8 +173,38 @@ public class ProductReviewActivity extends BaseActivity {
                                 Log.e("Variant", "Lỗi lấy variant: " + e.getMessage());
                             });
                 });
-        ReviewBlockHolder holder = new ReviewBlockHolder(productId, item.getId(), ratingBar, editReview, imgUpload);
 
+        ReviewBlockHolder holder = new ReviewBlockHolder(productId, item.getId(), ratingBar, editReview, imgUpload);
+        db.collection("Order")
+                .document(receivedOrderId)
+                .collection("Item")
+                .document(item.getId())
+                .collection("Review")
+                .limit(1)
+                .get()
+                .addOnSuccessListener(reviewQuery -> {
+                    if (!reviewQuery.isEmpty()) {
+                        DocumentSnapshot reviewDoc = reviewQuery.getDocuments().get(0);
+                        Review existingReview = reviewDoc.toObject(Review.class);
+                        if (existingReview != null) {
+                            // Gán lại dữ liệu vào UI
+                            ratingBar.setRating(existingReview.getScore());
+                            editReview.setText(existingReview.getComment());
+
+                            // Nếu có ảnh, hiển thị ảnh đầu tiên
+                            List<String> imgUrls = existingReview.getImageUrl();
+                            if (imgUrls != null && !imgUrls.isEmpty()) {
+                                Glide.with(this)
+                                        .load(imgUrls.get(0))
+                                        .into(imgUpload);
+                                holder.setImageUrls(new ArrayList<>(imgUrls)); // copy list
+                            }
+
+                            // Lưu reviewId để lát nữa ghi đè
+                            holder.reviewId = existingReview.getId();
+                        }
+                    }
+                });
         imgUpload.setOnClickListener(v -> {
             currentUploadImageView = imgUpload;
             currentReviewHolder = holder;
@@ -209,7 +240,9 @@ public class ProductReviewActivity extends BaseActivity {
             review.setImageUrl(imageUrls);
             review.setTimestamp(now);
 
-            String reviewId = db.collection("Review").document().getId();
+            String reviewId = (holder.reviewId != null && !holder.reviewId.isEmpty())
+                    ? holder.reviewId
+                    : db.collection("Review").document().getId();
             review.setId(reviewId);
 
             Task<Void> task = db.collection("Order")
@@ -228,6 +261,12 @@ public class ProductReviewActivity extends BaseActivity {
         Tasks.whenAllComplete(firestoreTasks)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+
+                        // Gọi cập nhật rating cho từng productId trong reviewBlocks
+                        for (ReviewBlockHolder holder : reviewBlocks) {
+                            updateRatingForProduct(holder.productId);
+                        }
+
                         Toast.makeText(this, "Gửi đánh giá thành công!", Toast.LENGTH_LONG).show();
                         finish();
                     } else {
@@ -236,10 +275,76 @@ public class ProductReviewActivity extends BaseActivity {
                     }
                 });
     }
+    private void updateRatingForProduct(String productId) {
+        db.collection("Order")
+                .get()
+                .addOnSuccessListener(orderSnapshots -> {
+                    List<Task<?>> itemTasks = new ArrayList<>();
+                    List<Integer> allScores = new ArrayList<>();
+
+                    for (DocumentSnapshot orderDoc : orderSnapshots) {
+                        String orderId = orderDoc.getId();
+
+                        Task<?> itemTask = db.collection("Order")
+                                .document(orderId)
+                                .collection("Item")
+                                .whereEqualTo("productid", productId)
+                                .get()
+                                .addOnSuccessListener(itemSnapshots -> {
+                                    List<Task<?>> reviewTasks = new ArrayList<>();
+
+                                    for (DocumentSnapshot itemDoc : itemSnapshots) {
+                                        String itemId = itemDoc.getId();
+
+                                        Task<?> reviewTask = db.collection("Order")
+                                                .document(orderId)
+                                                .collection("Item")
+                                                .document(itemId)
+                                                .collection("Review")
+                                                .get()
+                                                .addOnSuccessListener(reviewSnapshots -> {
+                                                    for (DocumentSnapshot reviewDoc : reviewSnapshots) {
+                                                        Review review = reviewDoc.toObject(Review.class);
+                                                        if (review != null) {
+                                                            allScores.add(review.getScore());
+                                                        }
+                                                    }
+                                                });
+
+                                        reviewTasks.add(reviewTask);
+                                    }
+
+                                    // Đợi tất cả review được xử lý
+                                    Tasks.whenAllComplete(reviewTasks).addOnSuccessListener(r -> {
+                                        if (!allScores.isEmpty()) {
+                                            int total = 0;
+                                            for (int score : allScores) total += score;
+                                            double average = (double) total / allScores.size();
+
+                                            db.collection("Product")
+                                                    .document(productId)
+                                                    .update("rating", average)
+                                                    .addOnSuccessListener(aVoid -> Log.d("UpdateRating", "Đã cập nhật rating: " + average))
+                                                    .addOnFailureListener(e -> Log.e("UpdateRating", "Lỗi cập nhật rating", e));
+                                        }
+                                    });
+                                });
+
+                        itemTasks.add(itemTask);
+                    }
+
+                    // (Tuỳ chọn) đợi tất cả itemTask xong nếu muốn xử lý gì thêm
+                    Tasks.whenAllComplete(itemTasks).addOnSuccessListener(t -> {
+                        Log.d("UpdateRating", "Đã xử lý xong toàn bộ order cho product: " + productId);
+                    });
+                });
+    }
+
 
     static class ReviewBlockHolder {
         String productId;
         String itemId;
+        String reviewId;
         RatingBar ratingBar;
         EditText editText;
         ImageView uploadImage;

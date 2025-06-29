@@ -186,7 +186,7 @@ a. If the customer is unavailable during delivery, the shipping provider will co
     <string name="instruction_content">Usage instructions here, a,b,c,d,e,f..</string>
     <string name="ingredient_title">Product ingredients</string>
     <string name="ingredient_content">Details of product ingredients here...</string>
-    <string name="product_review">Product reviews (123)</string>
+    <string name="product_review">Product reviews</string>
     <string name="review_name">Dung Chu ⭐⭐⭐⭐⭐</string>
     <string name="review_content">abcdef...xyz</string>
     <string name="view_all">View all</string>

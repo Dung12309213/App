@@ -172,11 +172,11 @@ a. If the customer is unavailable during delivery, the shipping provider will co
     <string name="tag_website">Website</string>
     <string name="tag_facebook">Facebook</string>
     <string name="tag_instagram">Instagram</string>
-    <string name="hint_FullName">Nhập họ và tên</string>
-    <string name="hint_PhoneNumber">Nhập số điện thoại</string>
+    <string name="hint_FullName">Input your full name</string>
+    <string name="hint_PhoneNumber">Input your Phone number</string>
     <string name="title_Account_Email">Email</string>
-    <string name="hint_Email">Nhập email</string>
-    <string name="hint_CreatePassword">Tạo mật khẩu</string>
+    <string name="hint_Email">Input your Email</string>
+    <string name="hint_CreatePassword">Create Password</string>
     <string name="checkout_success_title">Payment Successful</string>
     <string name="checkout_success_message">Thank you for your purchase.</string>
     <string name="button_track_order">Track Order</string>

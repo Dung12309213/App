@@ -1,6 +1,7 @@
 package com.example.applepie.UI;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -48,7 +49,7 @@ public class SearchBarHelper {
         if (btnNotification != null) {
             btnNotification.setOnClickListener(v -> {
                 // Bạn có thể start NotificationActivity tại đây nếu cần
-                // activity.startActivity(new Intent(activity, NotificationActivity.class));
+                activity.startActivity(new Intent(activity, NotificationActivity.class));
             });
         }
     }

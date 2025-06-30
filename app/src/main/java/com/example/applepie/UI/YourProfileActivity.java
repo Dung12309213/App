@@ -54,7 +54,7 @@ public class YourProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_profile);
 
-        userSessionManager = new UserSessionManager(this);
+        userSessionManager = UserSessionManager.getInstance(this);
         db = FirebaseFirestore.getInstance();
 
         addViews();

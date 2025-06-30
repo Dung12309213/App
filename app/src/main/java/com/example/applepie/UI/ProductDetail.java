@@ -294,7 +294,7 @@ public class ProductDetail extends BaseActivity {
                     variants.add(selectedVariant); // Thêm vào ArrayList
 
                     // Kiểm tra người dùng đã đăng nhập hay chưa
-                    UserSessionManager userSessionManager = new UserSessionManager(ProductDetail.this);
+                    UserSessionManager userSessionManager = UserSessionManager.getInstance(ProductDetail.this);
                     String userId = userSessionManager.getUserId();
 
                     if (!userId.isEmpty()) {

@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,8 +25,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.applepie.API.ApiService;
 import com.example.applepie.Adapter.FlashSaleAdapter;
 import com.example.applepie.Model.Product;
+import com.example.applepie.Model.RegisterTokenRequest;
 import com.example.applepie.Model.Variant;
 import com.example.applepie.R;
 import com.example.applepie.UI.BottomNavHelper;
@@ -41,9 +44,18 @@ import com.example.applepie.UI.SearchResultHelper;
 import com.example.applepie.Util.UserSessionManager;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private Runnable flashSaleRunnable;
     ImageButton btnNotification;
     HorizontalScrollView trietLyScrollView;
+    private static final String BASE_URL = "https://garfish-optimum-impala.ngrok-free.app";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +91,22 @@ public class MainActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+        /*String loggedInUserId = UserSessionManager.getInstance(this).getLoggedInUserId(); // Ví dụ lấy từ Session
+        if (loggedInUserId != null && !loggedInUserId.isEmpty()) {
+            getFirebaseTokenAndSendToBackend(loggedInUserId);
+        } else {
+            Log.w("FCM_TOKEN", "No logged in user ID found. Cannot send FCM token to backend.");
+            // Có thể chuyển hướng đến màn hình đăng nhập hoặc xử lý khác
+            Toast.makeText(this, "Vui lòng đăng nhập để nhận thông báo.", Toast.LENGTH_SHORT).show();
+            // Hoặc chuyển hướng:
+            // startActivity(new Intent(MainActivity.this, LoginScreen1.class));
+            // finish();
+        }*/
+
+        // Xài tạm để deploy, sử dụng thì bỏ hoặc comment 2 dòng dưới ròi mở cụm comment trên
+        String loggedInUserId = "9794320";
+        getFirebaseTokenAndSendToBackend(loggedInUserId);
+
         addViews();
         addEvents();
 
@@ -92,6 +121,71 @@ public class MainActivity extends AppCompatActivity {
         fetchAndDisplayImages();
         loadFlashSaleVariants();
         startFlashSaleTimer();
+    }
+    private void getFirebaseTokenAndSendToBackend(String userId) {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("FCM_TOKEN", "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+                    // Lấy token mới
+                    String token = task.getResult();
+                    Log.d("FCM_TOKEN", "FCM Token: " + token);
+
+                    // Gửi token này lên backend của bạn (cùng với userId)
+                    sendTokenToYourFastApiBackend(userId, token);
+                });
+    }
+
+    private void sendTokenToYourFastApiBackend(String userId, String fcmToken) {
+        // Khởi tạo HttpLoggingInterceptor để xem log request/response
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY); // Xem toàn bộ body của request/response
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(logging) // Thêm interceptor vào OkHttpClient
+                .build();
+
+        // Khởi tạo Retrofit
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL) // Sử dụng BASE_URL đã định nghĩa
+                .addConverterFactory(GsonConverterFactory.create()) // Thêm bộ chuyển đổi Gson
+                .client(client) // Gắn OkHttpClient đã cấu hình vào Retrofit
+                .build();
+
+        ApiService apiService = retrofit.create(ApiService.class);
+
+        // Tạo đối tượng request body
+        RegisterTokenRequest requestBody = new RegisterTokenRequest(userId, fcmToken);
+
+        // Gọi API
+        Call<Void> call = apiService.registerToken(requestBody);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("FCM_TOKEN", "FCM token sent successfully to backend for user: " + userId);
+                    Toast.makeText(getApplicationContext(), "Đã gửi Token thành công!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Log lỗi chi tiết nếu request không thành công (ví dụ: lỗi 400, 500)
+                    try {
+                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "No error body";
+                        Log.e("FCM_TOKEN", "Failed to send FCM token. Code: " + response.code() + ", Error: " + errorBody);
+                        Toast.makeText(getApplicationContext(), "Gửi Token thất bại: " + response.code() + " " + errorBody, Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Log.e("FCM_TOKEN", "Error parsing error body: " + e.getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // Log lỗi mạng (ví dụ: không có kết nối internet, sai URL)
+                Log.e("FCM_TOKEN", "Network error when sending FCM token: " + t.getMessage(), t);
+                Toast.makeText(getApplicationContext(), "Lỗi mạng khi gửi Token: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void addViews() {
@@ -262,5 +356,10 @@ public class MainActivity extends AppCompatActivity {
         };
 
         flashSaleHandler.post(flashSaleRunnable);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        flashSaleHandler.removeCallbacks(flashSaleRunnable);
     }
 }

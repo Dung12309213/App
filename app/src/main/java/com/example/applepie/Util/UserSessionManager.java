@@ -9,11 +9,13 @@ public class UserSessionManager {
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
-    public UserSessionManager(Context context) {
+    private UserSessionManager(Context context) {
         preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = preferences.edit();
     }
-
+    public String getLoggedInUserId() {
+        return preferences.getString("id", ""); // Lấy giá trị của khóa "id" từ SharedPreferences
+    }
     // Lưu thông tin người dùng
     public void saveUser(String userId, String userName, String userEmail) {
         editor.putString("id", userId);
@@ -43,6 +45,18 @@ public class UserSessionManager {
     public boolean isLoggedIn() {
         // Người dùng được coi là đã đăng nhập nếu có userId được lưu
         return !preferences.getString("id", "").isEmpty();
+    }
+
+    // Instance duy nhất của UserSessionManager (Singleton Pattern)
+    private static UserSessionManager instance;
+
+    // Phương thức public để lấy instance của UserSessionManager
+    // Đây là phương thức mà MainActivity đang cố gắng gọi
+    public static synchronized UserSessionManager getInstance(Context context) {
+        if (instance == null) {
+            instance = new UserSessionManager(context.getApplicationContext()); // Sử dụng application context để tránh rò rỉ bộ nhớ
+        }
+        return instance;
     }
 
 }

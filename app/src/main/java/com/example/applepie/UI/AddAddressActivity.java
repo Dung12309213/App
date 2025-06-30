@@ -63,7 +63,7 @@ public class AddAddressActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
 
-        userSessionManager = new UserSessionManager(this);
+        userSessionManager = UserSessionManager.getInstance(this);
         db = FirebaseFirestore.getInstance();
 
         addViews();

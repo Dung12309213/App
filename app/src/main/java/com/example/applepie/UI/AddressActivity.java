@@ -50,7 +50,7 @@ public class AddressActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
 
-        userSessionManager = new UserSessionManager(this);
+        userSessionManager = UserSessionManager.getInstance(this);
         db = FirebaseFirestore.getInstance();
 
         addressList = new ArrayList<>();

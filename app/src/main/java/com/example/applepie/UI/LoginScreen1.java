@@ -59,7 +59,7 @@ public class LoginScreen1 extends BaseActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseConnector.getInstance();
-        sessionManager = new UserSessionManager(this);
+        sessionManager = UserSessionManager.getInstance(this);
 
         if (getIntent() != null && getIntent().hasExtra("from_checkout")) {
             fromCheckout = getIntent().getBooleanExtra("from_checkout", false);

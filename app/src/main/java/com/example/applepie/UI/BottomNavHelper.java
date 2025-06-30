@@ -41,7 +41,7 @@ public class BottomNavHelper {
 
         if (btnBuy != null && !(activity instanceof CartActivity)) {
             btnBuy.setOnClickListener(v -> {
-                UserSessionManager userSessionManager = new UserSessionManager(activity);
+                UserSessionManager userSessionManager = UserSessionManager.getInstance(activity);
                 String userId = userSessionManager.getUserId();
 
                 if (userId.isEmpty()) {

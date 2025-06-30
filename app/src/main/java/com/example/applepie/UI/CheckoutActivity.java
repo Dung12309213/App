@@ -80,7 +80,7 @@ public class CheckoutActivity extends BaseActivity {
         setContentView(R.layout.activity_checkout);
         currentSelectedVariants = (ArrayList<Variant>) getIntent().getSerializableExtra("selectedVariants");
 
-        userSessionManager = new UserSessionManager(this);
+        userSessionManager = UserSessionManager.getInstance(this);
         db = FirebaseFirestore.getInstance();
         addViews();
 
@@ -101,7 +101,7 @@ public class CheckoutActivity extends BaseActivity {
         super.onResume();
         // Đảm bảo userSessionManager đã được khởi tạo
         if (userSessionManager == null) {
-            userSessionManager = new UserSessionManager(this);
+            userSessionManager = UserSessionManager.getInstance(this);
         }
 
         // Tải địa chỉ mặc định chỉ khi người dùng đã đăng nhập VÀ CHƯA CÓ địa chỉ nào được chọn trong phiên này

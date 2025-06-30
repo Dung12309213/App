@@ -30,7 +30,7 @@ public class ChangePasswordActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
-        userSessionManager = new UserSessionManager(this);
+        userSessionManager = UserSessionManager.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
 
         addViews();

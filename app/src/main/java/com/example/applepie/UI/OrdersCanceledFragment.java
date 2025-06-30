@@ -45,7 +45,7 @@ public class OrdersCanceledFragment extends Fragment implements OrderAdapter.OnR
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         db = FirebaseFirestore.getInstance(); // Khởi tạo Firestore
-        userSessionManager = new UserSessionManager(getContext()); // Khởi tạo UserSessionManager
+        userSessionManager = UserSessionManager.getInstance(getContext());
         orderList = new ArrayList<>();
         orderAdapter = new OrderAdapter(orderList, this); // 'this' vì fragment này implement OnReorderClickListener
         recyclerView.setAdapter(orderAdapter);

@@ -45,7 +45,7 @@ public class OrdersCompletedFragment extends Fragment implements OrderAdapter.On
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         db = FirebaseFirestore.getInstance();
-        userSessionManager = new UserSessionManager(getContext());
+        userSessionManager = UserSessionManager.getInstance(getContext());
         orderList = new ArrayList<>();
         orderAdapter = new OrderAdapter(orderList, this); // 'this' vì fragment này implement OnReorderClickListener
         recyclerView.setAdapter(orderAdapter);

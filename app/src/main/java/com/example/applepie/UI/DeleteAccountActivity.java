@@ -39,7 +39,7 @@ public class DeleteAccountActivity extends BaseActivity {
         setContentView(R.layout.activity_delete_account); // Sử dụng layout bạn đã cung cấp
 
         mAuth = FirebaseAuth.getInstance();
-        sessionManager = new UserSessionManager(this);
+        sessionManager = UserSessionManager.getInstance(this);
         db = FirebaseFirestore.getInstance();
 
         addViews();

@@ -39,7 +39,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
         this.context = context;
         this.itemList = itemList;
         this.listener = listener;
-        this.userSessionManager = new UserSessionManager(context);
+        this.userSessionManager = UserSessionManager.getInstance(context);
     }
 
     @NonNull

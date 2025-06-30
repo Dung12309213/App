@@ -44,7 +44,7 @@ public class ProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        sessionManager = new UserSessionManager(this);
+        sessionManager = UserSessionManager.getInstance(this);
         mAuth = FirebaseAuth.getInstance(); // KHỞI TẠO FIREBASE AUTH
 
         addViews();

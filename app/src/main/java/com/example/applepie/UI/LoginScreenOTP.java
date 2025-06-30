@@ -69,7 +69,7 @@ public class LoginScreenOTP extends BaseActivity {
         // Khởi tạo Firebase
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseConnector.getInstance();
-        sessionManager = new UserSessionManager(this);
+        sessionManager = UserSessionManager.getInstance(this);
 
         addViews();
         addEvents();

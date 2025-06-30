@@ -55,7 +55,7 @@ public class CartActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        userSessionManager = new UserSessionManager(this);
+        userSessionManager = UserSessionManager.getInstance(this);
         // Khởi tạo cartItems rỗng
         cartItems = new ArrayList<Variant>();
 

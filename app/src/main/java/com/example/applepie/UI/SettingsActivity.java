@@ -36,7 +36,7 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        sessionManager = new UserSessionManager(this);
+        sessionManager = UserSessionManager.getInstance(this);
         mAuth = FirebaseAuth.getInstance(); // KHỞI TẠO FIREBASE AUTH
 
         addViews();

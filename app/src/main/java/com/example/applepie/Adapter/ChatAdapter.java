@@ -48,9 +48,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ChatModel model = chatList.get(position);
         if (holder instanceof BotViewHolder) {
-            ((BotViewHolder) holder).txtBotMessage.setText(model.getMessage());
+            BotViewHolder botHolder = (BotViewHolder) holder;
+            botHolder.txtBotMessage.setText(model.getMessage());
+            botHolder.txtBotTime.setText(model.getFormattedTime());
         } else if (holder instanceof UserViewHolder) {
-            ((UserViewHolder) holder).txtUserMessage.setText(model.getMessage());
+            UserViewHolder userHolder = (UserViewHolder) holder;
+            userHolder.txtUserMessage.setText(model.getMessage());
+            userHolder.txtUserTime.setText(model.getFormattedTime());
         }
     }
 
@@ -61,17 +65,21 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static class BotViewHolder extends RecyclerView.ViewHolder {
         TextView txtBotMessage;
+        TextView txtBotTime;
         public BotViewHolder(@NonNull View itemView) {
             super(itemView);
             txtBotMessage = itemView.findViewById(R.id.txtBotMessage);
+            txtBotTime = itemView.findViewById(R.id.txtBotTime);
         }
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         TextView txtUserMessage;
+        TextView txtUserTime;
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             txtUserMessage = itemView.findViewById(R.id.txtUserMessage);
+            txtUserTime = itemView.findViewById(R.id.txtUserTime);
         }
     }
 }
